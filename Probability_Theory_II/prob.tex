@@ -106,7 +106,11 @@
 
 \chapter*{List of Symbols}
 \begin{notationlist}
-    \item
+    \item $\Omega$, a sample space.
+    \item $\omega$, an element of a sample space.
+    \item $EX$, the expectation of the random variable $X$.
+    \item $\text{Var}X$, the variance of the random variable $X$.
+    \item $N(\mu,\sigma^{2})$, a normal distribution with expectation $\mu$ and variance $\sigma^{2}$.
 \end{notationlist}
 
 \newpage
@@ -126,21 +130,135 @@
 
 \textit{January 3rd.}
 
+Let $\Omega$ be a countable state space, and let each $\omega \in \Omega$ have a probabiltiy $P(\omega)$ associated with it.
+
+\begin{lemma}
+    For random variables $X,Y$ such that $X(\omega) \leq Y(\omega)$ for all $\omega \in \Omega$. Then, $EX \leq EY$.
+\end{lemma}
+\begin{proof}
+    This can easily be seen by summing over all terms via the alternate definition of the expectation,
+    \begin{equation}
+        EX = \sum_{\omega \in \Omega} X(\omega) P(\omega) \leq \sum_{\omega \in \Omega} Y(\omega) P(\omega) = EY.
+    \end{equation}
+\end{proof}
+
+We now state Markov's inequality. 
+
+\begin{theorem}[\eax{Markov's inequality}]
+    If $X$ is a non-negative randm variable, then for $a > 0$, we have
+    \begin{equation}
+        P(X > a) \leq \frac{EX}{a}.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Define an indicator function $I_{a}(\omega)$ as 1 if $X(\omega) \geq a$, and 0 if otherwise. We then have
+    \begin{align}
+        I_{a}(\omega) &\leq \frac{X(\omega)}{a} \implies P(X \geq a) = EI_{a} \leq \frac{1}{a} EX.
+    \end{align}
+\end{proof}
+\begin{remark}
+    A better upper bound here may be found by starting with $I_{a}(\omega)X(\omega)$ instead of just $X(\omega)$.
+\end{remark}
+If we have $X \sim N(0,1)$, then we can find an upper bound for its probability density function.
+\begin{equation}
+    P(X > a) = \int_{a}^{\infty} \frac{1}{\sqrt{2\pi}} e^{\frac{-x^{2}}{2}} dx \leq \int_{a}^{\infty} \frac{1}{\sqrt{2\pi}} \frac{x}{a} e^{\frac{-x^{2}}{2}} dx = \frac{e^{\frac{-a^{2}}{2}}}{\sqrt{2\pi}a}.
+\end{equation}
+
+Note that $X$ here is a random variable over a continuous state space; the previous lemma and Markov's inequality also work here. We are to show them for the continuous case instead of the discrete one.
+
+\begin{proof}
+    Here, we have $0 \leq X(\omega) \leq Y(\omega)$ for all $\omega$ in our continuous state space $\Omega$. We see that $\{X > x\} \subseteq \{Y > x\} \implies P(X > x) \leq P(Y > x)$. Integrating both sides gives us $EX \leq EY$.
+\end{proof}
+
+\begin{theorem}[\eax{Chebyshev's inequality}]
+    Let $X$ be a random variable with finite mean $\mu = EX$ and finite variance $\sigma^{2} = \text{Var}(X)$. Then for $a > 0$, 
+    \begin{equation}
+        P(\abs{X-\mu}>a) \leq \frac{\text{Var}(X)}{a^{2}}.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Start with the proof of Markov's inequality, replacing the indiciator function with one that's unity when $\abs{X-\mu} \geq a$.
+\end{proof}
+\begin{example}
+    Suppose $X_{1}, X_{2}, \ldots, X_{n}$ are $n$ independent and identically distributed random variables, with $EX_{i} = \mu$ and $\text{Var}X_{i} = \sigma^{2}$. If $S_{n} = \sum X_{i}$, we then have
+    \begin{equation}
+        P(\abs{S_{n}-n\mu} > a) \leq \frac{\text{Var}S_{n}}{a^{2}} = \frac{n\sigma^{2}}{a^{2}}.
+    \end{equation}
+    If we replace $a$ with $n^{\frac{1}{2}+\varepsilon}$, we then have
+    \begin{equation}
+        P(\abs{S_{n}-n\mu} > n^{\frac{1}{2}+\varepsilon}) \leq \frac{\sigma^{2}}{n^{2 \varepsilon}} \to 0 \text{ as } n \to \infty.
+    \end{equation}
+\end{example}
+\begin{proposition}
+    If $\text{Var}(X) = 0$, then $P(X=EX) = 1$.
+\end{proposition}
+\begin{proof}
+    For all $\varepsilon > 0$, we have
+    \begin{equation}
+        P(\abs{X-EX} > \varepsilon) \leq \frac{\text{Var}X}{\varepsilon^{2}} = 0.
+    \end{equation}
+    Define $A_{n}$ as $\{\abs{X-EX} > \frac{1}{n}\}$. Taking $P(\bigcup A_{n}) = \lim_{n \to \infty} P(A_{n})$, the proof follows.
+\end{proof}
+
+\section{The Law of Large Numbers}
+
+We start by stating the weak law of large numbers.
+\begin{theorem}[\eax{Weak law of large numbers}]
+    Let $\{X_{k}\}_{k \geq 1}$ be a sequence of independent and identically distributed random variables with $E\abs{X_{i}} < \infty$. Let $\mu = EX_{i}$. Then for any $a > 0$,
+    \begin{equation}
+        \lim_{n \to \infty} P\left(\abs{\frac{X_{1}+X_{2}+\ldots+X_{n}}{n} - \mu} > a \right) = 0.
+    \end{equation} 
+\end{theorem}
+\begin{proof}
+    For now, let us assume that $\Omega$ is countable. We begin with the case where the variance of $X_{i}$, $\sigma^{2}$, is finite. Fix $a > 0$, and let $S_{n} = X_{1} + X_{2} + \ldots + X_{n}$. Then,
+    \begin{equation}
+        P\left(\abs{\frac{S_{n}}{n} - \mu} > a\right) = P(\abs{S_{n}-n\mu} > na) \leq \frac{\text{Var}S_{n}}{n^{2}a^{2}} = \frac{n\sigma^{2}}{n^{2}a^{2}} \to 0 \text{ as } n \to \infty.
+    \end{equation}
+    We now focus the case when the variance, $\sigma^{2}$, is infinite. Assume that the expected value, $\mu$, is 0; if it were non-zero, we would then instead work with $X_{i}-\mu$. Let $\delta > 0$; we shall choose a particular $\delta$ later. For each $n$, define $n$ pairs of random variables, $U_{1},V_{1}, \ldots, U_{n},V_{n}$, as $U_{k} = X_{k}, V_{k} = 0$ if $\abs{X_{k}} \leq \delta n$, and $U_{k} = 0, V_{k} = X_{k}$ if $\abs{X_{k}} > \delta n$. $X_{k}$ can be rewritten as $U_{k} + V_{k}$. We then have
+    \begin{align}
+        \{\abs{X_{1} + \ldots + X_{n}} \geq na\} &\subseteq \{\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\} \cup \{\abs{V_{1} + \ldots + V_{n}} \geq \frac{na}{2}\} \\
+        \implies P\left(\abs{X_{1} + \ldots + X_{n}} \geq na\right) &\leq P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) + P\left(\abs{V_{1} + \ldots + V_{n}} \geq \frac{na}{2}\right).
+    \end{align}
+    We focus on the first term on the right hand side. The $U_{i}$'s are independently and identically distributed, so
+    \begin{align}
+        P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) \leq \frac{4E[\abs{U_{1}+\ldots+U_{n}}^{2}]}{a^{2}n^{2}} = \frac{4}{a^{2}n^{2}} \left( \text{Var}(U_{1} + \ldots + U_{n}) + (nEU_{i})^{2} \right).
+    \end{align}
+    For the variance, we have
+    \begin{equation}
+        \text{Var}(U_{1}+\ldots+U_{n}) = n \text{Var}U_{i} \leq n EU_{i}^{2} \leq n E[\abs{U_{i}}\abs{U_{i}}] \leq \delta n^{2} E[\abs{U_{i}}]
+    \end{equation}
+    which transforms the previous equation as
+    \begin{equation}
+        P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) \leq \frac{4}{a^{2}n^{2}} \left( \delta n^{2} E[\abs{U_{i}}] + (nEU_{i})^{2} \right).
+    \end{equation}
+    A lemma (to be proven later) states that $E[\abs{U_{i}}] = E[\abs{X_{i}}]$ as $n \to \infty$, and $EU_{i} = EX_{i} = 0$ too. So,
+    \begin{equation}
+        P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) \leq \frac{4}{a^{2}n^{2}} \left( \delta n^{2} E[\abs{U_{i}}] + (nEU_{i})^{2} \right) \leq \frac{4 \delta E[\abs{U_{i}}]}{a^{2}} + \frac{4}{a^{2}} (EU_{i})^{2}.
+    \end{equation}
+
+    For the second term on the right hand side, begin with
+    \begin{align}
+        P(V_{1}+ \ldots + V_{n} \neq 0) &\leq P(\{V_{1} \neq 0\} \cup \ldots \cup \{V_{n} \neq 0\}) \leq nP(V_{i} \neq 0) = n \sum_{\abs{x} > \delta n} P(X_{i} = x) \notag \\
+        &\leq n \sum_{\abs{x} > \delta n} \frac{\abs{x}}{\delta n} P(X_{i} = x) = \frac{1}{\delta} E[\abs{V_{i}}]. 
+    \end{align}
+    The rightmost term here tends to 0 as $n \to \infty$. Now choose $\delta$ to be $\frac{\varepsilon a^{2}}{\abs{6 E{\abs{X_{i}}}}}$, and then choose $N$ to be large enough such that for all $n > N$, both the terms are smaller than $\frac{\varepsilon}{2}$.
+\end{proof}
+
 
 
 \begin{appendices}
 
-    \titleformat{\chapter}[display]
-      {\normalfont\Large\bfseries}
-      {\chaptername\ \thechapter}{20pt}{\Huge}
-    
-    \titlespacing*{\chapter}{0pt}{20pt}{40pt}
-    
-    \chapter{Appendix}
-    Extra content goes here.
-    
-    \printindex
-    
-    \end{appendices}
-    
-    \end{document}
+\titleformat{\chapter}[display]
+    {\normalfont\Large\bfseries}
+    {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\titlespacing*{\chapter}{0pt}{20pt}{40pt}
+
+\chapter{Appendix}
+Extra content goes here.
+
+\printindex
+
+\end{appendices}
+
+\end{document}
