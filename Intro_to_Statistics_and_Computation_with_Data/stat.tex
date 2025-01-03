@@ -1,0 +1,182 @@
+\documentclass[15pt,a4paper]{book}
+
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{graphicx} % For including graphics
+\usepackage{hyperref} % For clickable links
+\usepackage{bookmark} % Better control over bookmarks
+\usepackage{geometry} % Customize page layout
+\usepackage{xcolor} % Colors for text and graphics
+\usepackage{enumitem} % Customizable lists
+\usepackage{fancyhdr} % Header and footer
+\usepackage{titlesec} % Custom section/chapter titles
+\usepackage[toc,page]{appendix} % For the appendix
+\usepackage{longtable} % For tables spanning multiple pages
+\usepackage{mathrsfs} % For script fonts in math mode
+\usepackage{tocloft} % Custom table of contents
+\usepackage{datetime2} % For dates
+\usepackage{caption} % For better control over captions
+\usepackage{float} % Fine control over figure/table placement
+\usepackage{imakeidx} % For index
+
+% Custom Theorem Styles
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\cftchapfont}{\normalfont} % Remove bold for chapter names
+\renewcommand{\cftchappagefont}{\normalfont} % Remove bold for chapter page numbers
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
+\newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+
+
+% Custom Notation List Environment
+\newlist{notationlist}{description}{1}
+\setlist[notationlist]{font=\bfseries,labelsep=1em}
+
+% Geometry Settings
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+}
+
+% Hyperref Colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% Custom Headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark} % Chapter name on top left
+\fancyhead[R]{\rightmark}  % section name on top right
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Making index
+\makeindex[intoc]
+
+% Title Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries \centering}
+  {\chaptername\ \thechapter}{20pt}{\Huge \centering}
+
+\titlespacing*{\chapter}{0pt}{20pt}{100pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{titlepage}
+    \begin{center}
+    \vspace*{\fill}
+    % Title in all caps
+    {\Huge \textbf{\MakeUppercase{Introduction to Statistics and Computation with Data}}\par}
+
+    \vspace{0.5cm} % Adjust vertical spacing between title and subtitle
+    % Subtitle in normal text, slightly enlarged
+    {\Large Rituparna Sen, notes by Ramdas Singh\par}
+
+    \vspace{0.5cm} % Additional spacing before the author
+    % Author information
+    {\large Second Semester\par}
+    \vspace*{\fill}
+    \end{center}
+\end{titlepage}
+
+\clearpage
+
+\pagenumbering{roman}
+
+\chapter*{List of Symbols}
+\begin{notationlist}
+    \item $\hat{\theta}$, the estimate of a variable $\theta$.
+\end{notationlist}
+
+\newpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+
+%%-------------------------------------------------------------------------------------------------
+
+
+\chapter{AN INTRODUCTION TO STATISTICS}
+
+\textit{January 2nd.}
+
+Commonly referred to as the science of data, \eax{statistics} involves collecting, summarizing, presenting, and interpreting data. Randomness and variability in data neccessitate the use of statistics. If a process is deterministic, there is no real need of statistics.
+
+Often in probability, we are given the probability of getting heads in a single coin toss and we may be tasked to find the probability of 4 heads appearing in 10 tosses. In contrast, statistics starts with observing 4 heads appearing in 10 tosses, and utilises this data to determine the probability of a head. If we are to determine the price of a house in city, factors to look for may include the city itself, the specific location and area, the kind of house, the square footage, the age of the house, and the change with time. Despite all this, there is still an element of randomness; it is not a true deterministic quantity.
+
+\section{Fundamental Elements of Statistics}
+We first discuss some fundamental elements.
+\begin{itemize}
+    \item An \eax{experimental unit}. It may be a singular item such a coin toss, or a single house as in the previous example(s).
+    \item The \eax{population}. The set of all experimental units. We may note that studying all experimental units is a population may not be possible.
+    \item A \eax{census} studies all the units in a population.
+    \item A \eax{sample} of the population. A subset of the population. It is ideally chosen in a way that represents the entire population. A true representative sample may not always be possible without the the subset being the entire population.
+    \item A \eax{variable}. For each experimental unit in the sample, we record the data on several variables. In the case of the prices of houses, the factors discussed are the variables.
+    \item \eax{Univariate} and \eax{multivariate} samples. As expected, a univariate sample has only one variable per unit, and a multivariate one has multiple variables per unit. Two variables per unit in the sample is also often referred to as a \eax{bivariate} sample.
+\end{itemize}
+
+\section{Descriptive \& Inferential Statistics}\
+\subsection{Descriptive Statistics}
+Often, in statistics, we use pictures, tables, and summary numbers to describe the data. R Studio (or just R) may be used to handle descriptive statistics.
+
+\subsection{Inferential Statistics}
+Here, we make statements about the population based on our sample observations. In the case of coin tossing, let us look at the population of infinite coin tosses, where the probability of a heads is an unknown $p$. A census of this population is not possible, so we may take a sample of 10 tosses. Suppose we get $X$ heads in this sample. We know that $X$ follows a binomial distribution as $X \sim \text{Bin}(10,p)$. Here, we describe a new varaible called the \eax{estimate}, $\hat{p}$. In this case, we find that $\hat{p} = X/10$. This is how we work in statistics; we deal with an unknown variable of the population, say $\theta$, by looking at a sample and describing an estimate $\hat{\theta}$.
+
+We may also be tasked to find the \eax{measure of reliability}; how reliable our estimate is. One such measure may be $\abs{\hat{\theta}-\theta}<\delta$ where we target to make $\delta$ as small as possible.
+
+\begin{example}
+    Suppose 1000 cola consumers participate in a blind taste test among 2 brands, $A$ and $B$, and are asked their preference. To know which kind is preferred universally, let us begin by asking the following:
+    \begin{itemize}
+        \item Describing the population. In this case, it is all the cola consumers.
+        \item Describing the sample. In this case, it is our chosen 1000 cola consumers.
+        \item The variable of interest. Whether people prefer brand $A$ or brand $B$.
+        \item Our inference. The preference in the sample is extended to all the cola consumers.
+    \end{itemize}
+\end{example}
+
+\section{Type of Data}
+Qualitative data is data with no numerical value representation of it. In reference to the previous example, preference between $A$ and $B$ is a qualitative piece of data. Other such examples include choice of elective courses of a student, the gender of a person, a preference of a cricket team, etc..
+
+Quantitative data on the other hand has a numerical value which interests us in statistics. Examples include the age of a person, the semestral marks of a student, the salary of a worker, the cost of books, etc.. Quantitative data is also divided into two parts, discrete and continuous.
+
+
+\begin{appendices}
+
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\titlespacing*{\chapter}{0pt}{20pt}{40pt}
+
+\chapter{Appendix}
+Extra content goes here.
+
+\printindex
+
+\end{appendices}
+
+\end{document}

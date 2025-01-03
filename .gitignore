@@ -1,0 +1,10 @@
+Test_Folder/
+*.aux
+*.idx
+*.ilg
+*.ind
+*.log
+*.toc
+*.fls
+*.fdb_latexmk
+*.gz

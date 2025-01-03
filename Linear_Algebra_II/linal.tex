@@ -1,0 +1,236 @@
+
+\documentclass[15pt,a4paper]{book}
+
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{graphicx} % For including graphics
+\usepackage{hyperref} % For clickable links
+\usepackage{bookmark} % Better control over bookmarks
+\usepackage{geometry} % Customize page layout
+\usepackage{xcolor} % Colors for text and graphics
+\usepackage{enumitem} % Customizable lists
+\usepackage{fancyhdr} % Header and footer
+\usepackage{titlesec} % Custom section/chapter titles
+\usepackage[toc,page]{appendix} % For the appendix
+\usepackage{longtable} % For tables spanning multiple pages
+\usepackage{mathrsfs} % For script fonts in math mode
+\usepackage{tocloft} % Custom table of contents
+\usepackage{datetime2} % For dates
+\usepackage{caption} % For better control over captions
+\usepackage{float} % Fine control over figure/table placement
+\usepackage{imakeidx} % For index
+
+% Custom Theorem Styles
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\cftchapfont}{\normalfont} % Remove bold for chapter names
+\renewcommand{\cftchappagefont}{\normalfont} % Remove bold for chapter page numbers
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
+\newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+
+
+% Custom Notation List Environment
+\newlist{notationlist}{description}{1}
+\setlist[notationlist]{font=\bfseries,labelsep=1em}
+
+% Geometry Settings
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+}
+
+% Hyperref Colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% Custom Headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark} % Chapter name on top left
+\fancyhead[R]{\rightmark}  % section name on top right
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Making index
+\makeindex[intoc]
+
+% Title Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries \centering}
+  {\chaptername\ \thechapter}{20pt}{\Huge \centering}
+
+\titlespacing*{\chapter}{0pt}{20pt}{100pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{titlepage}
+    \begin{center}
+    \vspace*{\fill}
+    % Title in all caps
+    {\Huge \textbf{\MakeUppercase{Linear Algebra II}}\par}
+
+    \vspace{0.5cm} % Adjust vertical spacing between title and subtitle
+    % Subtitle in normal text, slightly enlarged
+    {\Large Anita Naolekar, notes by Ramdas Singh\par}
+
+    \vspace{0.5cm} % Additional spacing before the author
+    % Author information
+    {\large Second Semester\par}
+    \vspace*{\fill}
+    \end{center}
+\end{titlepage}
+
+\clearpage
+
+\pagenumbering{roman}
+
+\chapter*{List of Symbols}
+\begin{notationlist}
+    \item
+\end{notationlist}
+
+\newpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+
+%%-------------------------------------------------------------------------------------------------
+
+
+\chapter{PERMUTATION GROUPS}
+
+
+\textit{January 3rd.}
+
+Let $S_{n}$ denote the set of all bijections (permutations) on the set $\{1,2,\ldots,n\}$. If $\sigma, \tau \in S_{n}$, let us define $\sigma \tau$ to be the bijection defined as
+\begin{equation}
+    (\sigma \tau)(i) = \sigma(\tau(i)) \forall 1 \leq i \leq n.
+\end{equation}
+
+This gives us a binary operation on $S_{n}$ which is associative, and $S_{n}$ will then contain the identity permutation 1 such that $\sigma 1 = 1 \sigma = \sigma$ for all $\sigma \in S_{n}$. For every such $\sigma$, we can also find a $\sigma^{-1} \in S_{n}$ such that $\sigma \sigma^{-1} = \sigma^{-1}\sigma = 1$. The set $S_{n}$ equipped with this binary operation, thus, forms a group. In this case, we call $S_{n}$ as the \eax{symmetric group} of degree $n$. We now define a cycle in regards to permutations.
+
+\begin{definition}
+    A \eax{cycle} is a a string of positive integers, say $(i_{1},i_{2},\ldots,i_{k})$, which represents the permutation $\sigma \in S_{n}$ (with $k\leq n$) such that $\sigma(i_{j})=i_{j+1}$ for all $1 \leq j \leq k-1$, and $\sigma(i_{k}) = i_{1}$, and fixes all other integers. 
+\end{definition}
+
+We also note that $S_{3}$ is the smallest Abelian group possible, upto isomorphism. $S_{3}$ is one of the only two groups of order 6, and can be written as
+\begin{equation}
+    S_{3} = \{1, \sigma=(1,2,3), \sigma^{2}=(1,3,2), \tau=(1,2),\sigma\tau=(1,3),\tau\sigma=(2,3)\}.
+\end{equation}
+Some other observations arise. We find that $\sigma^{3} = \tau^{2} = 1$, and that $\tau\sigma = \sigma^{2}\tau$. We notice another fact via this $\sigma$;
+
+\begin{remark}
+    A \eax{k-cycle} $\sigma=(i_{1},i_{2},\ldots,i_{k})$ is of order $k$, that is, $\sigma^{k}=1$.
+\end{remark}
+
+\begin{definition}
+    Two cycles in $S_{n}$ are called disjoint if they have no intger in common.
+\end{definition}
+We note that if $\sigma$ and $\tau$ are two disjoint cycles in $S_{n}$ then $\sigma$ and $\tau$ commute, that is, $\sigma \tau = \tau \sigma$.
+
+\begin{proposition}
+    Every $\sigma$ in $S_{n}$ can be written uniquely as a product of disjoint cycles.
+\end{proposition}
+Every cycle can be written as a product of 2-cycles. 2-cycles are called \eax{transpositions}. This can easily be seen as
+\begin{equation}
+    (a_{1},a_{2},\ldots,a_{n})=(a_{1},a_{n})(a_{1},a_{n-1})\cdots(a_{1},a_{3})(a_{1},a_{2}).
+\end{equation}
+
+\section{Even and Odd Permutations}
+Let $x_{1},x_{2},\ldots,x_{n}$ be indeterminates, and let
+\begin{equation}
+    \Delta = \prod_{1 \leq i < j \leq n} (x_{i}-x_{j}).
+\end{equation}
+Let $\sigma \in S_{n}$, and define 
+\begin{equation}
+    \sigma(\Delta) = \prod_{1 \leq i < j \leq n} (x_{\sigma(i)}-x_{\sigma(j)}).
+\end{equation}
+We find that $\sigma(\Delta) = \pm \Delta$. Based on this, we classify permutations as odd or even.
+
+\begin{definition}
+    A permutation $\sigma$ is said to be an \eax{even permutation} if $\sigma(\Delta) = \Delta$, and is said to be an \eax{odd permutation} if $\sigma(\Delta) = -\Delta$. The sign of a permutation $\sigma$, denoted by $\epsilon(\sigma)$, is $+1$ if $\sigma$ is even, and is $-1$ if $\sigma$ is odd. So, $\sigma(\Delta) = \epsilon(\sigma)\Delta$.
+\end{definition}
+
+\begin{proposition}
+    The map $\epsilon: S_{n} \to \{-1,+1\}$, where $\epsilon(\sigma)$ is the sign of $\sigma$, is a homomorphism, that is, $\epsilon(\sigma \tau) = \epsilon(\sigma)\epsilon(\tau)$ for all $\sigma, \tau \in S_{n}$.
+\end{proposition}
+\begin{proof}
+    Start with $\tau(\Delta)$;
+    \begin{equation}
+        \tau(\Delta) = \prod_{1 \leq i < j \leq n} (x_{\tau(i)}-x_{\tau(j)}).
+    \end{equation}
+    Let there be $k$ factors of this polynomial where $\tau(i)>\tau(j)$ with $i<j$. We find that $\tau(\Delta) = (-1)^{k}\Delta$, and so, $\epsilon(\tau) = (-1)^{k}$. Now, $\sigma \tau(\Delta)$ has exactly $k$ factors of the form $x_{\sigma(j)}-x_{\sigma(i)}$, with $j > i$. Bringing out a factor $(-1)^{k}$, we find that $\sigma \tau (\Delta)$ has all factors of the form $x_{\sigma(i)}-x_{\sigma(j)}$, with $j > i$. Thus,
+    \begin{equation}
+        \epsilon(\sigma \tau)\Delta = \sigma \tau (\Delta) = (-1)^{k} \prod_{1 \leq i < j \leq n} (x_{\sigma(i)}-x_{\sigma(j)}) = (-1)^{k} \sigma(\Delta) = (-1)^{k} \epsilon(\sigma) \Delta = \epsilon(\tau) \epsilon(\sigma) \Delta.
+    \end{equation}
+    Cancelling out the $\Delta$, we find $\epsilon(\sigma \tau) = \epsilon(\sigma) \epsilon(\tau)$.
+\end{proof}
+$\epsilon$ is a homomorphism to an Abelian group, so $\epsilon(\sigma \tau) = \epsilon(\sigma) \epsilon(\tau) = \epsilon(\tau) \epsilon(\sigma)$.
+
+\begin{proposition}
+    If $\lambda = (i,j)$ is a transposition, then $\epsilon(\lambda) = -1$.
+\end{proposition}
+\begin{proof}
+    If $\lambda = (1,2) \in S_{n}$, it is easy to show that
+    \begin{equation}
+        \lambda(\Delta) = (x_{1}-x_{2}) \cdots (x_{1}-x_{n}) (x_{2}-x_{3}) \cdots (x_{2}-x_{n}) \cdots = (-1)(\Delta).
+    \end{equation}
+    Now, if $\sigma = (i,j)$, with $(i,j) \neq (1,2)$, then $(i,j) = \lambda (1,2) \lambda$ where $\lambda$ interchanges $1$ and $i$, and interchanges $2$ and $j$. Using that fact that $\epsilon$ is a homomorphism, $\epsilon(\sigma) = -1$.
+\end{proof}
+
+A cycle $\sigma$ of length $k$ is an even permutation if and only if $k$ is odd. This is because it can be decomposed into $k-1$ transpositions, and we would then have $\epsilon(\sigma) = (-1)^{k-1} = 1$ (using the fact that $\epsilon$ is a homomorphism). Some more corollaries of the previous proposition include the fact that $\epsilon$ is a surjective map, and that $\epsilon(\sigma^{-1}) = \epsilon(\sigma)$.
+
+If, for $\sigma \in S_{n}$, $\sigma$ can be decomposed as $\sigma_{1}\sigma_{2} \cdots \sigma_{k}$, where $\sigma_{i}$ is a $m_{i}$-cycle, then $\epsilon(\sigma_{i}) = (-1)^{m_{i}-1}$, and $\epsilon(\sigma) = (-1)^{(\sum m_{i}) - k}$.
+
+\begin{proposition}
+    $\sigma$ is an odd permutation if and only if the number of cycles of even length in its cycle decomposition is odd.
+\end{proposition}
+
+\begin{definition}
+    If $A = (a_{ij})$ is a square matrix of order $n$, then the \eax{determinant} of $A$ is defined as
+    \begin{equation}
+        \det{A} = \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} a_{2 \sigma(2)} \cdots a_{n \sigma(n)}.
+    \end{equation}
+\end{definition}
+Using this definition of the determinant of a square matrix, one may derive the usual determinant properties with ease.
+
+\begin{appendices}
+
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\titlespacing*{\chapter}{0pt}{20pt}{40pt}
+
+\chapter{Appendix}
+Extra content goes here.
+
+\printindex
+
+\end{appendices}
+
+\end{document}

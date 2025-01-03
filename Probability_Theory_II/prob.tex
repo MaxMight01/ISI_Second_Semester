@@ -1,0 +1,146 @@
+
+\documentclass[15pt,a4paper]{book}
+
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{graphicx} % For including graphics
+\usepackage{hyperref} % For clickable links
+\usepackage{bookmark} % Better control over bookmarks
+\usepackage{geometry} % Customize page layout
+\usepackage{xcolor} % Colors for text and graphics
+\usepackage{enumitem} % Customizable lists
+\usepackage{fancyhdr} % Header and footer
+\usepackage{titlesec} % Custom section/chapter titles
+\usepackage[toc,page]{appendix} % For the appendix
+\usepackage{longtable} % For tables spanning multiple pages
+\usepackage{mathrsfs} % For script fonts in math mode
+\usepackage{tocloft} % Custom table of contents
+\usepackage{datetime2} % For dates
+\usepackage{caption} % For better control over captions
+\usepackage{float} % Fine control over figure/table placement
+\usepackage{imakeidx} % For index
+
+% Custom Theorem Styles
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\cftchapfont}{\normalfont} % Remove bold for chapter names
+\renewcommand{\cftchappagefont}{\normalfont} % Remove bold for chapter page numbers
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
+\newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+
+
+% Custom Notation List Environment
+\newlist{notationlist}{description}{1}
+\setlist[notationlist]{font=\bfseries,labelsep=1em}
+
+% Geometry Settings
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+}
+
+% Hyperref Colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% Custom Headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark} % Chapter name on top left
+\fancyhead[R]{\rightmark}  % section name on top right
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Making index
+\makeindex[intoc]
+
+% Title Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries \centering}
+  {\chaptername\ \thechapter}{20pt}{\Huge \centering}
+
+\titlespacing*{\chapter}{0pt}{20pt}{100pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{titlepage}
+    \begin{center}
+    \vspace*{\fill}
+    % Title in all caps
+    {\Huge \textbf{\MakeUppercase{Probability Theory II}}\par}
+
+    \vspace{0.5cm} % Adjust vertical spacing between title and subtitle
+    % Subtitle in normal text, slightly enlarged
+    {\Large Matthew Joseph, notes by Ramdas Singh\par}
+
+    \vspace{0.5cm} % Additional spacing before the author
+    % Author information
+    {\large Second Semester\par}
+    \vspace*{\fill}
+    \end{center}
+\end{titlepage}
+
+\clearpage
+
+\pagenumbering{roman}
+
+\chapter*{List of Symbols}
+\begin{notationlist}
+    \item
+\end{notationlist}
+
+\newpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+
+%%-------------------------------------------------------------------------------------------------
+
+
+\chapter{}
+
+
+\textit{January 3rd.}
+
+
+
+\begin{appendices}
+
+    \titleformat{\chapter}[display]
+      {\normalfont\Large\bfseries}
+      {\chaptername\ \thechapter}{20pt}{\Huge}
+    
+    \titlespacing*{\chapter}{0pt}{20pt}{40pt}
+    
+    \chapter{Appendix}
+    Extra content goes here.
+    
+    \printindex
+    
+    \end{appendices}
+    
+    \end{document}
