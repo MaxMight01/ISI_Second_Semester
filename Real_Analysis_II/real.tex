@@ -1,0 +1,211 @@
+
+\documentclass[15pt,a4paper]{book}
+
+\usepackage{amsmath, amsthm, amssymb} 
+\usepackage{graphicx} % For including graphics
+\usepackage{hyperref} % For clickable links
+\usepackage{bookmark} % Better control over bookmarks
+\usepackage{geometry} % Customize page layout
+\usepackage{xcolor} % Colors for text and graphics
+\usepackage{enumitem} % Customizable lists
+\usepackage{fancyhdr} % Header and footer
+\usepackage{titlesec} % Custom section/chapter titles
+\usepackage[toc,page]{appendix} % For the appendix
+\usepackage{longtable} % For tables spanning multiple pages
+\usepackage{mathrsfs} % For script fonts in math mode
+\usepackage{tocloft} % Custom table of contents
+\usepackage{datetime2} % For dates
+\usepackage{caption} % For better control over captions
+\usepackage{float} % Fine control over figure/table placement
+\usepackage{imakeidx} % For index
+
+% Custom Theorem Styles
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\renewcommand{\cftchapfont}{\normalfont} % Remove bold for chapter names
+\renewcommand{\cftchappagefont}{\normalfont} % Remove bold for chapter page numbers
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
+\newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+\newcommand{\N}{\mathbb{N}} % Natural Numbers
+
+
+% Custom Notation List Environment
+\newlist{notationlist}{description}{1}
+\setlist[notationlist]{font=\bfseries,labelsep=1em}
+
+% Geometry Settings
+\geometry{
+    top=2.5cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+}
+
+% Hyperref Colors
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+% Custom Headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark} % Chapter name on top left
+\fancyhead[R]{\rightmark}  % section name on top right
+\fancyfoot[C]{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Making index
+\makeindex[intoc]
+
+% Title Formatting
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries \centering}
+  {\chaptername\ \thechapter}{20pt}{\Huge \centering}
+
+\titlespacing*{\chapter}{0pt}{20pt}{100pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\begin{titlepage}
+    \begin{center}
+    \vspace*{\fill}
+    % Title in all caps
+    {\Huge \textbf{\MakeUppercase{Real Analysis II}}\par}
+
+    \vspace{0.5cm} % Adjust vertical spacing between title and subtitle
+    % Subtitle in normal text, slightly enlarged
+    {\Large Jaydeb Sarkar, notes by Ramdas Singh\par}
+
+    \vspace{0.5cm} % Additional spacing before the author
+    % Author information
+    {\large Second Semester\par}
+    \vspace*{\fill}
+    \end{center}
+\end{titlepage}
+
+\clearpage
+
+\pagenumbering{roman}
+
+\chapter*{List of Symbols}
+\begin{notationlist}
+    \item $[a,b]$, the set of all real numbers $x$ such that $a \leq x \leq b$.
+    \item $\mathbb{N} = \{1,2,\ldots\}$, the set of all natural numbers.
+    \item $\mathbb{Z}_{+}$, defined as $\mathbb{N} \cup \{0\}$.
+    \item $\mathcal{B}[a,b]$, the set of all boundary functions defined as $\{f:[a,b] \to \mathbb{R}\}$. It is a vector space (also an algebra) over $\mathbb{R}$.
+    \item $\mathcal{P}[a,b]$, the set of all partitions of the set $[a,b]$.
+    \item $I_{j}$, the $j^{\text{th}}$ subinterval of $[a,b]$, controlled by a partition set.
+    \item $L(f,P)$, the lower Riemann sum for a function $f$ and partition $P$.
+    \item $U(f,P)$, the upper Riemann sum for a function $f$ and partition $P$.
+    \item $\int_{\underline{a}}^{b} f$, the lower Riemann integration for a function $f$.
+    \item $\int_{a}^{\overline{b}} f$, the upper Riemann integration for a function $f$.
+    \item $\mathcal{R}[a,b]$, the set of all Riemann integrable functions over the set $[a,b]$.
+\end{notationlist}
+
+\newpage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+
+%%-------------------------------------------------------------------------------------------------
+
+\chapter{THE RIEMANN INTEGRAL}
+
+\section{On The Path of Definitions}
+
+\textit{January 6th.}
+
+\begin{definition}
+    A \eax{partition} of $[a,b]$ are all the points $a=x_{0}<x_{1}<\ldots<x_{n} = b$. These points within are termed \eax{nodes}, and there are $n-1$ of them. The set $I_{j}$, defined by $[x_{j-1},x_{j}]$ denotes the $j^{\text{th}}$ subinterval.
+\end{definition}
+
+\begin{definition}
+    If $I = (a,b), [a,b], (a,b], [b,a)$, then the \eax{length of the interval} $I$ is denoted by $b-a$.
+\end{definition}
+
+Denote by $\mathcal{P}[a,b]$, the set of all partition sets of $[a,b]$. For $P \in \mathcal{P}[a,b]$, with $n-1$ nodes, the length of $[a,b]$ will be $\abs{[a,b]} = \sum_{j=1}^{n} I_{j}$. We also note that for all $P, \tilde{P} \in \mathcal{P}[a,b]$, $P \cup \tilde{P} \in \mathcal{P}[a,b]$. Note that here we consider $n$ to be finite.
+
+\begin{example}
+    The set $\{\frac{1}{n}\}_{n \geq 1} \cup \{0\}$ does not belong to the set of all partitions of the unit interval, $\mathcal{P}[0,1]$.
+\end{example}
+
+Let $f \in \mathcal{B}[a,b]$, and $P \in \mathcal{P}[a,b]$. Suppose $P$ has the nodes $a = x_{0} < x_{1} < \ldots < x_{n} = b$. For all $j = 1, \ldots n$, define $m_{j} = \inf_{x \in I_{j}} f(x)$ and $M_{j} = \sup_{x \in I_{j}} f(x)$. Finally, denote by $m$ the value of $\inf_{x \in [a,b]} f(x)$ and $M$ to be $\sup_{x \in [a,b]} f(x)$. These are all real values.
+
+Note that for all valid $j$, $m \leq m_{j} \leq M_{j} \leq M$ always holds. This must mean that
+\begin{align}
+    m \abs{I_{j}} &\leq m_{j} \abs{I_{j}} \leq M_{j} \abs{I_{j}} \leq M \abs{I_{j}} \notag \\
+    m(b-a) &\leq \sum_{j=1}^{n} m_{j} \abs{I_{j}} \leq \sum_{j=1}^{n} M_{j} \abs{I_{j}} \leq M(b-a).
+\end{align}
+
+\begin{definition}
+    Let $f \in \mathcal{B}[a,b]$. For $P$ $(a = x_{0}, x_{1}, \ldots, x_{n} = b)$ $\in \mathcal{P}[a,b]$, the \eax{lower Riemann sum} and the \eax{upper Riemann sum} are defined as
+    \begin{equation}
+        L(f,P) = \sum_{j=1}^{n} m_{j} \abs{I_{j}} \text{ and } U(f,P) = \sum_{j=1}^{n} M_{j} \abs{I_{j}},
+    \end{equation}
+    respectively. Thus, $m(b-a) \leq L(f,P) \leq U(f,P) \leq M(b-a)$ $\forall$ $P \in \mathcal{P}[a,b]$.
+\end{definition}
+
+\begin{remark}
+    Clearly, $L(f,P), U(f,P) \in \mathbb{R}$ for all paritions $P \in \mathcal{P}[a,b]$ and all boundary functions $f \in \mathcal{B}[a,b]$. In fact, $L(f,P), U(f,P) \in [m(b-a),M(b-a)]$.
+\end{remark}
+
+\begin{definition}
+    For $f \in \mathcal{B}[a,b]$, the \eax{lower Riemann integration} is defined as
+    \begin{equation}
+        \int_{\underline{a}}^{b} f = \sup\{L(f,P) | P \in \mathcal{P}[a,b]\}.
+    \end{equation}
+    Subsequently, the \eax{upper Riemann integration} is defined as
+    \begin{equation}
+        \int_{a}^{\overline{b}} f = \inf\{U(f,P) | P \in \mathcal{P}[a,b]\}.
+    \end{equation}
+\end{definition}
+\begin{remark}
+    Note that both $\int_{\underline{a}}^{b} f$ and $\int_{a}^{\overline{b}} f$ belong to the set $[m(b-a),M(b-a)]$.
+\end{remark}
+
+\begin{definition}
+    A function $f \in \mathcal{B}[a,b]$ is \eax{Riemann integrable} if the lower and the upper Riemann integration are equal, that is, $\int_{\underline{a}}^{b} f = \int_{a}^{\overline{b}} f$. We denote this value by $\int_{a}^{b} f$, and call it the integration of $f$ over $[a,b]$. We then say that $f \in \mathcal{R}[a,b]$.
+\end{definition}
+
+
+
+
+
+\begin{appendices}
+
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\titlespacing*{\chapter}{0pt}{20pt}{40pt}
+
+\chapter{Appendix}
+Extra content goes here.
+
+\printindex
+
+\end{appendices}
+
+\end{document}
