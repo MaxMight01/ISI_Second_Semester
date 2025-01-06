@@ -8,3 +8,4 @@ Test_Folder/
 *.fls
 *.fdb_latexmk
 *.gz
+*.synctex(busy)
