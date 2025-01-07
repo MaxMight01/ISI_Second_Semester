@@ -130,6 +130,7 @@
 
 \textit{January 3rd.}
 
+We first start with some initial statements.
 Let $\Omega$ be a countable state space, and let each $\omega \in \Omega$ have a probabiltiy $P(\omega)$ associated with it.
 
 \begin{lemma}
@@ -243,6 +244,92 @@ We start by stating the weak law of large numbers.
     \end{align}
     The rightmost term here tends to 0 as $n \to \infty$. Now choose $\delta$ to be $\frac{\varepsilon a^{2}}{\abs{6 E{\abs{X_{i}}}}}$, and then choose $N$ to be large enough such that for all $n > N$, both the terms are smaller than $\frac{\varepsilon}{2}$.
 \end{proof}
+\textit{January 7th.}
+
+We now prove the lemma called upon earlier.
+\begin{lemma}
+    If $X$ is a discrete random variable and takes values $y_{1},y_{2},\ldots,y_{k}$, and $E[\abs{X}] < \infty$, then $\lim_{n \to \infty} E[\abs{X}1_{\abs{X} \leq n}] = E[\abs{X}]$.
+\end{lemma}
+\begin{proof}
+    Notice that the terms on the left hand side and right hand side are $\sum_{y_{k} : \abs{y_{k}} \leq n}$ and $\sum_{y_{k}} \abs{y_{k}} P(Y = y_{k})$. The condition for convergence may now be applied.
+\end{proof}
+The above equation, begin inside absolute braces, must imply that the term $E[X \cdot 1_{\abs{X} \leq n}]$ must also absolutely converge to $EX$.
+
+\section{Simple Random Walk}
+Let $X_{1},X_{2},\ldots$ be independent and identically distributed random variables, with $X_{i} = 1$ with probability $\frac{1}{2}$ and $X_{i}=-1$ with probability $\frac{1}{2}$. Now define $S_{0}=0$ and $S_{n} = \sum_{i=1}^{n} X_{i}$. The sequence $(S_{n})_{n \geq 0}$ is a \eax{simple random walk}.
+
+Note that $S_{0}=k_{0}=0,S_{1}=k_{1},\ldots,S_{n}=k_{n}$ can occur if and only if $\abs{k_{i}-k_{i+1}} = 1$ for all $0 \leq i \leq n-1$. The sequence $(k_{n})_{n \geq 0}$ is a \eax{simple path} of the simple random walk. By the event $\{S_{n}=k\}$, we are concerned with the event that the random walk visits $k$ at step $n$. If $(k_{n})_{n \geq 0}$ is given we have $X_{i} = k_{i}-k_{i-1}$. Because the $X_{i}$'s are independent and identically distributed, each event $\{X_{1}=l_{1},X_{2}=l_{2},\ldots,X_{n}=l_{n}\}$, where $l_{i} = \pm 1$, is equally likely with probability $\frac{1}{2^{n}}$. Thus,
+\begin{equation}
+    P(S_{n}=k) = \frac{N_{n}(k)}{2^{n}}
+\end{equation}
+where $N_{n}(k)$ is defined as the number of distinct of path that start at $0$ and end at $k$ at step $n$. We also define $N_{n}^{+}(k)$ to be the number of distinct paths that end at $k$ at step $n$ and stay above the $x$-axis up to time $n-1$. The probability of the corresponding event is
+\begin{equation}
+    P(\{S_{1} > 0, S_{2} > 0, \ldots S_{n-1} > 0, S_{n} = k\}) = \frac{N_{n}^{+}(k)}{2^{n}}.
+\end{equation}
+
+\begin{lemma}
+    Suppose $a,a',b,b'$ are integers, with $0 \leq a < a'$. Then the number of distinct path from $(a,b)$ to $(a',b')$ depends only on $a'-a = n$ and $b'-b = k$, and is given by $\binom{n}{\frac{n+k}{2}}$.
+\end{lemma}
+\begin{proof}
+    Notice that we need $x$ $+1$'s and $y$ $-1$'s to appear, satisfying $x+y = a'-a$ and $x-y = b'-b$. Solving, we get $x = \frac{n+k}{2}$ and $y = \frac{n-k}{2}$. Thus, the number of paths is given by $\binom{n}{\frac{n+k}{2}}$.
+\end{proof}
+Using this lemma, we find that $N_{n}(k) = \binom{n}{\frac{n+k}{2}}$. The following convention is now followed; if $t$ is not an integer, then $\binom{n}{t} = 0$.
+
+\begin{lemma}[The \eax{method of images}]
+    Suppose $a,a',b,b'$ are integers, with $0 \leq a < a'$ and $b,b'>0$. Then the number of distinct paths from $(a,b)$ to $(a',b')$ that intersect the $x$-axis is equal to the number of paths from $(a,-b)$ to $(a',b')$.
+\end{lemma}
+\begin{proof}
+    Consider any path $(b=k_{0},k_{1},\ldots,k_{n-1},k_{n}=b')$, from $(a,b)$ to $(a',b')$, that intersects the $x$-axis. Let $j$ be the smallest index for which $k_{j}=0$. For ease, denote $(a,b)$ by $A$, $(a',b')$ by $A'$, $(a+j,0)$ by $B$, and $(a,-b)$ by $A''$. Reflect the segment from $A$ to $B$ about the $x$-axis to obtain a `mirrored-path' from $A''$ to $B$; $(-b=-k_{0},-k_{1},\ldots,-k_{j-1},k_{j}=0,k_{j+1},\ldots,k_{n}=b')$. There is now a one-to-one correspondence between the paths from $A$ to $A'$ that intersect the $x$-axis, and the paths from $A''$ to $A'$.
+\end{proof}
+We can now easily compute $N_{n}^{+}(k)$; it simply the number of paths from $(1,1)$ to $(n,k)$ that do not intersect the $x$-axis.
+\begin{theorem}[\eax{Ballot theorem}]
+    The number of paths that progress from $(0,0)$ to $(n,k)$ through strictly positive values is given by $N_{n}^{+}(k) = \frac{k}{n}N_{n}(k)$.
+\end{theorem}
+\begin{proof}
+    We have
+    \begin{align}
+        N_{n}^{+}(k) &= \text{ number of paths from $(1,1)$ to $(n,k)$} - \text{ number of such paths that intersect the $x$-axis} \notag \\
+        &= N_{n-1}(k-1) - N_{n-1}(k+1) \notag \\
+        &= \binom{n-1}{\frac{n+k}{2}-1} - \binom{n-1}{\frac{n+k}{2}} = \frac{k}{n}\binom{n}{\frac{n+k}{2}} = \frac{k}{n}N_{n}(k).
+    \end{align}
+\end{proof}
+Suppose $n = 2\nu$. Define $u_{2\nu}$ to be $P(S_{2\nu}=0) = \frac{\binom{2\nu}{\nu}}{2^{n}}$. The question we ask is to compute the probability that the first return to 0, if at all, occurs after step $n$. It can be found out as
+\begin{align}
+    P(\text{first return to $0$...}) &= P(S_{1}\neq 0, S_{2} \neq 0, \ldots, S_{2\nu} \neq 0) \\
+    &= P(S_{1}>0,\ldots,S_{2\nu}>0) + P(S_{1}<0,\ldots,S_{2\nu}<0) \notag \\
+    &= 2P(S_{1}>0,\ldots,S_{2\nu}>0) \notag \\
+    &= 2 \sum_{k \text{ even}, k>0} P(S_{1}>0,\ldots,S_{2\nu-1}>0,S_{2\nu}=k) \notag \\
+    &= \frac{2}{2^{2\nu}} \sum_{k \text{ even}, k>0} N_{2\nu}^{+}(k) \notag \\
+    &= \frac{2}{2^{2\nu}} \sum_{k \text{ even}, k>0} N_{2\nu-1}(k-1)-N_{2\nu-1}(k+1) \notag \\
+    &= \frac{2}{2^{2\nu}} N_{2\nu-1}(1) = u_{2\nu}.
+\end{align}
+We state this down as a lemma.
+\begin{lemma}[\eax{Basic lemma}]
+    For $n$ even, the probability that the first return to 0, if at all, occurs after step $n$ is the same as the probability that the location at step $n$ is 0. For $n$ odd, it is the probability that the location at step $n-1$ is 0.
+\end{lemma}
+We ask another question; for a fixed $n$, where does the random walk achieve its first maximum upto time $n$? For this, denote by $M_{n}$ the index $m$ at which the walk $S_{0},S_{1},\ldots,S_{n}$, over $n$ steps, achieves its maximum for the first time.
+
+For $0<m<n$, $M_{n}=m$ if and only if $S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}$ and $S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n}$. Notice that the first of these two conditions depends only on $X_{1},X_{2},\ldots,X_{m}$, and the second condition depends only on $X_{m+1},X_{m+2},\ldots,X_{n}$. So, $P(M_{n}=m) = P(S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}) \cdot P(S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n})$.
+
+The key idea here is to consider the \eax{reversed walk}; define a new walk with $X_{1}'=X_{m},\; X_{2}'=X_{m-1},\ldots,X_{m}'=X_{1}$. Also define $S_{k}' = X_{1}' + \ldots + X_{k}'$. From here, we can deduce that $S_{m}>S_{m-i}$ is true if and only if $X_{m}+\ldots+X_{m-i}$ is true, which is true if and only if $S_{i}'>0$ is true. So, $P(S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}) = P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$. If we now define $S_{k}''=X_{m+1}+\ldots+X_{m+k}$, we have
+\begin{align*}
+    P(S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n}) &= P(X_{m+1}\leq 0,\; X_{m+1}+X_{m+2}\leq 0, \ldots, X_{m+1}+\ldots+X_{n}\leq 0) \\
+    &= P(S_{1}''\leq 0,\; S_{2}''\leq 0,\ldots,S_{n-m}''\leq 0) \\
+    &= P(S_{1}''\geq 0,\; S_{2}''\geq 0,\ldots,S_{n-m}''\geq 0)
+\end{align*}
+The first of the terms discussed, $P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$, can be computed for $m = 2\nu, 2\nu+1$; it is simply $\frac{1}{2}u_{2\nu}$. For the latter of these terms, we introduce a new random variable $\tilde{X}$ which has the same distribution as the $X_{i}$'s and is independent. Also define $\tilde{S_{i}}$ to be $\tilde{X}+X_{1}+\ldots+X_{i-1}$ and $\tilde{S_{0}}$ to be $0$. We then have
+\begin{align}
+    \frac{1}{2}P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) &= P(\tilde{X}=1) \cdot P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \\
+    &= P(\tilde{X}=1,S_{0} \geq 0, S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \\
+    &= P(\tilde{S_{1}}=1,\tilde{S_{2}}>0,\ldots,\tilde{S_{n-m+1}}>0) \\
+    &= P(S_{1}>0,S_{2}>0,\ldots,S_{n-m+1}>0).
+\end{align}
+Thus, we get
+\begin{equation}
+    P(M_{n}=m) = \frac{1}{2} u_{2k}u_{2\nu-2k}
+\end{equation}
+where $m$ is of the form $2k$ or $2k+1$, and $n$ is of the form $2\nu$.
+
 
 
 
