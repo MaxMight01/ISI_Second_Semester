@@ -210,13 +210,100 @@ If, for $\sigma \in S_{n}$, $\sigma$ can be decomposed as $\sigma_{1}\sigma_{2} 
     $\sigma$ is an odd permutation if and only if the number of cycles of even length in its cycle decomposition is odd.
 \end{proposition}
 
+\section{The Determinant}
+
 \begin{definition}
     If $A = (a_{ij})$ is a square matrix of order $n$, then the \eax{determinant} of $A$ is defined as
     \begin{equation}
         \det{A} = \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} a_{2 \sigma(2)} \cdots a_{n \sigma(n)}.
     \end{equation}
 \end{definition}
-Using this definition of the determinant of a square matrix, one may derive the usual determinant properties with ease.
+Using this definition of the determinant of a square matrix, one may derive the usual determinant properties with ease.\\ \\
+\textit{January 7th.}
+
+\begin{remark}
+    The following properties may be inferred:
+    \begin{itemize}
+        \item If $A$ contains a row of zeroes, or a column of zeroes, then $\det{A} = 0$.
+        \item $\det{I_{n}} = 1$.
+        \item The determinant of a diagonal matrix is the product of the diagonal elements. This is because if $\sigma \in S_{N}$ is not the identity permutation, then there exists at least one element in the corresponding term where $i \neq \sigma(i)$, and $a_{i \sigma(i)}$ makes the term zero. For the identity transformation, it contains only those elements of the form $a_{ii}$.
+    \end{itemize}
+\end{remark}
+
+Other non-trivial properties may also be shown with ease.
+
+\begin{corollary}
+    If $A$ is an upper triangular matrix, then $\det{A}$ is the product of the diagonal entries.
+\end{corollary}
+\begin{proof}
+    If $a_{1 \sigma(1)} \cdots a_{n \sigma(n)} \neq 0$, then $a_{n \sigma(n)} \neq 0$, that is, $\sigma(n) = n$, as $a_{ni} = 0 \; \forall \; i < n$. Again, $\sigma_{(n-1) \sigma(n-1)} \neq 0$ leads us to conclude that $\sigma(n-1) = n-1$ as $\sigma$ is a bijection and has to lead to a non-zero element. By similar logic, $\sigma(i) = i$ for all valid $i$. So, $\sigma$ is the identity permutation.
+\end{proof}
+\begin{corollary}
+    If $A$ is a lower triangular matrix, then $\det{A}$ is the product of the diagonal entries.
+\end{corollary}
+\begin{proof}
+    The proof of this is similar to the previous proof if we consider that the determinant of the tranpose of a matrix is equal to the determinant of said matrix.
+\end{proof}
+
+\begin{theorem}
+    The determinant of a matrix is equal to the determinant of its transpose, that is, $\det{A} = \det{A^{t}}$ for a square matrix $A$.
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+
+\begin{proposition}
+    Let $B$ be obtained from $A$ by multiplying a row (or column) of $A$ by a non-zero scalar, $\alpha$. Then, $\det{B} = \alpha \det{A}$.
+\end{proposition}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{proposition}
+    If $B$ is obtained from $A$ by interchanging any two rows (or columns) of $A$, then $\det{B} = -\det{A}$.
+\end{proposition}
+\begin{proof}
+    Let $B$ be obtained from $A$ by interchanging the rows $k$ and $l$, with $k < l$. We then have
+    \begin{align}
+        \det{B} &= \sum_{\sigma \in S_{n}} \epsilon(\sigma) b_{1 \sigma(1)} b_{2 \sigma(2)} \cdots b_{n \sigma(n)} \notag \\
+        &= \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots a_{(k-1) \sigma(k-1)} a_{l \sigma(k)} \sigma_{(k+1) \sigma(k+1)} \cdots a_{k \sigma(l)} \cdots a_{n \sigma(n)}.
+    \end{align}
+    As $\sigma$ runs through all elements in $S_{n}$, $\tau = \sigma(k, l)$ also runs through all $S_{n}$. Hence, via $\epsilon(\tau) = -\epsilon(\sigma)$, the equation now looks like
+    \begin{align}
+        \det{B} &= -\sum_{\tau \in S_{n}} \epsilon(\tau) a_{1 \tau(1)} \cdots a_{l \tau(l)} \cdots a_{k \tau(k)} \cdots a_{n \tau(n)} = -\det{A}.
+    \end{align}
+\end{proof}
+
+\begin{proposition}
+    If two rows (or columns) of $A$ are equal, then $\det{A} = 0$.
+\end{proposition}
+\begin{proof}
+    Suppose that the rows $k$ and $l$ of $A$ are equal. Interchanging will alter the determinant by $-1$, so $\det{A} = -\det{A} \implies 2 \det{A} = 0 \implies \det{A} = 0$ if $2 \neq 0$ in the field $F$ from where the elements of $A$ arrive.
+
+    If $2 = 0$ in $F$, that is, $F$ is of characteristic $2$, we pair the $\sigma$ term in the expression of $\det {A}$ with the term $\tau$ where $\tau = \sigma (k, l)$. The terms corresponding to $\sigma$ and $\tau$ in the expressions are the same, differing in only the sign. Hence, $\det{A} = 0$.
+\end{proof}
+
+\begin{theorem}
+    For a fixed $k$, let the row $k$ of $A$ be the sum of the two row vectors $X^{t}$ and $Y^{t}$, that is, $a_{kj} = x_{j} + y_{j}$ for all $1 \leq j \leq n$. Then $\det{A} = \det{B} + \det{C}$ where $B$ is obtained from $A$ by replacing the row $k$ of $A$ by the row vector $X^{t}$, and $C$ is obtained from $A$ by replacing the row $k$ of $A$ by the row vector $Y^{t}$.
+\end{theorem}
+\begin{proof}
+    We utilize the fact that $a_{kj} = x_{j} + y_{j}$. We have
+    \begin{align}
+        \det{A} &= \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots a_{k \sigma(k)} \cdots a_{n \sigma(n)} \notag \\
+        &= \left( \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots x_{\sigma(k)} \cdots a_{n \sigma(n)} \right) + \left( \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots y_{\sigma(k)} \cdots a_{n \sigma(n)} \right) \notag \\
+        &= \det{B} + \det{C}. \notag
+    \end{align}
+\end{proof}
+
+\begin{proposition}
+    If a scalar multiple of a row (or column) is added to a row (or column) of a matrix, the determinant remains unchanged.
+\end{proposition}
+\begin{proof}
+    The proof follows immediately from the previously proved properties.
+\end{proof}
+
+
 
 \begin{appendices}
 
