@@ -40,6 +40,7 @@
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cR}{\mathcal{R}}
 \newcommand{\cB}{\mathcal{B}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 
 % Custom Notation List Environment
@@ -193,9 +194,119 @@ Note that for all valid $j$, $m \leq m_{j} \leq M_{j} \leq M$ always holds. This
 \begin{definition}
     A function $f \in \mathcal{B}[a,b]$ is \eax{Riemann integrable} if the lower and the upper Riemann integration are equal, that is, $\int_{\underline{a}}^{b} f = \int_{a}^{\overline{b}} f$. We denote this value by $\int_{a}^{b} f$, and call it the integration of $f$ over $[a,b]$. We then say that $f \in \mathcal{R}[a,b]$.
 \end{definition}
+\textit{January 8th.}
+\begin{example}
+    Note that $\cR [a,b] \subseteq \cB [a,b]$. In fact, it is a proper subset; for there exists the \eax{Dirichlet function} $f:[0,1] \to \R$ defined by
+    \begin{equation}
+        f(x) = \begin{cases}
+            1 &\text{ if } x \in \mathbb{Q} \cap [0,1],\\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation}
+    Clearly, $f$ is a boundary function but not a continuous one. Now pick a partition $P$ with $x_{0}=0<x_{1}<\ldots<x_{n}=1$. Now, $m_{j}=0 \; \forall \; \implies L(f,P) = 0 \; \forall \; P \implies \int_{\underline{0}}^{1} f = 0$. If we consider that $M_{j}$ is always 1, we get $\int_{0}^{\overline{1}} f = 1$. $f$ does not belong to the set of Riemann integrable functions.
+\end{example}
+\begin{example}
+    We show that $\cR [a,b]$ is not empty. Simply pick $f:[a,b] \to \R$ defined by $f(x) = c$ for all valid $x$. For every partition of this interval, we $m_{j} = M_{j} = c$ for all $j$. Finally, after computing the lower Riemann and upper Riemann sums, we get $\int_{\underline{a}}^{b} f = \int_{a}^{\overline{b}} f = c(b-a)$.
+\end{example}
+\begin{example}
+    There exists a function $f \in \cB [a,b]$ such that $\abs{f} \in \cR [a,b]$ but $f \notin \cR [a,b]$. Indeed, simply pick a modification of the Dirichlet function defined as
+    \begin{equation}
+        f(x) = \begin{cases}
+            -1 &\text{ if } x \in \mathbb{Q} \cap [a,b],\\
+            1 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation}
+\end{example}
 
+\begin{definition}
+    Let $P, \tilde{P} \in \cP [a,b]$. We say $\tilde{P} \supset P$, or $\tilde{P}$ is a \eax{refinement} of $P$ if the nodes of $P$ are a subset of the nodes of $\tilde{P}$.
+\end{definition}
+\begin{example}
+    For all $P,\tilde{P} \in \cP [a,b]$, we have $P \cup \tilde{P} \supset P, \tilde{P}$.
+\end{example}
+\begin{proposition}
+    Let $f \in \cB [a,b]$, and $P, \tilde{P} \in cP [a,b]$. Suppose $\tilde{P} \supset P$. Then
+    \begin{equation}
+        L(f,P) \leq L(f,\tilde{P}) \leq U(f,\tilde{P}) \leq U(f,P).
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Note that it is sufficient to prove the first inequality; the second one is already true and the third one is analagous to the first one. Set $\tilde{P} = P \cup \{\tilde{x}\}$ with $\tilde{x} \notin P$, and set $P$ as $a = x_{0} < x_{1} < \ldots < x_{n} = b$. As $\tilde{x}$ is not part of $P$, there must exist some $j \in \{1, \ldots, n\}$ such that $\tilde{x} \in (x_{j-1},x_{j})$.
 
+    For this $j$, let $\tilde{m}_{j-1} = \inf_{[x_{j-1},\tilde{x}]} f$ and let $\tilde{m}_{j} = \inf_{[\tilde{x},x_{j}]} f$. Therefore, we shall have
+    \begin{align}
+        L(f,\tilde{P}) - L(f,P) &= \tilde{m}_{j-1}(\tilde{x}-x_{j-1}) + \tilde{m}_{j}(x_{j}-\tilde{x}) - m_{j}(x_{j}-x_{j-1}) \notag \\
+        &= \tilde{m}_{j-1}(\tilde{x}-x_{j-1}) + \tilde{m}_{j}(x_{j}-\tilde{x}) - m_{j}(x_{j}-\tilde{x}) - m_{j}(\tilde{x}-x_{j-1}) \notag \\
+        &= (\tilde{m}_{j}-m_{j})(x_{j}-\tilde{x}) + (\tilde{m}_{j-1} - m_{j})(\tilde{x}-x_{j-1}) \geq 0 \notag \\
+        \implies L(f,\tilde{P}) - L(f,P) &\geq 0.
+    \end{align}
+    Induction may now be applied to make any refinement $\tilde{P}$ of $P$. A similar logic applies to the upper Riemann sums.
+\end{proof}
+\begin{corollary}
+    Let $f \in \cB [a,b]$. Then, for all $P,Q \in \cP [a,b]$, $L(f,P) \leq U(f,Q)$.
+\end{corollary}
+\begin{proof}
+    Choose $R = P \cup Q$ to be a refinement of both $P$ and $Q$. Applying the previous proposition, we simply get $L(f,P) \leq L(f,R) \leq U(f,R) \leq U(f,Q)$.
+\end{proof}
+\begin{corollary}
+    For all $f \in \cB [a,b]$, $\int_{\underline{a}}^{b} f \leq \int_{a}^{\overline{b}} f$ is always true.
+\end{corollary}
+\begin{proof}
+    The lower Riemann intergral is the supremum of all the lower Riemann sums, so it must be the lowest upper bound, and, thus, has to be lesser than the upper Riemann sums. Similarly, the upper Riemann integral is greater than the lower Riemann sums. Consequently, we get the desired inequality.
+\end{proof}
+\begin{theorem}
+    Let $f \in \cB [a,b]$. Then, for $f$ to be Riemann intergrable, the only neccessary and sufficient condition is $\int_{\underline{a}}^{b} f \geq \int_{a}^{\overline{b}} f$.
+\end{theorem}
+\begin{proof}
+    If the condition is satisfied, then we must conclude that the Riemann integrals have to be equal. The converse follows the opposite argument.
+\end{proof}
+\begin{theorem}
+    Let $f \in \cB [a,b]$. Then $f \in \cR [a,b]$ if and only if for every $\varepsilon > 0$, there exists a $P \in \cP [a,b]$ such that $U(f,P) - L(f,P) < \varepsilon$.
+\end{theorem}
+\begin{proof}
+    We first prove the converse; assume that for every $\varepsilon > 0$, there exists a $P$ satisfying $U(f,P) - L(f,P) < \varepsilon$. Now,
+    \begin{align}
+        L(f,P) \leq \underline{\int} f \leq \overline{\int} f \leq U(f,P) < \varepsilon + L(f,P) \leq \varepsilon + \underline{\int} f \notag \\
+        \implies \overline{\int} f - \underline{\int} f < \varepsilon \; \forall \; \varepsilon < 0\\
+        \implies \overline{\int} f = \underline{\int} f.
+    \end{align}
+    To show that every Riemann integrable function satisfies this property, let $f \in \cR [a,b]$ and $\varepsilon > 0$. The Riemann integrals are a supremum and an infimum, so there must exist a $P_{1} \in \cP [a,b]$ such that $L(f,P_{1}) > \int f - \frac{\varepsilon}{2}$ and a $P_{2} \in \cP [a,b]$ such that $U(f,P_{1}) < \int f + \frac{\varepsilon}{2}$. Now choose $P$ to be $P_{1} \cup P_{2}$, a refinement of both $P_{1}$ and $P_{2}$. Therefore,
+    \begin{align}
+        U(f,P) \leq U(f,P_{2}) < \int f + \frac{\varepsilon}{2} < (L(f,P_{1}) + \frac{\varepsilon}{2}) + \frac{\varepsilon}{2} \leq L(f,P) + \varepsilon \notag \\
+        \implies U(f,P) - L(f,P) < \varepsilon.
+    \end{align}
+\end{proof}
 
+\begin{definition}
+    Let $P$ be a partition with $a=x_{0} < x_{1} < \ldots < x_{n} = b$. We define the \eax{norm} of $P$, or the \eax{mesh} of $P$, as $\norm{P} = \max_{j}\{x_{j}-x_{j-1}\}$.
+\end{definition}
+
+\begin{theorem}[\eax{Darboux's theorem}]
+    Let $f \in \cB [a,b]$. Then $f \in \cR [a,b]$ if and only if for every $\varepsilon > 0$, there exists a $\delta > 0$ such that $U(f,P)-L(f,P) < \varepsilon$ for all $P \in \cP [a,b]$ with $\norm{P} < \delta$. 
+\end{theorem}
+\begin{remark}
+    To prove this, we define $\eta: \cP [a,b] \to \R_{\geq 0}$ by $\eta(P) = U(f,P) - L(f,P)$ for all $P \in \cP [a,b]$.
+\end{remark}
+\begin{proof}
+    The proof of the converse is trivial and follows the same reasoning as before. To show that every Riemann integrable function satisfies this property, let $f \in \cR [a,b]$ and $\varepsilon > 0$. There exists a $\tilde{P} \in \cP [a,b]$ such that $U(f,\tilde{P}) - L(f,\tilde{P}) < \frac{\varepsilon}{2}$. Denote the number of nodes in $\tilde{P}$ by $p$, and set $\delta = \frac{\varepsilon}{8pM}$, where $M$ is the supremum of $f$ over $[a,b]$. Pick $P \in \cP [a,b]$ and assume that $\norm{P} < \delta$. Now set $\hat{P} = P \cup \tilde{P}$; $\hat{P}$ has at most $p$ points that are not in $P$.
+
+    For now, assume that $p = 1$. Then, $\tilde{P} = P \cup \{\tilde{x}\}$ with $\tilde{x} \notin P$. Thus, with variables defined as before,
+    \begin{equation}
+        L(f,\hat{P}) - L(f,P) = (\tilde{m}_{j}-m_{j})(x_{j}-\tilde{x}) + (\tilde{m}_{j-1} - m_{j})(\tilde{x}-x_{j-1}).
+    \end{equation}
+    Notice that $(\tilde{m}_{j}-m_{j}), (\tilde{m}_{j-1} - m_{j}) < 2M$ and $(x_{j}-\tilde{x}), (\tilde{x}-x_{j-1}) < \delta$. In fact, in general, for an arbitrary $p$, we have
+    \begin{equation}
+        L(f,\hat{P}) - L(f,P) < 4pM\delta = \frac{\varepsilon}{2}.
+    \end{equation}
+    A similar story unfolds for the upper sums,
+    \begin{equation}
+        U(f,P) - U(f, \hat{P}) < \frac{\varepsilon}{2}.
+    \end{equation}
+    Together, the equations combine to form
+    \begin{align}
+        U(f,P) - L(f,P) < \varepsilon + U(f,\hat{P})-L(f,\hat{P}) < \varepsilon + U(f,\tilde{P})-L(f,\tilde{P}) < 2\varepsilon.
+    \end{align}
+\end{proof}
 
 
 \begin{appendices}
