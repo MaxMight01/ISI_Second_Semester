@@ -5,7 +5,7 @@ Welcome to the **Second Semester** repository. This repo contains comprehensive 
 ## 📚 Subjects
 
 1. **Introduction to Statistics and Computation with Data**
-   - Files: `stat.tex`, `stat.pdf`
+   - Files: `stat.tex`, `stat.pdf`; also contains `.R` files for R studio lectures.
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/SCD.html)
 
 2. **Probability Theory II**
@@ -17,7 +17,7 @@ Welcome to the **Second Semester** repository. This repo contains comprehensive 
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/RA2.html)
 
 4. **Numerical Computing**
-   - Files: `.ipynb`; subfolders are named after the dates of the classes.
+   - Files: `.ipynb`; subfolders are named after the dates of the lectures.
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/NC.html)
 
 5. **Linear Algebra II**
