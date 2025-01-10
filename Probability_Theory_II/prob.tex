@@ -319,17 +319,108 @@ The key idea here is to consider the \eax{reversed walk}; define a new walk with
 \end{align*}
 The first of the terms discussed, $P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$, can be computed for $m = 2\nu, 2\nu+1$; it is simply $\frac{1}{2}u_{2\nu}$. For the latter of these terms, we introduce a new random variable $\tilde{X}$ which has the same distribution as the $X_{i}$'s and is independent. Also define $\tilde{S_{i}}$ to be $\tilde{X}+X_{1}+\ldots+X_{i-1}$ and $\tilde{S_{0}}$ to be $0$. We then have
 \begin{align}
-    \frac{1}{2}P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) &= P(\tilde{X}=1) \cdot P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \\
-    &= P(\tilde{X}=1,S_{0} \geq 0, S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \\
-    &= P(\tilde{S_{1}}=1,\tilde{S_{2}}>0,\ldots,\tilde{S_{n-m+1}}>0) \\
+    \frac{1}{2}P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) &= P(\tilde{X}=1) \cdot P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \notag\\
+    &= P(\tilde{X}=1,S_{0} \geq 0, S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \notag\\
+    &= P(\tilde{S_{1}}=1,\tilde{S_{2}}>0,\ldots,\tilde{S_{n-m+1}}>0) \notag\\
     &= P(S_{1}>0,S_{2}>0,\ldots,S_{n-m+1}>0).
 \end{align}
 Thus, we get
 \begin{equation}
     P(M_{n}=m) = \frac{1}{2} u_{2k}u_{2\nu-2k}
 \end{equation}
-where $m$ is of the form $2k$ or $2k+1$, and $n$ is of the form $2\nu$.
+where $m$ is of the form $2k$ or $2k+1$, and $n$ is of the form $2\nu$, with $1 < k < \nu$.\\ \\
+\textit{January 10th.}
 
+Plugging in $m = 0$, we get $P(M_{n}=0) = P(S_{1} \leq 0, \ldots, S_{2 \nu} \leq 0) = \frac{1}{2}u_{2\nu}$. For $m=n$, we have $P(M_{n}=n) = P(S_{1}\leq 0, \ldots, S_{2\nu} \leq 0) = \frac{1}{2}u_{2 \nu}$. Let us first compute $u_{2k}$.
+\begin{align}
+    u_{2k} &= P(2k=0) = \frac{\binom{2k}{k}}{2^{2k}} = \frac{(2k)!}{(k!)^{2}2^{2k}} \notag \\
+    &\sim \frac{(2k)^{2k+\frac{1}{2}} e^{-2k} \sqrt{2\pi}}{(\sqrt{2pi} k^{k+\frac{1}{2}} e^{-k})^{2}2^{2k}} = \frac{1}{\sqrt{\pi k}}.
+\end{align}
+For $0 < a < b < 1$, we have
+\begin{align}
+    P(an \leq M_{n} \leq bn) &= \sum_{m = an}^{bn} P(M_{n}=m) = \sum_{k=a\nu}^{b\nu} u_{2k}u_{2\nu-2k} \notag \\
+    &\sim \sum_{k=a\nu}^{b\nu}\frac{1}{\sqrt{\pi k}}\frac{1}{\sqrt{\pi (\nu-k)}} = \sum_{k=a\nu}^{b\nu} \frac{1}{\nu \sqrt{\pi \frac{k}{\nu} \sqrt{\pi (1-\frac{k}{\nu})}}} \notag \\
+    &\to \frac{1}{\pi} \int_{a}^{b} \frac{dx}{\sqrt{x(1-x)}} = \frac{2}{\pi} (\arcsin{\sqrt{b}} - \arcsin{\sqrt{a}}).
+\end{align}
+In fact, this is the \eax{arcsin law for maxima}; for $0 \leq t \leq 1$, we have
+\begin{equation}
+    \lim_{n \to \infty} P\left( \frac{M_{n}}{n} \leq t\right) = \frac{2}{\pi} \arcsin{\sqrt{t}}.
+\end{equation}
+If we look at this as a cumulative density funtion, the probability density function becomes $\frac{d}{dt} \frac{2}{\pi} \arcsin{\sqrt{t}} = \frac{1}{\pi \sqrt{t(1-t)}}$.
+
+We are now interested in $\tilde{M}_{n}$, the last time wen maximum up to time $n$ is attained. We can just look at the walk backwards again; in this case, we get
+\begin{equation}
+    P(\frac{\tilde{M}_{n}}{n}) = P\left(\frac{n-\tilde{M}_{n}}{n} \leq t\right) \to \frac{2}{\pi} \arcsin{\sqrt{t}}.
+\end{equation}
+
+We now ask the probability that the random walk of $n = 2\nu$ steps last visit $0$ at time $2k$. We denote by $K_{n}$ the location of the last return to $0$ in a walk of $n$ steps. Now look at
+\begin{align}
+    \alpha_{2k,2\nu} &= P(K_{n}=2k) = P(S_{2k}=0,S_{2k+1}\neq 0,\ldots,S_{2\nu}\neq 0) \notag
+    \\ &= P(S_{2k}=0) \cdot P(X_{2k+1}\neq 0, \ldots, X_{2k+1}+\ldots+X_{2\nu} \neq 0) \notag \\
+    &= P(S_{2k}=0) \cdot P(S_{1} \neq 0, \ldots, S_{2\nu-2k} \neq 0) = u_{2k}u_{2\nu-2k}.
+\end{align}
+We can also state an \eax{arcsin law for last visit} here; for $0 < t < 1$
+\begin{equation}
+    \lim_{n \to \infty} P(K_{n} \leq tn) = \frac{2}{\pi} \arcsin{\sqrt{t}}.
+\end{equation}
+If we set the an additional limit that says $t$ tends to $0$, replacing $t$ by an arbitrary $\varepsilon > 0$, we have
+\begin{equation}
+    \lim_{n \to \infty} P(K_{n}=0) = 0.
+\end{equation}
+Given enough time, a simple random walk must return to 0.
+
+Denote by $f_{2n}$ the probability that the first return to 0 occurs at time $2n$.
+\begin{align}
+    f_{2n} &= P(S_{1} \neq 0, \ldots, S_{2n-1} \neq 0, S_{2n} = 0) \notag \notag \\
+    &= P(S_{1} \neq 0, \ldots, S_{2n-1} \neq 0) - P(S_{1} \neq 0, \ldots, S_{2n} \neq 0) \notag \\
+    &= P(S_{1} \neq 0, \ldots, S_{2n-2} \neq 0) - P(S_{1} \neq 0, \ldots, S_{2n} \neq 0) \notag \\
+    &= u_{2n-2} - u_{2n} = \frac{1}{2n-1} u_{2n}.
+\end{align}
+\begin{lemma}
+    With the usual notation,
+    \begin{equation}
+        u_{2n} = f_{2}u_{2n-2} + f_{4}u_{2n-4} + \ldots + f_{2n} u_{0}.
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    We have
+    \begin{align}
+        P(S_{2n} = 0) &= \sum_{k=1}^{n} P(S_{2n}=0, \text{ first return at $2k$}) \notag\\
+        &= \sum_{k=1}^{n} P(\text{first return at 2k}) \cdot P(S_{2n} = 0 \mid \text{first return at 2k}) \notag\\
+        \implies P(S_{n} = 0) &= \sum_{k=1}^{n} f_{2k} u_{2n-2k}.
+    \end{align}
+\end{proof}
+\begin{theorem}
+    The probability that in the time interval $0$ to $n=2\nu$, the random walk spends $2k$ amount of time on the positive side and $2\nu-2k$ amount of time on the negative side is $\alpha_{2k,2\nu}$.
+\end{theorem}
+\begin{corollary}
+    For $0 < t < 1$,
+    \begin{equation}
+        P(\text{random walk spends less than $tn$ time on positive side}) \to \frac{2}{\pi} \arcsin{\sqrt{t}}.
+    \end{equation}
+\end{corollary}
+\begin{proof}
+    This is the proof of the theorem. We introduce $b_{2k,2\nu}$; it is defined as the probability that the random walk of length $2\nu$ and $2k$ sides above the $x$-axis. We need to show that $b_{2k,2\nu} = \alpha_{2k,2\nu}$. We have
+    \begin{align}
+        b_{2\nu,2\nu} &= P(S_{1} \geq 0, S_{2} \geq 0, \ldots, S_{2\nu} \geq 0) = u_{2\nu}, \\
+        b_{0,2\nu} &= P(S_{1} \leq 0, \ldots, S_{2\nu} \leq 0) = u_{2\nu}.
+    \end{align}
+    We are left to prove it for $1 \leq k \leq \nu-1$. Assume that exactly $2k$ out of $2\nu$ time are spent above the $x$-axis, with $1 \leq k \leq \nu-1$. Suppose first return to 0 occurs at time $2r < 2\nu$. We deal in cases.
+    \begin{itemize}
+        \item Case I: $2r$ time units upto first return are on the positive side. Then, $r \leq k \leq \nu-1$. The time from $2r$ to $2\nu$ has to be above the $x$-axis, $2k-2\nu$ time. The number of such paths is $(\frac{1}{2}2^{2r}f_{2r}) (2^{2\nu-2r} b_{2k-2r,2\nu-2r})$.
+        \item The $2r$ time units upto the first return are on the negative side. The nubmer of such paths is $(\frac{1}{2}2^{2r}f_{2r})(2^{2\nu-2r}b_{2k,2\nu-2r})$. Also, $\nu-r \geq k$.
+    \end{itemize}
+    Thus, we have
+    \begin{equation}
+        b_{2k,2\nu} = \frac{1}{2}\sum_{r=1}^{k} f_{2r} b_{2k-2r,2\nu-2r} + \frac{1}{2} \sum_{r=1}^{\nu-k} f_{2r} b_{2k,2\nu-2r}.
+    \end{equation}
+    We now proceed with induction on $\nu$. We have already shown this for $\nu = 1$; assume that this is true for $\nu \leq V - 1$. By induction,
+    \begin{align}
+        b_{2k,2V} &= \frac{1}{2}\sum_{r=1}^{k} f_{2r} \alpha_{2k-2r,2V-2r} + \frac{1}{2} \sum_{r=1}^{V - k} f_{2r} \alpha_{2k,2V-2r} \notag \\
+        &= \frac{1}{2} u_{2V-2k} \sum_{r=1}^{k} f_{2r} u_{2k-2r} + \frac{1}{2} u_{2k} \sum_{r=1}^{V-k} f_{2r} u_{2V-2k-2r} \notag \\
+        &= u_{2k}u_{2\nu-2k} = \alpha_{2k,2\nu}.
+    \end{align}
+\end{proof}
 
 
 

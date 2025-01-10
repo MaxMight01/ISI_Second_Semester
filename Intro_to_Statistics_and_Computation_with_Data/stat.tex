@@ -17,6 +17,7 @@
 \usepackage{caption} % For better control over captions
 \usepackage{float} % Fine control over figure/table placement
 \usepackage{imakeidx} % For index
+\usepackage{pgfplots} % For plot
 
 % Custom Theorem Styles
 \newtheorem{theorem}{Theorem}[chapter]
@@ -177,7 +178,57 @@ Two kinds of simple random sampling exist; one is \eax{simple random sampling wi
 A major source of error is \eax{selection bias}; some parts of the population are deliberately left out when choosing the sample. It is an error of bias and not of randomness. For example, online surveys leave out people without access to internet. While this may be at fault of the person sampling the population, a \eax{non-response bias} occurs when the population does not respond. A \eax{reponse bias} also exists where the population does not reflect the true value. An error is noting down values or measuring samples may also occure, known as a \eax{measurement error}.
 
 \chapter{DESCRIPTIVE STATISTICS}
-The most one can possible do with qualitative data is to pictorially represent it via tables and charts.
+The most one can possible do with qualitative data is to pictorially represent it via tables and charts.\\
+\textit{January 9th.}
+
+For qualitative data, frequency tables, bar charts, pie charts, and ogives are the most approprite way to pictorially represent them. Quantitative data, on the other hand, have more variety in terms in descriptive statistics. They can be represented in graphs such as a dot plot, stem and leaf plot, histogram, adn even a box and whisker plot.
+
+Plots can also be categorized as skewed and symmetric. A \eax{symmetric plot} is (roughly) the same as its image under reflection about some vertical line. We typically look for symmetry of the population from which the data is a sample. A \eax{skewed plot} is one where a peak in the plot occurs. A peak towards higher values is termed a left skewed plot, while a peak towards lower values is termd a right skewed plot. We can also have a \eax{bimodal distribution} where 2 peaks occur, or even a \eax{multimodal distribution}. More peaks suggests a mixture in the population.
+
+Another thing to look out for are \eax{outliers}. These are a few data points that are very different from the rest of the data. When such an outlier occurs, we are generally provoked to investigate it. A reason for an outlier could be a mistake in recording of data, which can be removed by fixing it. Another possible reason for a outlier is that the data point(s) come from a different distribution. In such a case, it is best to drop such outliers. Outliers may also occur purely due to the population being highly skewed; in this case, such outliers are expected by one.
+
+\section{Representing Quantitative Data}
+\subsection{Graphical Measures}
+A \eax{stem and leaf plot}. It is typically used when there are too many data points to draw a meaningful dot plot. It also has the added advantage of no loss of data.
+\begin{table}[htbp]
+\centering
+\caption{Key: $1 | 1= 11$}
+\begin{tabular}{r|l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}l@{\hspace{4 pt}}}
+Stem & \multicolumn{8}{l}{ Leaf}\\ \hline
+1 & 3 \\
+2 & 2 & 4 & 8 & 9 \\
+3 & 1 & 2 & 6 & 6 & 7 & 8 \\
+4 & 3 & 7 \\
+5 & 2
+\end{tabular}
+\end{table}
+One may even look at it as a horizontal histogram, with the number of values per row representing the `height' of the bars.
+
+A \eax{histogram}. For the same data as the previous example, we use bars instead to categorize classes. However, their is a loss of individual data points here.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[ybar interval, ymax=10,ymin=0, minor y tick num = 3]
+\addplot coordinates { (10, 1) (20, 4) (30, 6) (40, 2) (50, 1) (60, 0)};
+\end{axis}
+\end{tikzpicture}\\
+A histogram.
+\end{center}
+A general rule of thumb exists for determining the number of classes. When there are less than 25 observations, we choose 5--6 classes; for 25 to 50 observations, 7--14 classes are enough. For more than 50 observations, one may even choose to use about 15--20 classes. Another thing to note about the histogram is that the area under the curve for a particular region represents the proportion of that region in the sample
+
+A \eax{box and whisker plot}. Again using the same data, a box and whisker plot utilises other aspects of the data such as the maximum value, the minimum value, the median value, the first quartile end value, and the third quartile end value. In our case, these are 52, 12, 24, 28, and 38 respectively (\textit{A box and whisker plot is to be added here later}).
+
+\subsection{Numerical Measures}
+We first discuss some central values.
+\begin{itemize}
+    \item The \eax{mean}. It is the average value (the arithmetic mean) of the sample.
+    \item The \eax{median}. It is that value the splits the data in half; half the data points are below this value, while the other half are above it.
+    \item The \eax{mode}. It is that value which occurs with the highest frequency. Often, for larger samples, a modal class is more meaningful.
+\end{itemize}
+Note that the mean and median do not make sense for qualitative data. In contrast to this, the mode can be used for both qualitative and quantitative data. The median is sometimes used in qualitative data when it is ordinal.
+
+\begin{example}
+    For a set of data points $x_{1}, \ldots, x_{n}$, the mean is defined as $\overline{x} = \left(\sum x_{i}\right)/n$. Show that, for $a = \overline{x}$, the sum of squared deviations of the data points from the value $a$ is minimized, that is, the value $\sum (x_{i} - a)^{2}$ is minimized.
+\end{example}
 
 
 

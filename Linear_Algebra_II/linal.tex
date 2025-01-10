@@ -18,6 +18,13 @@
 \usepackage{caption} % For better control over captions
 \usepackage{float} % Fine control over figure/table placement
 \usepackage{imakeidx} % For index
+\usepackage{afterpage} % For blank page
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 % Custom Theorem Styles
 \newtheorem{theorem}{Theorem}[chapter]
@@ -34,7 +41,7 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
-
+\newcommand{\mc}[1]{\mathcal{#1}}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -302,7 +309,108 @@ Other non-trivial properties may also be shown with ease.
 \begin{proof}
     The proof follows immediately from the previously proved properties.
 \end{proof}
+\textit{January 10th.}
 
+\begin{definition}
+    For $a_{ij} \in A$, the \eax{cofactor} of $a_{ij}$ is $A_{ij}=(-1)^{i+j} \det M_{ij}$, where $M_{ij}$ is the $(n-1) \times (n-1)$ matrix obtained from $A$ by deleting the $i^{\text{th}}$ row and $j^{\text{th}}$ column of $A$.
+\end{definition}
+\begin{lemma}
+    Fix $k,j$. If $a_{kl} = 0$ for all $l \neq j$, then $\det{A} = a_{kj}A_{kj}$.
+\end{lemma}
+\begin{proof}
+    Take $A$ to be a $n \times n$ matrix. We deal in cases.
+    \begin{itemize}
+        \item Case I: $k=j=n$. In the expansion of the determinant,
+        \begin{equation}
+            \det{A} = \sum_{\sigma \in S_{n}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots a_{n \sigma(n)}, \notag
+        \end{equation}
+        only those $\sigma$'s survive where $\sigma(n) = n$. These $\sigma$'s can be thought of as permutations of $S_{n-1}$ instead. The sign of $\sigma \in S_{n}$ and $\sigma \in S_{n-1}$ is the same as $n$ is fixed. Thus, we get
+        \begin{equation}
+            a_{nn} \sum_{\sigma \in S_{n-1}} \epsilon(\sigma) a_{1 \sigma(1)} \cdots a_{(n-1) \sigma(n-1)} = a_{nn} \det M_{nn} = (-1)^{n+n} a_{nn} A_{nn} = a_{nn} A_{nn}.
+        \end{equation}
+        \item Case II: $(k,j) \neq (n,n)$. We construct a matrix $B$ by interchanging $n-k$ rows and $n-j$ columns to bring $a_{ij}$ to the position $(n,n)$. Thus, we have $\det B = (-1)^{n-k+n-j} \det A = (-1)^{k+j} \det A$. But $B = a_{kj} \det M_{kj}$, so
+        \begin{equation}
+            \det A = (-1)^{k+j} a_{kj} \det M_{kj} = a_{kj} A_{kj}.
+        \end{equation}
+    \end{itemize}
+\end{proof}
+\begin{theorem}
+    Let $A$ be a $n \times n$ matrix, and let $1 \leq k \leq n$. Then, $\det {A} = \sum \limits_{j=1}^{n} a_{kj} A_{kj}$, expansion by the $k^{\text{th}}$ row.
+\end{theorem}
+\begin{proof}
+    Write out the $k^{\text{th}}$ row of $A$ as $x_{1}^{t}+\ldots+x_{n}^{t}$, where $x_{i} = (0,\ldots,0,a_{ki},0,\ldots,0)^{t}$, and all the other rows remaining are the same. Writing the matrix $A$ as the sum of $n$ matrices where each matrix is the same as $A$ but with a row that looks like $x_{i}^{t}$, we can easily show that $\det{A} = \sum_{j=1}^{n} a_{kj} A_{kj}$.
+\end{proof}
+\begin{example}
+    Let $n \geq 1$, and let $A_{n} = \begin{pmatrix}
+        a_{1}^{n-1} & a_{1}^{n-2} & \ldots & a_{1} & 1 \\
+        a_{2}^{n-1} & a_{2}^{n-2} & \ldots & a_{2} & 1 \\
+        \ldots & \ldots & \ldots & \ldots & \ldots \\
+        a_{n}^{n-1} & a_{n}^{n-2} & \ldots & a_{n} & 1
+    \end{pmatrix}$. Then, $\det {A_{n}} = \prod \limits_{1 \leq i \leq j \leq n} (a_{i}-a_{j})$.
+\end{example}
+\begin{proof}
+    If $a_{i}=a_{j}$ for some $i \neq j$, then $\det{A_{n}} = 0$ as two rows are then identical. Hence, assume that the $a_{i}$'s are distinct. Now construct
+    \begin{equation}
+        B_{n} = 
+        \begin{pmatrix}
+            x_{1}^{n-1} & x_{1}^{n-2} & \ldots & x_{1} & 1 \\
+            a_{2}^{n-1} & a_{2}^{n-2} & \ldots & a_{2} & 1 \\
+            \ldots & \ldots & \ldots & \ldots & \ldots \\
+            a_{n}^{n-1} & a_{n}^{n-2} & \ldots & a_{n} & 1
+        \end{pmatrix}.
+    \end{equation}
+    Notice that $\det B_{n} \in F[x]$, where $F$ is the field, and $x$ is an indeterminate. $\det {B}$ is also of degree $(n-1)$; let us call this polynomial $f(x)$. Each of $a_{2},\ldots,a_{n}$ are roots of $f(x)$, so $f(x)$ must be of the form $f(x) = C(x-a_{2}) \ldots (x-a_{n})$. Equating coefficients of $x^{n-1}$, we get
+    \begin{equation}
+        C = \prod_{2 \leq i < j \leq n} (a_{i}-a_{j}) = \det \begin{pmatrix}
+            a_{2}^{n-2} & \ldots & a_{2} & 1 \\
+            \ldots & \ldots & \ldots & \ldots \\
+            a_{n}^{n-2} & \ldots & a_{n} & a_{1}
+        \end{pmatrix}.
+    \end{equation}
+    Thus, we must have
+    \begin{align}
+        f(x) &= \left( \prod_{2 \leq i < j \leq n} (a_{i}-a_{j}) \right) (x-a_{2}) \cdots (x-a_{n}) \\
+        \implies \det A_{n} = f(1) &= \prod_{1 \leq i < j \leq n} (a_{i}-a_{j}).
+    \end{align}
+\end{proof}
+\begin{example}
+    Show that there exists a unique polynomial of degree $n$ that takes arbitrary prescribed values at the $(n+1)$ points $x_{0},x_{1},\ldots,x_{n}$.
+\end{example}
+
+\chapter{LINEAR TRANSFORMATIONS}
+
+\section{A Brief Summary}
+Let $\mc{B} = (v_{1},\ldots,v_{n})$ be a basis of vector space $V$ and $\mc{C} = (w_{1},\ldots,w_{n})$ be a basis of a vector space $W$. As these are bases, given a $v \in V$, there exists a unique $X \in F^{n}$ such that $v = \mc{B}X$, called the \eax{coordinate vector} of $v$ with respect to the basis $\mc{B}$. We note that since the mapping from a $v \in V$ to a $X \in F^{n}$ is linear in nature and is bijection, the vector spaces $V$ and $F^{n}$ are isomorphic to each other. Similarly, a mapping that takes $w \in W$ to $Y \in F^{m}$ shows that $W$ and $F^{m}$ are isomorphic to each other. 
+
+Now suppose that there exists a linear map that takes $v \mapsto Tv$ with $v \in V$ and $Tv \in W$. This transformer $T$ is with respect to the bases $\mc{B}$ and $\mc{C}$ of $V$ and $W$, respectively. We construct the $m \times n$ matrix $A$ so that the $j^{\text{th}}$ column of $A$ is the coordinate vector of $Tv_{j}$ with respect to the basis $\mc{C}$. We will then have $T(\mc{B}) = \mc{C}A$. For any vector $v \in V$, we have
+\begin{align}
+    v &= \mc{B}X = v_{1}x_{1}+ \ldots v_{n}x_{n} \notag \\
+    \implies T(v) &= T(v_{1})x_{1} + \ldots T(v_{n})x_{n} = (T(v_{1}),\ldots,T(v_{n})) \begin{pmatrix}
+        x_{1} \\ x_{2} \\ \ldots \\ x_{n}
+    \end{pmatrix} = T(\mc{B})X = (\mc{C}A) X \\
+    &= (w_{1},\ldots,w_{m}) AX;
+\end{align}
+the coordinate vector of $Tv$ with respect to the basis $AX$. In fact, if we denote the isomorphism from $V$ to $F^{n}$ by $\phi_{\mc{B}}$ and the isomorphism from $W$ to $F^{m}$ by $\phi_{\mc{C}}$, we get $\phi_{\mc{C}} \circ T = (\text{mult. by $A$}) \circ \phi_{\mc{B}}$.
+
+The next theorem will be divided into two parts.
+\begin{theorem}
+    \begin{enumerate}
+        \item The vector space form. Let $T:V \to W$ be a linear mapping between finite dimensional vector spaces $V$ and $W$, of dimensions $n$ and $m$ respectively. There are bases $\mc{B}$ and $\mc{C}$ of $V$ and $W$ respectively such that the matrix of $T$ with respect to the bases $\mc{B}$ and $\mc{C}$ looks like $\begin{pmatrix}
+            I_{r} & O_{r \times (n-r)} \\ O_{(m-r) \times r} & O_{(m-r) \times (n-r)}
+        \end{pmatrix}_{m \times n}$.
+        \item The matrix form. If $A$ is a $m \times n$ matrix, then there exists an invertible matrix $Q_{m \times m}$ and an invertible matrix $P_{n \times n}$ such that $Q^{-1}AP$ is of the form $\begin{pmatrix}
+            I_{r} & 0 \\ 0 & 0
+        \end{pmatrix}$, where $r$ is the rank of $A$.
+        \item In fact, both these forms of the theorem are equivalent.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    \begin{enumerate}
+        \item Let $(u_{1},\ldots,u_{n-r})$ be a basis of $\ker{T}$. We can extend this to a basis $\mc{B}$ by appending independent vectors that do not belong to the kernel of $T$, that is, $(v_{1},\ldots,v_{r},u_{1},\ldots,u_{n-r})$. Let $(Tv_{1},\ldots,Tv_{r})$ be a basis of $\text{Im}{T}$. We can extend this to a basis of $W$, say $\mc{C} = (w_{1},\ldots,w_{r},w_{r+1},\ldots,w_{m})$, where $w_{i} = Tv_{i}$ for $1 \leq i \leq r$. These bases are the desired ones.
+        \item $P$ is a sequence of column operations, multipled to form a matrix, and $Q^{-1}$ is a sequence of row operations, multiplied to form a matrix, that get the matrix $A$ into the desired form. These are our desired $P$ and $Q$.
+        \item Suppose the vector space form holds. Let $A$ be a $m \times n$ matrix over $F$, with $A:F^{n} \to F^{m}$ defined as $X \mapsto AX$. There then exists a basis $\mc{B}$ of $F^{n}$ and a basis $\mc{C}$ of $F^{m}$ such that the linear map $A$ with respect to ther bases $\mc{B}$ and $\mc{C}$ has the desired matrix. We then have $\mc{B} =I_{n}P_{n \times n}$ and $\mc{C} = I_{m}Q_{m \times m}$, with both $P$ and $Q$ invertible. We claim that the matrix of the linear mapping $A$ with respect to the bases $\mc{B}$ and $\mc{C}$ is $Q^{-1}AP$.
+    \end{enumerate}
+\end{proof}
 
 
 \begin{appendices}
