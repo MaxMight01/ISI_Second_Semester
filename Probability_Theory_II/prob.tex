@@ -18,6 +18,8 @@
 \usepackage{caption} % For better control over captions
 \usepackage{float} % Fine control over figure/table placement
 \usepackage{imakeidx} % For index
+\usepackage{mdframed}% For middle boxes styling
+\usepackage{tcolorbox} % For colored boxes
 
 % Custom Theorem Styles
 \newtheorem{theorem}{Theorem}[chapter]
@@ -34,6 +36,34 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+
+\tcbset {
+  base/.style={
+    arc=0mm, 
+    bottomtitle=0.5mm,
+    boxrule=0mm,
+    colbacktitle=black!10!white, 
+    coltitle=blue!70!red, 
+    fonttitle=\bfseries, 
+    left=2.5mm,
+    leftrule=1mm,
+    right=3.5mm,
+    title={#1},
+    toptitle=0.75mm, 
+  }
+}
+
+\definecolor{brandblue}{rgb}{0.7, 0.6, 1}
+\newtcolorbox{mainbox}[1]{
+  colframe=brandblue, 
+  base={#1}
+}
+
+\newtcolorbox{subbox}[1]{
+  colframe=black!10!white,
+  base={#1}
+}                  !% Custom Theorem Styles
+                  % Call by \begin{mainbox}{Title} ... \end{mainbox}
 
 
 % Custom Notation List Environment
@@ -220,6 +250,49 @@ We start by stating the weak law of large numbers.
         \{\abs{X_{1} + \ldots + X_{n}} \geq na\} &\subseteq \{\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\} \cup \{\abs{V_{1} + \ldots + V_{n}} \geq \frac{na}{2}\} \\
         \implies P\left(\abs{X_{1} + \ldots + X_{n}} \geq na\right) &\leq P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) + P\left(\abs{V_{1} + \ldots + V_{n}} \geq \frac{na}{2}\right).
     \end{align}
+
+    \begin{mainbox}
+        {Why should we use $a_n$ instead of $\delta n$?}
+        >> We must use $a_n$ because we don't have any idea about the growth rate that is needed and that is what we address here...
+        \end{mainbox}
+        \vspace{1em}
+        \begin{tcolorbox}[title=Analysis on $a_n$...,colback=blue!2!white,colframe=blue!55!black]
+        As $M=\int_{\mathbb{R}}|x| d F(x)$ is finite the integral tails must decay to zero. Thus, for any $\zeta>0$, we must have $\int_{|x|>a_{n}}|x| \operatorname{dF}(x)<\zeta$ as $n \rightarrow \infty$. It follows that
+        
+        \[\PP\left\{\left|X_{j}\right|>a_{n}\right\}=\int_{|x|>a_{n}} d F(x) \leq \int_{|x|>a_{n}} \frac{|x|}{a_{n}} d F(x)<\frac{\zeta}{a_{n}},
+        \]
+        eventually, for all sufficiently large $n$.We begin with the second of the terms on the right. As the occurrence of the event $\left\lvert\mathrm{V}_{1}+\cdots+\mathrm{V}_{\mathrm{n}}\right\rvert \geq \frac{1}{2} \epsilon \mathrm{n}$ certainly implies that at least one of the $V_{j}$ is non-zero, Boole's inequality implies
+        \[\PP\left\{\left|\mathrm{V}_{1}+\cdots+\mathrm{V}_{n}\right| \geq \frac{1}{2} \epsilon n\right\} \leq \PP\left(\bigcup_{j=1}^{n}\left\{\mathrm{V}_{j} \neq 0\right\}\right) \leq \sum_{j=1}^{n} \PP\left\{\left|X_{j}\right|>a_{n}\right\}<\frac{\zeta n}{a_{n}}\]
+        For the bound to be useful we conclude that $a_{n}$ must have a growth rate at least of the order of $n$.
+
+        If we set $\mu_{n}=\EE\left(U_{j}\right)=\int_{|x| \leq a_{n}} x\; dF(x)$ then, 
+$$
+\left|\mu_{n}-\mu\right|=\left|\int_{|x|>a_{n}} x \;dF(x)\right| \leq \int_{|x|>a_{n}}|x| \;dF(x)<\zeta \quad .
+$$
+
+We can afford to be more cavalier in estimating the variance. As $x^{2} \leq a_{n}|x|$ if $|x| \leq a_{n}$, by monotonicity of expectation we have
+
+\[
+Var\left(\mathrm{U}_{j}\right) \leq \EE\left(\mathrm{U}_{j}^{2}\right)=\int_{|x| \leq a_{n}} x^{2} \;dF(x) \leq a_n \int_{|x| \leq a_{n}}|x| \;dF(x) \leq a_n \int_{-\infty}^{\infty}|x| \; dF(x)=M a_{n}
+\]
+
+
+The pieces are in place for an application of Chebyshev's inequality. We first centre the sum appropriately by a routine application of the triangle inequality,For any $0<\zeta<\frac{\epsilon}{4}$, Chebyshev's inequality now yields
+$$
+\begin{aligned}
+    & \PP\left\{\left|\mathrm{U}_{1}+\cdots+\mathrm{U}_{n}-\mu n\right| \geq \frac{1}{2} \epsilon{n}\right\} \leq \PP\left\{\left|\mathrm{U}_{1}+\cdots+\mathrm{U}_{n}-\mu_{n} n\right| \geq \frac{1}{2} \epsilon{n}-\left|\mu_{n}-\mu\right| n\right\} \\ & \quad \leq \PP\left\{\left|\mathrm{U}_{1}+\cdots+\mathrm{U}_{n}-\mu_{n} n\right| \geq \frac{1}{2}(\epsilon-2 \zeta) n\right\} \leq \frac{4 M n a_{n}}{(\epsilon-2 \zeta)^{2} n^{2}} \leq \frac{16 M a_{n}}{\epsilon^{2} n} .
+\end{aligned}
+$$
+The bound will diverge if $a_{n}$ has a growth rate faster than $n$ and so $a_{n}$ cannot increase faster than the order of $n$. From our two bounds we conclude that, if the approach is to be useful at all, $a_{n}$ must be chosen to be exactly of order $n$.Accordingly, set $a_{n}={n\delta}$ with $\delta$ to be specified.
+
+ Pooling our bounds, we obtain
+$$
+\mathbf{P}\left\{\left|\frac{1}{n} S_{n}-\mu\right| \geq \epsilon\right\}<\frac{16 M a_{n}}{\epsilon^{2} n}+\frac{\zeta n}{a_{n}}=\frac{16 M\delta}{\epsilon^{2}}+\frac{\zeta}{\delta} .
+$$
+
+The parameters $\delta$ and $\zeta$ may be chosen at our discretion and we select them to make the right-hand side small.
+        \end{tcolorbox}
+        \vspace{1em}
     We focus on the first term on the right hand side. The $U_{i}$'s are independently and identically distributed, so
     \begin{align}
         P\left(\abs{U_{1} + \ldots + U_{n}} \geq \frac{na}{2}\right) \leq \frac{4E[\abs{U_{1}+\ldots+U_{n}}^{2}]}{a^{2}n^{2}} = \frac{4}{a^{2}n^{2}} \left( \text{Var}(U_{1} + \ldots + U_{n}) + (nEU_{i})^{2} \right).
@@ -244,6 +317,8 @@ We start by stating the weak law of large numbers.
     \end{align}
     The rightmost term here tends to 0 as $n \to \infty$. Now choose $\delta$ to be $\frac{\varepsilon a^{2}}{\abs{6 E{\abs{X_{i}}}}}$, and then choose $N$ to be large enough such that for all $n > N$, both the terms are smaller than $\frac{\varepsilon}{2}$.
 \end{proof}
+\vspace{1em}
+
 \textit{January 7th.}
 
 We now prove the lemma called upon earlier.
