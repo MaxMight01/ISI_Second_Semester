@@ -10,3 +10,4 @@ Test_Folder/
 *.gz
 *.synctex(busy)
 assignments/
+test.ipynb
