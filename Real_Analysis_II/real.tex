@@ -40,6 +40,7 @@
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cR}{\mathcal{R}}
 \newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 
@@ -124,6 +125,8 @@
     \item $\int_{\underline{a}}^{b} f$, the lower Riemann integration for a function $f$.
     \item $\int_{a}^{\overline{b}} f$, the upper Riemann integration for a function $f$.
     \item $\mathcal{R}[a,b]$, the set of all Riemann integrable functions over the set $[a,b]$.
+    \item $\cC[a,b]$, the set of all continuous functions over the set $[a,b]$
+    \item $\{a_{n}\}_{n \geq 1}$, a sequence of real numbers.
 \end{notationlist}
 
 \newpage
@@ -307,6 +310,95 @@ Note that for all valid $j$, $m \leq m_{j} \leq M_{j} \leq M$ always holds. This
         U(f,P) - L(f,P) < \varepsilon + U(f,\hat{P})-L(f,\hat{P}) < \varepsilon + U(f,\tilde{P})-L(f,\tilde{P}) < 2\varepsilon.
     \end{align}
 \end{proof}
+\textit{January 13th.}\\
+We now wish to answer two questions; which elements reside in the set $\cR[a,b]$, and the value of the Riemann integral $\int_{a}^{b} f$ for some $f \in \cR[a,b]$.
+
+Let us first wonder whether $\cC[a,b]$, the set of continuous functions, is a subset of $\cR[a,b]$. In fact, this is true.
+
+\begin{theorem}
+    $\cC[a,b] \subseteq \cR[a,b]$.
+\end{theorem}
+\begin{proof}
+    Fix $f \in \cC[a,b]$; thus, $f:[a,b] \to \R$ is also uniformly continuous. For all $\varepsilon > 0$, there eixsts $\delta > 0$ such that
+    \begin{equation}
+        \abs{f(x)-f(y)} < \frac{\varepsilon}{b-a} \text{ for all } \abs{x-y} < \delta.
+    \end{equation}
+    Pick $P \in \cP[a,b]$ such that $\norm{P} < \delta$, and fix such a $P : a = x_{0} < x_{1} < \ldots < x_{n} = b$. Thus,
+    \begin{align}
+        U(f,P) - L(f,P) &= \sum_{j=1}^{n} (M_{j}-m_{j})\abs{I_{j}}.
+    \end{align}
+    Now, $f|_{I_{j}} : I_{j} \to \R$ is a continuous function for all valid $j$. Therefore, there exist $\eta_{j}, \zeta_{j} \in I_{j}$ such that $f(\eta_{j}) = M_{j}$ and $f(\zeta_{j}) = m_{j}$. $M_{j}-m_{j}$ can be rewritten as $f(\eta_{j}) - f(\zeta_{j})$. As $\abs{\eta_{j}-\zeta_{j}} < \delta$, it follows that
+    \begin{align}
+        M_{j}-m_{j} &< \frac{\varepsilon}{b-a} \text{ for all } j \\
+        \implies (M_{j}-m_{j})\abs{I_{j}} &< \frac{\varepsilon}{b-a} \abs{I_{j}} \notag \\
+        \implies \sum_{j=1}^{n} (M_{j}-m_{j}) \abs{I_{j}} &< \varepsilon.
+    \end{align}
+    By Darboux's theorem, $f$ is Riemann integrable.
+\end{proof}
+We now wish to compute $\int_{a}^{b} f$. Our first attempt at this is the following theorem.
+\begin{theorem}
+    Let $f \in \cB[a,b]$. Then $f \in \cR[a,b]$ if and only if there exists a sequence $\{P_{n}\}_{n \geq 1} \subseteq \cP[a,b]$ such that
+    \begin{equation}
+        \lim_{n \to \infty} U(f,P_{n}) - L(f,P_{n}) = 0.
+    \end{equation}
+    Moreover, in this case,
+    \begin{equation}
+        \int_{a}^{b} f = \lim_{n \to \infty} U(f,P_{n}) = \lim_{n \to \infty} L(f,P_{n}).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Let us first assume that $f$ is Riemann integrable. Thus, for $\varepsilon = \frac{1}{n}$, there exists $P_{n} \in \cP[a,b]$ such that
+    \begin{equation}
+        0 \leq U(f,P) - L(f,P) < \frac{1}{n}
+        \implies U(f,P) - L(f,P) \to 0.
+    \end{equation}
+    For the converse, let $\varepsilon > 0$. There exists $N \in \N$ such that
+    \begin{equation}
+        0 \leq U(f,P_{n}) - L(f,P_{n}) < \varepsilon \text{ for all } n \geq N.
+    \end{equation}
+    Pick $n$ to be $N$. Thus, $U(f,P_{N}) - L(f,P_{N}) < \varepsilon$ must imply that $f \in \cR[a,b]$.
+
+    Let us now show the computation of the integral. We have
+    \begin{align}
+        0 \leq U(f,P_{n}) - \overline{\int_{a}^{b}} = U(f,P_{n}) - \underline{\int_{a}^{b}} f \leq U(f,P_{n}) - L(f,P_{n}) &\to 0 \implies \\
+        \implies U(f,P_{n}) &\to \int_{a}^{b}f.
+    \end{align}
+    Similarly,
+    \begin{align}
+        0 \leq \underline{\int_{a}^{b}} f - L(f,P_{n}) = \int_{a}^{b} f - U(f,P_{n}) + U(f,P_{n}) - L(f,P_{n}) &\to 0 \\
+        \implies L(f,P_{n}) &\to \int_{a}^{b} f.
+    \end{align}
+\end{proof}
+\begin{remark}
+    Let $f \in \cB[a,b]$, and let $\{P_{n}\}_{n \geq 1} \subseteq \cP[a,b]$. If $L(f,P_{n}) \to \lambda$ and if $U(f,P_{n}) \to \lambda$. We then must have $f \in \cR[a,b]$ and $\int_{a}^{b} = \lambda$. This is reminiscent of Newton's method of integration.
+\end{remark}
+\begin{example}
+    Let us compute $\int_{0}^{1}f$ where $f(x) = x^{2}$ on $[0,1]$. For all $n \in \N$, consider the partitions $P_{n} : 0 = x_{0} < x_{1} = \frac{1}{n} < x_{2} = \frac{2}{n} < \ldots < x_{n} = \frac{n}{n} = 1$. Thus, $I_{j} = \left[ \frac{j-1}{n}, \frac{j}{n} \right] \text{ for all } j = 1, \ldots, n$. We then have $M_{j} = (\frac{j}{n})^{2}$ and $m_{j} = (\frac{j-1}{n})^{2}$. The sums can be computed as
+    \begin{align}
+        U(f,P_{n}) &= \sum_{j=1}^{n} \frac{1}{n} \cdot \frac{j^{2}}{n^{2}} = \frac{1}{n^{3}} \sum_{j=1}^{n} j^{2} = \frac{(n+1)(2n+1)}{6n^{2}} &\to \frac{1}{3}, \\
+        L(f,P_{n}) &= \sum_{j=1}^{n} \frac{1}{n} \cdot \frac{(j-1)^{2}}{n^{2}} = \frac{1}{n^{3}} \sum_{j=1}^{n} (j-1)^{2} = \frac{(n-1)(2n-1)}{6n^{2}} &\to \frac{1}{3}.
+    \end{align}
+    Both sums converge to $\frac{1}{3}$; $f$ is Riemann integrable and $\int_{0}^{1} f = \frac{1}{3}$.
+\end{example}
+\begin{example}
+    We show that $\cC[a,b]$ is a proper subset of $\cR[a,b]$. Let us consider the function $f:[a,b] \to \R$ defined by
+    \begin{equation}
+        f(x) = \begin{cases}
+        1 &\text{ if } 0 \leq x < \frac{1}{2}, \\
+        \frac{1}{2} &\text{ if } x = \frac{1}{2}, \\
+        0 &\text{ if } \frac{1}{2} < x \leq 1.
+        \end{cases}
+    \end{equation}
+    Fix $\varepsilon > 0$. Choose the partition $P_{\varepsilon} : 0 < \frac{1}{2}-\varepsilon < \frac{1}{2} + \varepsilon < 1$. We then have $m_{1} = 1 = M_{1}$, $m_{2} = 0 = m_{3}$, and $M_{2} = 1$, $M_{3} = 0$. Therefore, we have
+    \begin{equation}
+        L(f,P) = \frac{1}{2}-\varepsilon, \; U(f,P) = \frac{1}{2} + \varepsilon.
+    \end{equation}
+    Finally,
+    \begin{equation}
+        U(f,P) - L(f,P) = 2\varepsilon < 3\varepsilon.
+    \end{equation}
+    $f$ is Riemann integrable, but is not a continuous function.
+\end{example}
 
 
 \begin{appendices}
