@@ -125,8 +125,9 @@
     \item $\int_{\underline{a}}^{b} f$, the lower Riemann integration for a function $f$.
     \item $\int_{a}^{\overline{b}} f$, the upper Riemann integration for a function $f$.
     \item $\mathcal{R}[a,b]$, the set of all Riemann integrable functions over the set $[a,b]$.
-    \item $\cC[a,b]$, the set of all continuous functions over the set $[a,b]$
+    \item $\cC[a,b]$, the set of all continuous functions over the set $[a,b]$.
     \item $\{a_{n}\}_{n \geq 1}$, a sequence of real numbers.
+    \item $T_{P}$, a tag set for the partition $P$.
 \end{notationlist}
 
 \newpage
@@ -257,6 +258,8 @@ Note that for all valid $j$, $m \leq m_{j} \leq M_{j} \leq M$ always holds. This
 \begin{proof}
     The lower Riemann intergral is the supremum of all the lower Riemann sums, so it must be the lowest upper bound, and, thus, has to be lesser than the upper Riemann sums. Similarly, the upper Riemann integral is greater than the lower Riemann sums. Consequently, we get the desired inequality.
 \end{proof}
+\section{Classification and Computation}
+We now discuss the classification of Riemann integrable functions, and the computation of the Riemann integral.
 \begin{theorem}
     Let $f \in \cB [a,b]$. Then, for $f$ to be Riemann intergrable, the only neccessary and sufficient condition is $\int_{\underline{a}}^{b} f \geq \int_{a}^{\overline{b}} f$.
 \end{theorem}
@@ -399,7 +402,106 @@ We now wish to compute $\int_{a}^{b} f$. Our first attempt at this is the follow
     \end{equation}
     $f$ is Riemann integrable, but is not a continuous function.
 \end{example}
+\textit{January 15th.}\\ \\
+We now discuss a more refined way of computing the Riemann integral.
+\begin{definition}
+    Let $P:a=x_{0} < x_{1} < \ldots < x_{n} = b$ be a partition of $[a,b]$. A \eax{tag} of $P$ is a function $T_{P}:\{I_{j}\}_{j=1}^{n} \to [a,b]$ such that $T_{p}(I_{j}) \in I_{j}$ for all $j = 1,2,\ldots,n$. In other words, $T_{p} = \{\zeta_{j}\}_{j=1}^{n}$ such that $\zeta_{j} \in I_{j}$ for all valid $j$.
+\end{definition}
+\begin{definition}
+    Let $f \in \cB[a,b]$, $P \in \cP[a,b]$, and $T_{P}$ be a tag set. The \eax{Riemann sum} of $f$ with respect $(P,T_{P})$ is
+    \begin{equation}
+        S(f,P) = \sum_{j=1}^{n} f(\zeta_{j})\abs{I_{j}}.
+    \end{equation}
+\end{definition}
+What good is Riemann sum and why the need for defining it? Let us fix $f \in \cB[a,b]$, $P \in \cP[a,b]$, and $T_{P} = \{\zeta_{j}\}_{j=1}^{n}$. We now have $m_{j} \leq f(\zeta_{j}) \leq M_{j}$ for all valid $j$. Multiplying by the subintervals $\abs{I_{j}}$ and summing over all $j$'s gives us
+\begin{equation}
+    L(f,P) \leq S(f,P) \leq U(f,P)
+\end{equation}
+for any tag set $T_{P}$. This gives us a better condition as if both the lower and upper sum collapse, then the Riemann sum will give us a value, say $\lambda$, for any tag set $T_{P}$.
 
+What do we hope for? We wish to show that $L(f,P) \to \lambda$ as $\norm{P} \to 0$. Let us write this more formally.
+\begin{definition}
+    Given $f \in \cB[a,b]$ and $\lambda \to \R$, we say
+    \begin{equation}
+        \lim_{\norm{P} \to 0} S(f,P) = \lambda
+    \end{equation}
+    if for every $\varepsilon > 0$, there exists $\delta > 0$ such that
+    \begin{equation}
+        \abs{S(f,P) - \lambda} < \varepsilon \text{ for all } P \in \cP[a,b] \text{ satisfying } \norm{P} < \delta \text{ for any } T_{P}.
+    \end{equation}
+\end{definition}
+Note that if such $\lambda$ exists, it is unique.
+\begin{theorem}
+    Let $f \in \cB[a,b]$. Then $f \in \cR[a,b]$ if and only if there exists $\lambda \in \R$ such that $\lim_{\norm{P} \to 0} S(f,P) = \lambda$. Also, in this case, $\int_{a}^{b} f = \lambda$.
+\end{theorem}
+\begin{proof}
+    Assume $f$ is Riemann integrable. Let $\lambda = \int_{a}^{b} f$, For every $\varepsilon > 0$, there exists $\delta > 0$ such that
+    \begin{equation*}
+        U(f,P) - L(f,P) < \varepsilon \text{ for all } \norm{P} < \delta.
+    \end{equation*}
+    We know that $L(f,P) \leq S(f,P) \leq U(f,P)$ for all tag sets $T_{P}$. Now,
+    \begin{equation}
+        L(f,P) \geq U(f,P) - \varepsilon \geq \overline{\int} f - \varepsilon = \lambda - \varepsilon.
+    \end{equation}
+    Similarly,
+    \begin{equation}
+        U(f,P) < \varepsilon + L(f,P) \leq \varepsilon + \underline{\int} f = \varepsilon + \lambda.
+    \end{equation}
+    Thus, we have, for all $P \in \cP[a,b]$ satisfying $\norm{P} < \delta$ and for all $T_{P}$, we have
+    \begin{equation*}
+        \lambda - \varepsilon < S(f,P) \leq \lambda + \varepsilon \implies \abs{S(f,P) - \lambda} < \varepsilon \implies \lim_{\norm{P} \to 0} S(f,P) = \lambda.
+    \end{equation*}
+    For the converse, let $\lambda = \lim_{\norm{P} \to 0} S(f,P)$. Then for all $\varepsilon > 0$, there exists $\delta > 0$ such that
+    \begin{equation*}
+        \abs{S(f,P) - \lambda} < \frac{\varepsilon}{3}
+    \end{equation*}
+    for all $\abs{P} < \delta$ and for all $T_{P}$. Note that $S(f,P)$ is just $\sum_{j=1}^{n} f(\zeta_{j}) \abs{I_{j}}$. By taking the infimum and supremum of tag sets for a fixed $P$ over their valid intervals, we have
+    \begin{equation}
+        \lambda-\frac{\varepsilon}{3} < L(f,P) < \lambda + \frac{\varepsilon}{3}, \; \lambda - \frac{\varepsilon}{3} < U(f,P) < \lambda + \frac{\varepsilon}{3}.
+    \end{equation}
+    Finally, we can now minimize $U(f,P) - L(f,P)$ for Darboux's criteria---
+    \begin{equation}
+        U(f,P) - L(f,P) < \lambda+\frac{\varepsilon}{3} - \lambda + \frac{\varepsilon}{3} = \frac{2\varepsilon}{3} < \varepsilon \implies f \in \cR[a,b].
+    \end{equation}
+    Finally, for all $\norm{P} < \delta$, we have
+    \begin{equation}
+        \lambda - \frac{\varepsilon}{3} < L(f,P) \leq \underline{\int}f = \int f = \overline{\int}f < U(f,P) < \lambda + \frac{\varepsilon}{3} \implies \lambda = \int f.
+    \end{equation}
+\end{proof}
+
+We are now done with the classification and computation of the Riemann integral.
+
+\begin{theorem}
+    Let $f \in \cR[a,b]$ and let $\{P_{n}\} \subseteq \cP[a,b]$ such that $\norm{P_{n}} \to 0$. Then
+    \begin{equation}
+        \lim_{n \to \infty} S(f,P_{n}) = \int_{a}^{b} f
+    \end{equation}
+    for all tag sets $T_{P_{n}}$.
+\end{theorem}
+\begin{proof}
+    $f$ is Riemann integrable. For all $\varepsilon > 0$, there exists $\delta > 0$ such that for all $\norm{P} < \delta$, $U(f,P)-L(f,P) < \varepsilon$. There also exists a natural $N$ such that $\norm{P_{n}} < \delta$ for all $n \geq N$. This tells us that $U(f,P_{n})-L(f,P_{n}) < \varepsilon$ for all $n \geq N$. We rewrite this as
+    \begin{align}
+        U(f,P_{n}) - \int f + \int f - L(f,P_{n}) < \varepsilon \text{ for all } n \geq N.
+    \end{align}
+    Pairing up the terms on the left, we find that they are non-negative, so each pair individually must be less than $\varepsilon$---
+    \begin{equation}
+        0 \leq U(f,P_{n}) - \int f < \varepsilon \text{ and } 0 \leq \int f - L(f,P_{n}) < \varepsilon
+    \end{equation}
+    Using this equation, we can finally write
+    \begin{equation}
+        \int f - \varepsilon < L(f,P_{n}) \leq S(f,P_{n}) \leq U(f,P_{n}) < \int f + \varepsilon \implies \lim_{n \to \infty} S(f,P_{n}) = \int f.        
+    \end{equation}
+    Again, this is regardless of the choice of tag sets.
+\end{proof}
+\section{School Integration Rocks}
+Let us now connect to Newton's definition of integration. Pick $f \in \cC[a,b]$. For any $n \in \N$, consider the partition $P_{n} : a = x_{0} < x_{1} < \ldots < x_{n} = b$ such that $x_{j}-x_{j-1} = \frac{b-a}{n}$. This is the standard school partition. Note that $\norm{P_{n}} = \frac{b-a}{n} \to 0$. For all tag sets $\{\zeta_{j}^{(n)}\}$ of $P_{n}$, we find that
+\begin{equation}
+    \int_{a}^{b} f = \lim_{n \to \infty} \sum_{j=1}^{n} f(\zeta_{j}^{(n)}) \frac{b-a}{n}.
+\end{equation}
+In school, the tag set was generally chosen as the left endpoints or right endpoints of the subintervals. The left endpoints tag set is
+\begin{equation}
+    \zeta_{j} = a + \frac{b-a}{n}(j-1).
+\end{equation}
 
 \begin{appendices}
 
