@@ -42,6 +42,8 @@
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
 \newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\R}{\mathbb{R}}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -377,9 +379,9 @@ Other non-trivial properties may also be shown with ease.
     Show that there exists a unique polynomial of degree $n$ that takes arbitrary prescribed values at the $(n+1)$ points $x_{0},x_{1},\ldots,x_{n}$.
 \end{example}
 
-\chapter{LINEAR TRANSFORMATIONS}
+\chapter{EIGENVECTORS AND EIGENVALUES}
 
-\section{A Brief Summary}
+\section{A Brief Summary of Linear Transformers}
 Let $\mc{B} = (v_{1},\ldots,v_{n})$ be a basis of vector space $V$ and $\mc{C} = (w_{1},\ldots,w_{n})$ be a basis of a vector space $W$. As these are bases, given a $v \in V$, there exists a unique $X \in F^{n}$ such that $v = \mc{B}X$, called the \eax{coordinate vector} of $v$ with respect to the basis $\mc{B}$. We note that since the mapping from a $v \in V$ to a $X \in F^{n}$ is linear in nature and is bijection, the vector spaces $V$ and $F^{n}$ are isomorphic to each other. Similarly, a mapping that takes $w \in W$ to $Y \in F^{m}$ shows that $W$ and $F^{m}$ are isomorphic to each other. 
 
 Now suppose that there exists a linear map that takes $v \mapsto Tv$ with $v \in V$ and $Tv \in W$. This transformer $T$ is with respect to the bases $\mc{B}$ and $\mc{C}$ of $V$ and $W$, respectively. We construct the $m \times n$ matrix $A$ so that the $j^{\text{th}}$ column of $A$ is the coordinate vector of $Tv_{j}$ with respect to the basis $\mc{C}$. We will then have $T(\mc{B}) = \mc{C}A$. For any vector $v \in V$, we have
@@ -411,6 +413,52 @@ The next theorem will be divided into two parts.
         \item Suppose the vector space form holds. Let $A$ be a $m \times n$ matrix over $F$, with $A:F^{n} \to F^{m}$ defined as $X \mapsto AX$. There then exists a basis $\mc{B}$ of $F^{n}$ and a basis $\mc{C}$ of $F^{m}$ such that the linear map $A$ with respect to ther bases $\mc{B}$ and $\mc{C}$ has the desired matrix. We then have $\mc{B} =I_{n}P_{n \times n}$ and $\mc{C} = I_{m}Q_{m \times m}$, with both $P$ and $Q$ invertible. We claim that the matrix of the linear mapping $A$ with respect to the bases $\mc{B}$ and $\mc{C}$ is $Q^{-1}AP$.
     \end{enumerate}
 \end{proof}
+
+\textit{January 16th.}
+\begin{proposition}
+    \begin{enumerate}
+        \item Let $T:V \to W$ be a linear map, and $A$ the matrix of $T$ with respect to the bases $\mc{C}$ and $\mc{C}$ of $V$ and $W$ respectively. Let $\mc{B}'$ and $\mc{C}'$ be new bases of $V$ and $W$ respectively, and let the change of basis matrices be given by $\mc{B}' = \mc{B}P$ and $\mc{C}' = \mc{C}Q$. Then the matrix of $T$ with respect to $\mc{B}'$ and $\mc{C}'$ is $Q^{-1}AP$.
+        \item If $A' = Q_{1}^{-1}AP_{1}$, where $P_{1}$ and $Q_{1}$ are $n \times n$ and $m \times m$ invertible matrices, respectively, then $A'$ is the matrix of $T$ with respect to the bases $\mc{B}P_{1}$ and $\mc{C}Q_{1}$.
+    \end{enumerate}
+    
+\end{proposition}
+\begin{proof}
+    Let the coordinate vector of $v$ with respect to the basis $\mc{B}'$ be $X'$. We claim that the coordinate vector of $Tv$ with respect to the basis $\mc{C}'$ is $Y'$, where $Y' = (Q^{-1}AP)X'$. We assume that $\mc{B}' = \mc{B}P_{n \times n}$, $\mc{C}' = \mc{C}Q_{m \times m}$, and $T(\mc{B}) = \mc{C}A_{m \times n}$. If $v = \mc{B}X$, then $T(v) = \mc{C}(AX)$. If we let $v = \mc{B}'\mc{X}' = v_{1}'x_{1}' + \ldots + v_{n}'x_{n}'$, then
+    \begin{equation}
+        T(v) = \mc{C}'Y' = (\mc{C}Q)' = \mc{C}(QY') = \mc{C}(APX') \implies QY' = APX' \implies Y' = (Q^{-1}AP)X'
+    \end{equation}
+    To prove the second part, we will show that the first part implies it. Let $A_{m \times n}$ be a matrix. Let $T_{A}$ be the linear map from $\R^{n} \to \R^{m}$ given by multiplication by $A$, that is $T_{A} : \R^{n} \to \R^{m}$ given by $X \mapsto AX$. By the first part, there exist bases $P_{n \times n}$ and $Q_{m \times m}$, both invertible, such that with respect $P$ and $Q$, the matrix of $T_{A}$ looks like $\begin{pmatrix}
+        I & O \\ O & O
+    \end{pmatrix}$, that is, $Q^{-1}AP = \begin{pmatrix}
+        I & O \\ O & O
+    \end{pmatrix}$.
+\end{proof}
+
+\subsection{Linear Operators}
+Let $T:V_{\mc{B}} \to V_{\mc{B}}$. Let $A$ be the matrix of $T$ with respect to the basis $\mc{B}$. The other matrices of $T$ with respect to new bases are $P^{-1}AP$, where $P_{n \times n}$ is invertible. Also, the fact that $T$ is bijective, one-one, or onto are all equivalent for a finite dimensional vector space $V$.
+
+\section{Eigenvectors and Eigenvalues}
+\begin{definition}
+    A non-zero vector $v \in V$ is said to be an \eax{eigenvector} of $T$ if $T(v) = \lambda v$ for some $\lambda \in \F$. If $A$ is a $n \times n$ matrix, a non-zero column vector $X$ is said to be an eigenvector of $A$ if $AX = \lambda X$ for some $\lambda \in \F$. $\lambda$, in both these cases, is called the \eax{eigenvalue} of $v$ and $X$ respectively.
+\end{definition}
+Usually, we always disregard the zero vector being an eigenvector. If $v$ is an eigenvector of $T:V \to V$, and $v = \mc{B}X$ with respect to some basis $\mc{B}$ of $V$, then $X$ is an eigenvector of the matrix of $T$ with respect to the basis $\mc{B}$. In fact,
+\begin{equation}
+    \mc{B}(AX) = (\mc{B}A)X = T(\mc{B})X = T(\mc{B}X) = Tv = \lambda v = \lambda \mc{B} X = \mc{B} (\lambda X) \implies AX = \lambda X.
+\end{equation}
+The converse is also true; if $X$ is an eigenvector of $A_{n \times n}$, then $X$ is also an eigenvector of $T_{A} : \R^{n} \to \R^{n}$.
+
+\begin{proposition}
+    0 is an eigenvalue of $A_{n \times n}$ ($T:V \to V)$ if and only if $A$ ($T$) is non-invertible (not an isomorphism).
+\end{proposition}
+Suppose $v$ is an eigenvector of $T: V \to V$ with eigenvalue $\lambda$. Let $W$ be the subspace spanned by $v$. Then every vector $w \in W$ is an eigenvector of $T$ with eigenvalue $\lambda$. The proof of this is left as an exercise.
+
+\begin{definition}
+    Two matrices $A_{n \times n}'$ and $A_{n \times n}$ are called similar if there exists an invertible matrix $P_{n \times n}$ such that $P^{-1}AP = A'$.
+\end{definition}
+
+Again let $T: V \to V$ be a linear operator, and let $\mc{B} = (v_{1},\ldots,v_{n})$. Suppose, with respect to the basis $\mc{B}$, the matrix of $T$ is $\begin{pmatrix}
+    \lambda_{1} & \ldots & \ldots & \ldots \\ 0 & \ldots & \ldots & \ldots \\ \ldots & \ldots & \ldots & \ldots \\ 0 & \ldots & \ldots & \ldots    
+\end{pmatrix}$. Then $v_{1}$ is an eigenvector with eigenvalue $\lambda_{1}$.
 
 
 \begin{appendices}
