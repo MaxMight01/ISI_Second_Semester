@@ -107,6 +107,8 @@
 \chapter*{List of Symbols}
 \begin{notationlist}
     \item $\hat{\theta}$, the estimate of a variable $\theta$.
+    \item $\overline{x}$, the mean of the observations $x_{i}$.
+    \item $x_{M}$, the mediam of the observations $x_{M}$.
 \end{notationlist}
 
 \newpage
@@ -177,7 +179,7 @@ Two kinds of simple random sampling exist; one is \eax{simple random sampling wi
 
 A major source of error is \eax{selection bias}; some parts of the population are deliberately left out when choosing the sample. It is an error of bias and not of randomness. For example, online surveys leave out people without access to internet. While this may be at fault of the person sampling the population, a \eax{non-response bias} occurs when the population does not respond. A \eax{reponse bias} also exists where the population does not reflect the true value. An error is noting down values or measuring samples may also occure, known as a \eax{measurement error}.
 
-\chapter{DESCRIPTIVE STATISTICS}
+\chapter{REPRESENTING QUANTITATIVE DATA}
 The most one can possible do with qualitative data is to pictorially represent it via tables and charts.\\
 \textit{January 9th.}
 
@@ -187,8 +189,7 @@ Plots can also be categorized as skewed and symmetric. A \eax{symmetric plot} is
 
 Another thing to look out for are \eax{outliers}. These are a few data points that are very different from the rest of the data. When such an outlier occurs, we are generally provoked to investigate it. A reason for an outlier could be a mistake in recording of data, which can be removed by fixing it. Another possible reason for a outlier is that the data point(s) come from a different distribution. In such a case, it is best to drop such outliers. Outliers may also occur purely due to the population being highly skewed; in this case, such outliers are expected by one.
 
-\section{Representing Quantitative Data}
-\subsection{Graphical Measures}
+\section{Graphical Measures}
 A \eax{stem and leaf plot}. It is typically used when there are too many data points to draw a meaningful dot plot. It also has the added advantage of no loss of data.
 \begin{table}[htbp]
 \centering
@@ -217,7 +218,9 @@ A general rule of thumb exists for determining the number of classes. When there
 
 A \eax{box and whisker plot}. Again using the same data, a box and whisker plot utilises other aspects of the data such as the maximum value, the minimum value, the median value, the first quartile end value, and the third quartile end value. In our case, these are 52, 12, 24, 28, and 38 respectively (\textit{A box and whisker plot is to be added here later}).
 
-\subsection{Numerical Measures}
+A \eax{scatter plot}. The plots discussed before were for univariate data. For bivariate data, a scatter plot is helpful. Here, we plot one variable against the other by representing them as 2-dimensional points. We also discuss the linear relationship in this case.
+
+\section{Numerical Measures}
 We first discuss some central values.
 \begin{itemize}
     \item The \eax{mean}. It is the average value (the arithmetic mean) of the sample.
@@ -229,8 +232,80 @@ Note that the mean and median do not make sense for qualitative data. In contras
 \begin{example}
     For a set of data points $x_{1}, \ldots, x_{n}$, the mean is defined as $\overline{x} = \left(\sum x_{i}\right)/n$. Show that, for $a = \overline{x}$, the sum of squared deviations of the data points from the value $a$ is minimized, that is, the value $\sum (x_{i} - a)^{2}$ is minimized.
 \end{example}
+\begin{proof}
+    We have
+    \begin{align*}
+        \sum (x_{i}-a)^{2} &= \sum (x_{i} - \overline{x} + \overline{x} - a)^{2} = \sum (x_{i}-\overline{x})^{2} + \sum (\overline{x}-a)^{2} + 2 \sum (x_{i}-\overline{x})(\overline{x}-a) \\
+        &= \sum (x_{i}-\overline{x})^{2} + n(\overline{x}-a)^{2} + 2(\overline{x}-a) \sum (x_{i}-\overline{x}) \\
+        &= \sum (x_{i}-\overline{x})^{2} + n(\overline{x}-a)^{2}.
+    \end{align*}
+    Now $(\overline{x}-a)^{2} \geq 0$; it is 0 if and only if $a = \overline{x}$.
+\end{proof}
+\textit{January 16th.}\\ \\
+We also have another result that says that $\sum \abs{x_{i}-a}$ is minimized when the value of $a = \text{median}(x_{1}, \ldots, x_{n})$.
 
+\subsection{Variability or Spread}
+We also are interested in the \eax{variability} or the \eax{spread}; how far the observations or data points are from each other or from the centre.
+\begin{itemize}
+    \item One is such measure is the \eax{range} defined as $\max - \min$. The range is a simple and intuitive measure of spread. Between different samples from the same population, the value of the range can be very different. It depends on only two values.
+    \item Another measure if the \eax{variance}. For $n$ $x_{i}$ observations, we have
+    \begin{equation}
+        \sigma^{2} = \frac{1}{n-1} \sum_{i=1}^{n} (x_{i}-\overline{x})^{2}
+    \end{equation}
+    as the variance; it is the average squared distance of eah point from the centre. Dividing by $n-1$ makes the measure `good' as it is unbiased for the population variance.
+    \item If we define $x_{M}$ to be the median of the $x_{i}$'s, we can define another measure: \eax{MAD from the median}.
+    \begin{equation}
+        \text{MAD} = \frac{1}{n} \sum_{i=1}^{n} \abs{x_{i}-x_{M}}.
+    \end{equation}
+    MAD is short for \eax{mean absolute deviation}.
+    \item The \eax{standard deviation} may be defined as the square root of the variance.
+    \item The \eax{interquartile range} or IQR. It is a robust measure; applicable if there are a few very high or very low values. It is defined as
+    \begin{equation}
+        \text{IQR} = Q_{3} - Q_{1}
+    \end{equation}
+    where $Q_{3}$ is the third quartile, the value for which 75\% of the data resides below it, and $Q_{1}$ is the first quartile, the value for which 25\% of the data resides below it.
+\end{itemize}
+\begin{example}
+    Let us work with the following dataset---
+    \begin{equation}
+        40, 60, 65, 65, 65, 68, 68, 70, 70, 70, 70, 70, 70, 74, 75, 75, 90, 95 \notag
+    \end{equation}
+    For this dataset, the median is the $\frac{1}{2}(n+1)$th observation, or the 9.5th observation: $70 + 0.5(70-70) = 0$.
 
+    $Q_{1}$ will be the $\frac{1}{4}(n+1)$th observation, or the $4.75$th observation: $65+0.75(65-65) = 65$.
+
+    $Q_{3}$ will be the $\frac{3}{4}(n+1)$th observation, or the $14.25$th observation: $74+0.25(75-74) = 74.25$.
+\end{example}
+
+\subsubsection{The Chebyshev Inequality}
+The \eax{Chebyshev inequality} can be summarised as
+\begin{equation}
+    P\left( \abs{\frac{X-\mu}{\sigma}} \right) \leq \frac{1}{k^{2}}
+\end{equation}
+where $\mu$ is the population mean and $\sigma$ is the population standard deviation. Along with this, we also adopt the convention $\overline{X}$ for the sample mean, and $s$ for the sample standard deviation. We can also infer that 2 standard deviations worth of values around the mean contain, at the very least, three-fourths of the values.
+\begin{equation}
+    P(\mu-2\sigma < X < \mu+2\sigma) \geq \frac{3}{4}.
+\end{equation}
+Note that this is true for all distributions. Similarly, we have $P(\mu-3\sigma < X < \mu+3\sigma) \geq \frac{8}{9}$. If we have $\overline{X}$ and $s$, then we can say that $\frac{8}{9}$ths of the population values will lie between $\overline{X}-3s$ and $\overline{X}+3s$, approximately. In practice, the coverage is more. For example, if have the normal distribution, 95\% of the values will lie in between $\mu \pm 2\sigma$. Chebyshev guarantees that 75\% of the values will lie here for any distribution.
+
+\subsection{Measures of Relative Standing}
+These measure look at the `position' of a particular value relative to other, or in comparison to others.
+\begin{itemize}
+    \item A \eax{rank} is simply ordering of the population, and numbering them in order. The number assigned is the rank.
+    \item A \eax{percentile} or \eax{quartile} also exists; it is defined as
+    \begin{equation}
+        \text{Quartile of value } a = \frac{\#\{x_{i} \leq a\}}{n}.
+    \end{equation}
+    \item The $\eax{z-score}$ measures how many standard deviations above the mean is the value $a$---
+    \begin{equation}
+        \text{z-score of } a = \frac{a-\overline{x}}{s}.
+    \end{equation}
+\end{itemize}
+
+\subsubsection{Detecting Outliers}
+The z-score is helpful it detecting outliers; if the absolute value of the z-score of a value $a$ is above 3, there is a high likelihood it is an outlier.
+
+For a boxplot, a good detection system is to check for those values greater than $Q_{3} + 1.5\text{IQR}$ or less than $Q_{1} - 1.5\text{IQR}$.
 
 
 
