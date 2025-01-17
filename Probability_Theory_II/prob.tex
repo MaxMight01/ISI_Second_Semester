@@ -34,7 +34,9 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
-
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\Cov}{\text{Cov}}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -421,6 +423,72 @@ Denote by $f_{2n}$ the probability that the first return to 0 occurs at time $2n
         &= u_{2k}u_{2\nu-2k} = \alpha_{2k,2\nu}.
     \end{align}
 \end{proof}
+
+\textit{January 17th.}
+\begin{theorem}[\eax{Weirstrass's polynomial approximation}.]
+    Let $f:[0,1] \to \R$ be a continuous function. Then for every $\varepsilon > 0$, there is a polynomial $P$, dependent on $f$ and $\varepsilon$, such that
+    \begin{equation}
+        \abs{f(x)-P(x)} < \varepsilon \text{ for all } x \in [0,1].
+    \end{equation}
+\end{theorem}
+\begin{remark}
+    Any continuous function $f:[0,1]\to\R$ is bounded and uniformly continuous. This fact will be useful in proving the previous theorem.
+\end{remark}
+\begin{proof}
+    Start with $X_{1},X_{2},\ldots$ which are independent and identically disitributed Bernoulli random variables, $\text{Ber}(x)$. Let $S_{n} = X_{1} + X_{2} + \ldots + X_{n}$. From the weak law of large numbers, we know that $\frac{S_{n}}{n}$ is approximately $x$. We can expect that $f(x)$ will also be approximately $f(\frac{S_{n}}{n})$. We now have
+    \begin{align}
+        f_{n}(x) &= Ef(\frac{S_{n}}{n}) = \sum_{j=0}^{n} f(\frac{j}{n})P(S_{n}=j) \notag \\
+        &= \sum_{j=0}^{n} f(\frac{j}{n}) \binom{n}{j} x^{j} (1-x)^{n-j}.
+    \end{align}
+    This is now a polynomial; we wish to see how close this is to $f$. Define $A_{\delta}$ to be $\{j : \abs{\frac{j}{n} - x} \leq \delta\}$
+    \begin{align}
+        \abs{f_{n}(x)-f(x)} &= \abs{\sum_{j=0}^{n} \left( f(\frac{j}{n}) - f(x) \right)} P(S_{n}=j) \notag \\
+        &= \abs{\sum_{j \in A_{\delta}} \left( f(\frac{j}{n}) - f(x) \right) + \sum_{j \notin A_{\delta}} \left( f(\frac{j}{n}) - f(x) \right)} P(S_{n}=j) \notag \\
+        &\leq \sum_{j \in A_{\delta}} \abs{ f(\frac{j}{n}) - f(x) } P(S_{n}=j) + \sum_{j \notin A_{\delta}} \abs{ f(\frac{j}{n}) - f(x) } P(S_{n}=j).
+    \end{align}
+    We have two terms to deal with now. For the first term, choose $\delta > 0$ such that $\abs{x-y} < \delta \implies \abs{f(x)-f(y)} < \varepsilon$; this $\delta$ can be chosen since $f$ is uniformly continuous. Similarly, also choose $M = \sup_{x \in [0,1]} \abs{f(x)}$. $M$ is finite since $f$ is bounded. Thus, we have
+    \begin{align}
+        \sum_{j \in A_{\delta}} \abs{f(\frac{j}{n})} P(S_{n}=j) \leq \sum_{j \in A_{\delta}} \varepsilon P(S_{n} = j) \leq \varepsilon
+    \end{align}
+    and
+    \begin{align}
+        \sum_{j \notin A_{\delta}} \leq 2M P(\abs{\frac{S_{n}}{n}-x} > \delta) \leq 2M \frac{\text{Var}(S_{n})}{n^{2}\delta^{2}} = \frac{2Mnx(1-x)}{n^{2}\delta^{2}}.
+    \end{align}
+    Combining the two, and choosing $n$ large enough, we have
+    \begin{align}
+        \abs{f_{n}(x)-f(x)} &\leq \varepsilon + \frac{2Mx(1-x)}{n\delta^{2}} \leq \varepsilon + \frac{M}{2n\delta^{2}} \leq 2\varepsilon.
+    \end{align}
+\end{proof}
+
+\section{Erd\"os-Renyi Random Graph}
+We first discuss the setup; start with $n$ vertices of an empty graph. For any pair of points $(i,j)$, with $i \neq j$, join these vertices with an edge with probability $p$ independently for all such pairs. Such a graph is denoted by $G_{n,p}$.
+
+A collection of three points $S = \{i,j,k\}$ form a triangle if $G_{n,p}$ has the edges $\{i,j\}$, $\{j,k\}$, and $\{i,k\}$. We question the probability that such a graph has no formed triangles. Can we find $p = p_{n}$ such that triangles begin to appear at $p_{n}$? Let $S$ be any set of three vertices. Define $X_{S}$ to be the indicator function; 1 if $S$ forms a triangle, and 0 otherwise. We note that $X_{S} \sim \text{Ber}(p^{3})$. We note that
+\begin{equation*}
+    EX_{S} = p^{3}, \; \text{Var}X_{S} = p^{3}(1-p^{3}) \leq p^{3}.
+\end{equation*}
+Denote by $N$ the number of triangles in the graph $G_{n,p}$. Clearly,
+\begin{equation*}
+    N = \sum_{S: \abs{S} = 3} X_{S}, \;  EN = \binom{n}{3} p^{3} < n^{3}p^{3}, \; \text{Var}{N} = \sum_{S} \Var{X_{S}} + \sum_{S}\sum_{T \neq S} \Cov{(X_{S}X_{T})} \leq n^{3}p^{3} + n^{4}p^{5}
+\end{equation*}
+ALso, $P(N \geq 1) \leq EN < n^{3}p^{3}$. If $p = p_{n} << \frac{1}{n}$, then $P(N \geq 1) \to 0$ as $n \to \infty$. We discuss this for $p >> \frac{1}{n}$. We have
+\begin{align}
+    P(N = 0) \leq P(\abs{N-EN} \geq EN) \leq \frac{\text{Var}N}{(EN)^{2}} \leq \frac{(n^{3}p^{3}+n^{4}p^{5})}{\frac{n^{6}p^{6}}{100}} \leq \frac{100}{n^{3}p^{3}} + \frac{100}{n(np)} \to 0.
+\end{align}
+We can state this as a theorem.
+\begin{theorem}
+    Consider $G_{n,p_{n}}$. Let $E$ be the event that the graph is triangle free. We then have
+    \begin{equation}
+        P(E) \to \begin{cases}
+        0 &\text{ if } \dfrac{p_{n}}{\frac{1}{n}} \to \infty,\\
+        1 &\text{ if } \dfrac{p_{n}}{\frac{1}{n}} \to 0.
+        \end{cases}
+    \end{equation}
+\end{theorem}
+Now suppose that $\frac{np_{n}} \to C > 0$ as $n \to \infty$. Then we have
+\begin{equation}
+    N \approx \text{Poisson} \left( \frac{C^{3}}{6} \right).
+\end{equation}
 
 
 
