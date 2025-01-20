@@ -41,6 +41,8 @@
 \newcommand{\cR}{\mathcal{R}}
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\osc}{\text{osc}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 
@@ -502,6 +504,124 @@ In school, the tag set was generally chosen as the left endpoints or right endpo
 \begin{equation}
     \zeta_{j} = a + \frac{b-a}{n}(j-1).
 \end{equation}
+
+\chapter{RIEMANN INTEGRAL}
+\textit{January 20th.}\\ \\
+Let us first summarise; let $f$ be a bounded function on the interval $[a,b]$. Then, the following are equivalent---
+\begin{itemize}
+    \item $f \in \cR[a,b]$,
+    \item For $\varepsilon > 0$, there exists $P \in \cP[a,b]$ such that $U(f,P)-L(f,P) < \varepsilon$,
+    \item For $\varepsilon > 0$, there exists $\delta > 0$ such that for all $P \in \cP[a,b]$ satisfying $\norm{P} < \delta$, $U(f,P)-L(f,P) < \varepsilon$,
+    \item There exists $\{P_{n}\} \subset \cP[a,b]$ such that $U(f,P_{n})-L(f,P_{n}) \to 0$,
+    \item There exists $\{P_{n}\} \subset \cP[a,b]$ such that $\lim_{n \to \infty} U(f,P_{n}) = \lim_{n \to \infty} L(f,P_{n})$,
+    \item $\lim_{\norm{P} \to 0} S(f,P) = \lambda$.
+\end{itemize}
+
+\section{Spaces and Algebras}
+Note that $\cB[a,b]$ is a vector space; a linear combination of two elements in it is also part of this set. If we now define a multiplication of two vectors in it as $(f \cdot g)(x) = f(x) \cdot g(x)$ for $f,g \in \cB[a,b]$, we see that $f \cdot g$ is also a vector in this space. Thus, we have made $\cB[a,b]$ into an algebra.
+
+We now question if $\cR[a,b]$ is an algebra, or even a vector space. We begin by defining $\cI: \cR[a,b] \to \R$ by $\cI (f) = \int_{a}^{b} f$. We can ask the following questions:
+\begin{itemize}
+    \item whether $\cI$ is linear; $\cI(rf+g) = r\cI(f) + \cI(g)$, for $r \in \R$,
+    \item whether $\cI$ is multiplicative; $\cI(f \cdot g) = \cI(f) \cdot \cI(g)$.
+\end{itemize}
+Other questions can also be asked; is $\cI$ a monotonic function, or even a homomorphism if $\cR[a,b]$ proves to be a vector space.\\
+
+Given $f \in \cB[a,b]$ and $P \in \cP[a,b]$, we have
+\begin{equation}
+    M_{j} - m_{j} = \sup\{\abs{f(x)-f(y)} : x,y \in I_{j}\}.
+\end{equation}
+We denote this value by $\osc_{I_{j}} f$, the oscillation of $f$ over $I_{j}$. If we adopt this notation, we would then have
+\begin{equation}
+    U(f,P) - L(f,P) = \sum_{j=1}^{n} \osc_{I_{j}} f \cdot \abs{I_{j}}.
+\end{equation}
+\subsection{Results on $\cI$ and $\cR[a,b]$}
+Assume that, here, $f,g \in \cR[a,b]$ and $r \in \R$.
+\begin{enumerate}
+\item Coming back, let us prove that $\cI$ is, in fact, linear.
+\begin{proof}
+    First, we show that $rf+g$ is Riemann integrable for $f,g \in \cR[a,b]$. For any partition $P \in \cP[a,b]$, we have
+    \begin{align}
+        S(rf+g,P) &= \sum_{j=1}^{n} (rf+g)(\zeta_{j})\abs{I_{j}} \notag \\
+        &= r \sum_{j=1}^{n} f(\zeta_{j})\abs{I_{j}} + \sum_{j=1}^{n} g(\zeta_{j}) \abs{I_{h}} = rS(f,P)+S(g,P).
+    \end{align}
+    This result is regardless of choice of tag set $T_{P}$. Thus, $rf+g \in \cR[a,b]$. Now, we show the linearity of $\cI$.
+    \begin{align}
+        \abs{S(rf+g,P) -r\int f - \int g} &= \abs{r(S(f,P)-\int f) + (S(g,P) - \int g)} \leq \abs{r}\abs{S(f,P)-\int f} + \abs{S(g,P)- \int g} \\
+        \implies S(rf+g,P) &\to r \int f + \int g \text{ as } \norm{P} \to 0.
+    \end{align}
+\end{proof}
+\item We now show that $f \cdot g \in \cR[a,b]$ for $f$ and $g$ Riemann integrable. We first show this for $f^{2}$.
+\begin{proof}
+    We show that $f^{2} \in \cR[a,b]$. We have
+    \begin{align}
+        \abs{f^{2}(x)-f^{2}(y)} = \abs{f(x)+f(y)}\abs{f(x)-f(y)} &\leq 2M \abs{f(x)-f(y)} \notag \\
+        \implies \sum_{j} \osc_{I_{j}} \abs{f}^{2} \cdot \abs{I_{j}} &\leq \sum_{j} 2M \cdot \osc_{I_{j}} f \cdot \abs{I_{j}} \notag \\
+        U(f^{2},P)-L(f^{2},P) &\leq 2M(U(f,P)-L(f,P)).
+    \end{align}
+    Since $f$ is Riemann integrable, $U(f,P)-L(f,P)$ can be lowered to less than $\varepsilon > 0$, we can make the left hand term less than $\varepsilon$. Thus, $f^{2} \in \cR[a,b]$.
+\end{proof}
+Despite this, $\cI(f^{2}) \neq (\cI(f))^{2}$; $\cI$ is not multiplicative.
+
+\item Let us show $f \cdot g \in \cR[a,b]$.
+\begin{proof}
+    Break down $f \cdot g$ as
+    \begin{equation}
+        f \cdot g = \frac{1}{4}\left( (f+g)^{2} - (f-g)^{2}\right).
+    \end{equation}
+    From the previous results, the right hand side is Riemann integrable. Thus, $f \cdot g \in \cR[a,b]$.
+\end{proof}
+
+\item If $f(x) \geq 0$ for all $x \in [a,b]$, then $\cI(f) \geq 0$. This result is left as an exercise to the reader.
+
+\item If $f \geq g$, then $\cI(f) \geq \cI(g)$. This result is also left as an exercise to the reader.
+
+\item If $f \in \cR[a,b]$, then $\abs{f} \in \cR[a,b]$. Moreover, $\abs{\cI(f)} \leq \cI(\abs{f})$.
+\begin{proof}
+    Start with
+    \begin{equation}
+        \abs{f(x)}-\abs{f(y)} \leq \abs{f(x)-f(y)}.
+    \end{equation}
+    Therefore, for all $P \in \cP[a,b]$, $\osc_{I_{j}} \abs{f} \leq \osc_{I_{j}} f$ for all valid $j$. Thus,
+    \begin{equation}
+        U(\abs{f},P) - L(\abs{f},P) \leq U(f,P) - L(f,P)
+    \end{equation}
+    tells us that $\abs{f}$ is also Riemann integrable. Using the fact that $\cI$ is monotonous,
+    \begin{align}
+        -\abs{f} \leq f \leq \abs{f} \implies -\int \abs{f} \leq \int f \leq \int \abs{f} \implies \abs{\cI(f)} \leq \cI(\abs{f}).
+    \end{align}
+\end{proof}
+
+\item We have $\max\{f,g\},\min\{f,g\} \in \cR[a,b]$. The proof of this result is left as an exercise to the reader.
+
+\item If $\frac{1}{g} \in \cB[a,b]$, then $\frac{1}{g} \in \cR[a,b]$. This would also imply that $\frac{f}{g} \in \cR[a,b]$.
+\begin{proof}
+    Denote $1/\tilde{M} = \sup_{[a,b]} \frac{1}{g}$. Then,
+    \begin{equation}
+        \abs{\frac{1}{g(x)} - \frac{1}{g(y)}} \leq \frac{1}{\tilde{M}^{2}} \abs{g(x)-g(y)}.
+    \end{equation}
+    We can then proceed by using the oscillations.
+\end{proof}
+
+\item Let $a < c < b$. Then $f|_{[a,c]} \in \cR[a,c]$ and $f|_{[c,b]} \in \cR[c,b]$. Moreover, $\int_{a}^{c} f + \int_{c}^{b} f = \int_{a}^{b} f$.
+
+\begin{proof}
+    For $\varepsilon > 0$, there exists $P \in \cP[a,b]$ such that $U(f,P) - L(f,P) < \varepsilon$. Let, without loss of generality, $c \in P$. If not, we could refine $P$ as $P \cup \{c\}$. We then have $P: x_{0} = a < x_{1} < \ldots < x_{m} = c < \ldots < x_{n} = b$. The nodes from $x_{0}$ to $x_{m}$ form a partition $P_{1} \in \cP[a,b]$, and the nodes $x_{m}$ to $x_{n}$ form a partition $P_{2} \in \cP[c,b]$. Thus,
+    \begin{align}
+        (U(f,P_{1})-L(f,P_{1})) + (U(f,P_{2})-L(f,P_{2})) < \varepsilon.
+    \end{align}
+    Both of these pairs of terms are non-negative, so each pair individually is less than $\varepsilon$. Thus, $f|_{[a,c]} \in \cR[a,c]$ and $f|_{[c,b]} \in \cR[c,b]$. Now let $\lambda_{1} = \int_{a}^{c} f$ and $\lambda_{2} = \int_{c}^{b} f$. Then,
+    \begin{align}
+        \int_{a}^{b} f \geq L(f,P) = L(f,P_{1}) + L(f,P_{2}) > U(f,P_{1}) - \varepsilon + U(f,P_{2}) - \varepsilon \geq \lambda_{1} + \lambda_{2} - 2\varepsilon
+    \end{align}
+    and
+    \begin{align}
+        \int_{a}^{b} f \leq U(f,P) = U(f,P_{1}) + U(f,P_{2}) < L(f,P_{1}) + \varepsilon + L(f,P_{2}) + \varepsilon \leq \lambda_{1} + \lambda_{2} + 2\varepsilon.
+    \end{align}
+    Both inequalities imply that $\abs{\int_{a}^{b} f - (\lambda_{1}+\lambda_{2})} \leq 2\varepsilon$.
+\end{proof}
+
+\end{enumerate}
 
 \begin{appendices}
 
