@@ -314,7 +314,7 @@ We ask another question; for a fixed $n$, where does the random walk achieve its
 
 For $0<m<n$, $M_{n}=m$ if and only if $S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}$ and $S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n}$. Notice that the first of these two conditions depends only on $X_{1},X_{2},\ldots,X_{m}$, and the second condition depends only on $X_{m+1},X_{m+2},\ldots,X_{n}$. So, $P(M_{n}=m) = P(S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}) \cdot P(S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n})$.
 
-The key idea here is to consider the \eax{reversed walk}; define a new walk with $X_{1}'=X_{m},\; X_{2}'=X_{m-1},\ldots,X_{m}'=X_{1}$. Also define $S_{k}' = X_{1}' + \ldots + X_{k}'$. From here, we can deduce that $S_{m}>S_{m-i}$ is true if and only if $X_{m}+\ldots+X_{m-i}$ is true, which is true if and only if $S_{i}'>0$ is true. So, $P(S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}) = P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$. If we now define $S_{k}''=X_{m+1}+\ldots+X_{m+k}$, we have
+The key idea here is to consider the \eax{reversed walk}; define a new walk with $X_{1}'=X_{m},\; X_{2}'=X_{m-1},\ldots,X_{m}'=X_{1}$. Also define $S_{k}' = X_{1}' + \ldots + X_{k}'$. From here, we can deduce that $S_{m}>S_{m-i}$ is true if and only if $X_{m}+\ldots+X_{m-i}>0$ is true, which is true if and only if $S_{i}'>0$ is true. So, $P(S_{m}>S_{0},\; S_{m}>S_{1},\ldots,S_{m}>S_{m-1}) = P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$. If we now define $S_{k}''=X_{m+1}+\ldots+X_{m+k}$, we have
 \begin{align*}
     P(S_{m} \geq S_{m+1},\; S_{m} \geq S_{m+2}, \ldots, S_{m} \geq S_{n}) &= P(X_{m+1}\leq 0,\; X_{m+1}+X_{m+2}\leq 0, \ldots, X_{m+1}+\ldots+X_{n}\leq 0) \\
     &= P(S_{1}''\leq 0,\; S_{2}''\leq 0,\ldots,S_{n-m}''\leq 0) \\
@@ -337,12 +337,12 @@ where $m$ is of the form $2k$ or $2k+1$, and $n$ is of the form $2\nu$, with $1 
 Plugging in $m = 0$, we get $P(M_{n}=0) = P(S_{1} \leq 0, \ldots, S_{2 \nu} \leq 0) = \frac{1}{2}u_{2\nu}$. For $m=n$, we have $P(M_{n}=n) = P(S_{1}\leq 0, \ldots, S_{2\nu} \leq 0) = \frac{1}{2}u_{2 \nu}$. Let us first compute $u_{2k}$.
 \begin{align}
     u_{2k} &= P(2k=0) = \frac{\binom{2k}{k}}{2^{2k}} = \frac{(2k)!}{(k!)^{2}2^{2k}} \notag \\
-    &\sim \frac{(2k)^{2k+\frac{1}{2}} e^{-2k} \sqrt{2\pi}}{(\sqrt{2pi} k^{k+\frac{1}{2}} e^{-k})^{2}2^{2k}} = \frac{1}{\sqrt{\pi k}}.
+    &\sim \frac{(2k)^{2k+\frac{1}{2}} e^{-2k} \sqrt{2\pi}}{(\sqrt{2\pi} k^{k+\frac{1}{2}} e^{-k})^{2}2^{2k}} = \frac{1}{\sqrt{\pi k}}.
 \end{align}
 For $0 < a < b < 1$, we have
 \begin{align}
     P(an \leq M_{n} \leq bn) &= \sum_{m = an}^{bn} P(M_{n}=m) = \sum_{k=a\nu}^{b\nu} u_{2k}u_{2\nu-2k} \notag \\
-    &\sim \sum_{k=a\nu}^{b\nu}\frac{1}{\sqrt{\pi k}}\frac{1}{\sqrt{\pi (\nu-k)}} = \sum_{k=a\nu}^{b\nu} \frac{1}{\nu \sqrt{\pi \frac{k}{\nu} \sqrt{\pi (1-\frac{k}{\nu})}}} \notag \\
+    &\sim \sum_{k=a\nu}^{b\nu}\frac{1}{\sqrt{\pi k}}\frac{1}{\sqrt{\pi (\nu-k)}} = \sum_{k=a\nu}^{b\nu} \frac{1}{\nu \sqrt{\pi \frac{k}{\nu}} \sqrt{\pi (1-\frac{k}{\nu})}}\notag \\
     &\to \frac{1}{\pi} \int_{a}^{b} \frac{dx}{\sqrt{x(1-x)}} = \frac{2}{\pi} (\arcsin{\sqrt{b}} - \arcsin{\sqrt{a}}).
 \end{align}
 In fact, this is the \eax{arcsin law for maxima}; for $0 \leq t \leq 1$, we have
