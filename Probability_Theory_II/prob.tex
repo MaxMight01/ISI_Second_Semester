@@ -37,6 +37,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Var}{\text{Var}}
 \newcommand{\Cov}{\text{Cov}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor} % For flooor
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -491,6 +492,62 @@ Now suppose that $\frac{np_{n}} \to C > 0$ as $n \to \infty$. Then we have
 \end{equation}
 
 
+\textit{January 21st.}
+\begin{remark}
+    For this next `game', we will think of $X_{i}$'s as the winnings in game $i$ and $\mu$ to be the entrance fees for a game.
+\end{remark}
+\begin{definition}
+    Suppose that $X_{1},X_{2},\ldots$ are independent, but not necessarily identically distributed. Let $S_{n} = X_{1} + \ldots + X_{n}$. We say a game with accumulated entrance fees $\{\alpha_{n},n\geq 1\}$ is fair if
+    \begin{equation}
+        P(\abs{\frac{S_{n}}{\alpha_{n}}-1} > \varepsilon) \to 0
+    \end{equation}
+    for all $\varepsilon > 0$.
+\end{definition}
+Using this definition of `fair', we look at an example.
+\begin{example}
+    This is the St.\ Petersburg's paradox. This is the game; toss a coin repeatedly until the first head is observed. If this head occurs at the $k^{\text{th}}$ toss, the amount paid out is $X = 2^{k}$. Let us find a fair accumulated entrance fees. In this case,
+    \begin{equation}
+        EX = \sum_{k=1}^{\infty} \frac{1}{2^{k}} 2^{k} = \infty.
+    \end{equation}
+    Suppose we play this game $n$ times. We are to find a fair accumulated sum $\{\alpha_{n}\}$ such that
+    \begin{equation}
+        P(\abs{S_{n}-\alpha_{n}} > \varepsilon \alpha_{n}) \to 0.
+    \end{equation}
+    To find this, we will define
+    \begin{align}
+        U_{j} &= X_{j} 1_{\{X_{j}\leq a_{n}\}}, \notag \\
+        V_{j} &= X_{j} 1_{\{X_{j} > a_{n}\}}. \notag
+    \end{align}
+    $a_{n}$ shall be determined later. Note that $S_{n} = X_{1} + \ldots + X_{n} = U_{1} + \ldots + U_{n} + V_{1} + \ldots V_{n}$. Then,
+    \begin{align}
+        P(\abs{S_{n}-\alpha_{n}} > \varepsilon \alpha_{n}) \leq  P(\abs{U_{1}+\ldots+U_{n}-\alpha_{n}} > \frac{1}{2}\varepsilon \alpha_{n}) + P(\abs{V_{1} + \ldots + V_{n}} > \frac{1}{2}\varepsilon \alpha_{n}).
+    \end{align}
+    We first bound the second term on the right hand side. We have
+    \begin{align}
+        P(\abs{V_{1} + \ldots + V_{n}} > \frac{1}{2}\varepsilon \alpha_{n}) &\leq P(\bigcup_{i=1}^{n} \{V_{i} \neq 0\}) \leq nP(V_{1} \neq 0) = nP(X_{1} > a_{n}) \\
+        &= \sum_{2^{k}>a_{n}} P(X=2^{k}) \leq \frac{2n}{a_{n}}.
+    \end{align}
+    Thus, we will require that $a_{n} >> n$. Also,
+    \begin{equation}
+        EU_{1} = \sum_{k \leq \log_{2}a_{n}} 2^{k} \cdot 2^{-k} = \floor{\log_{2}a_{n}}, \; \Var{U_{1}} \leq E[U_{1}^{2}] = \sum_{k \leq \log_{2}a_{n}} (2^{k})^{2} \cdot 2^{-k} = 2^{\floor{\log_{2}a_{n}}+1}-1 < 2a_{n}.
+    \end{equation}
+    $\frac{1}{n}(U_{1}+\ldots+U_{n}) \approx EU_{j} = \floor{\log_{2}a_{n}}$, so we should choose
+    \begin{equation}
+        \alpha_{n} = n EU_{j} = n \floor{\log_{2}a_{n}}.
+    \end{equation}
+    This gives us
+    \begin{equation}
+        P(\abs{U_{1}+\ldots+U_{n}-\alpha_{n}} > \frac{1}{2}\varepsilon \alpha_{n}) \leq \frac{n(2a_{n})}{\frac{1}{4}\varepsilon^{2}\alpha_{n}^{2}}.
+    \end{equation}
+    Thus, we have another condition where we require that $\frac{na_{n}}{\alpha_{n}^{2}} \to 0$. The conditions we require are
+    \begin{equation*}
+        \frac{n}{a_{n}} \to 0 \text{ and } \frac{na_{n}}{n^{2}(\log_{2}a_{n})^{2}} \to 0.
+    \end{equation*}
+    The sequence $\{a_{n}\}$ defined as $a_{n} = n \log_{2} n$ satisfies these properties. The sequnce $\alpha_{n}$ is thus
+    \begin{equation}
+        \alpha_{n} = n \log_{2} a_{n} = n \log_{2} n + n \log_{2} \log_{2} n.
+    \end{equation}
+\end{example}
 
 \begin{appendices}
 
