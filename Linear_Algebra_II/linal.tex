@@ -42,6 +42,7 @@
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
 \newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\tr}{\text{tr}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\R}{\mathbb{R}}
 
@@ -381,7 +382,7 @@ Other non-trivial properties may also be shown with ease.
 
 \chapter{EIGENVECTORS AND EIGENVALUES}
 
-\section{A Brief Summary of Linear Transformers}
+\section{Linear Transformers and an Introduction}
 Let $\mc{B} = (v_{1},\ldots,v_{n})$ be a basis of vector space $V$ and $\mc{C} = (w_{1},\ldots,w_{n})$ be a basis of a vector space $W$. As these are bases, given a $v \in V$, there exists a unique $X \in F^{n}$ such that $v = \mc{B}X$, called the \eax{coordinate vector} of $v$ with respect to the basis $\mc{B}$. We note that since the mapping from a $v \in V$ to a $X \in F^{n}$ is linear in nature and is bijection, the vector spaces $V$ and $F^{n}$ are isomorphic to each other. Similarly, a mapping that takes $w \in W$ to $Y \in F^{m}$ shows that $W$ and $F^{m}$ are isomorphic to each other. 
 
 Now suppose that there exists a linear map that takes $v \mapsto Tv$ with $v \in V$ and $Tv \in W$. This transformer $T$ is with respect to the bases $\mc{B}$ and $\mc{C}$ of $V$ and $W$, respectively. We construct the $m \times n$ matrix $A$ so that the $j^{\text{th}}$ column of $A$ is the coordinate vector of $Tv_{j}$ with respect to the basis $\mc{C}$. We will then have $T(\mc{B}) = \mc{C}A$. For any vector $v \in V$, we have
@@ -437,7 +438,7 @@ The next theorem will be divided into two parts.
 \subsection{Linear Operators}
 Let $T:V_{\mc{B}} \to V_{\mc{B}}$. Let $A$ be the matrix of $T$ with respect to the basis $\mc{B}$. The other matrices of $T$ with respect to new bases are $P^{-1}AP$, where $P_{n \times n}$ is invertible. Also, the fact that $T$ is bijective, one-one, or onto are all equivalent for a finite dimensional vector space $V$.
 
-\section{Eigenvectors and Eigenvalues}
+\subsection{Eigenvectors and Eigenvalues}
 \begin{definition}
     A non-zero vector $v \in V$ is said to be an \eax{eigenvector} of $T$ if $T(v) = \lambda v$ for some $\lambda \in \F$. If $A$ is a $n \times n$ matrix, a non-zero column vector $X$ is said to be an eigenvector of $A$ if $AX = \lambda X$ for some $\lambda \in \F$. $\lambda$, in both these cases, is called the \eax{eigenvalue} of $v$ and $X$ respectively.
 \end{definition}
@@ -453,12 +454,62 @@ The converse is also true; if $X$ is an eigenvector of $A_{n \times n}$, then $X
 Suppose $v$ is an eigenvector of $T: V \to V$ with eigenvalue $\lambda$. Let $W$ be the subspace spanned by $v$. Then every vector $w \in W$ is an eigenvector of $T$ with eigenvalue $\lambda$. The proof of this is left as an exercise.
 
 \begin{definition}
-    Two matrices $A_{n \times n}'$ and $A_{n \times n}$ are called similar if there exists an invertible matrix $P_{n \times n}$ such that $P^{-1}AP = A'$.
+    Two matrices $A_{n \times n}'$ and $A_{n \times n}$ are called \eax{similar matrices} if there exists an invertible matrix $P_{n \times n}$ such that $P^{-1}AP = A'$.
 \end{definition}
 
 Again let $T: V \to V$ be a linear operator, and let $\mc{B} = (v_{1},\ldots,v_{n})$. Suppose, with respect to the basis $\mc{B}$, the matrix of $T$ is $\begin{pmatrix}
     \lambda_{1} & \ldots & \ldots & \ldots \\ 0 & \ldots & \ldots & \ldots \\ \ldots & \ldots & \ldots & \ldots \\ 0 & \ldots & \ldots & \ldots    
 \end{pmatrix}$. Then $v_{1}$ is an eigenvector with eigenvalue $\lambda_{1}$.
+\section{Finding Eigenvalues and Eigenvectors}
+\textit{January 21st.}
+
+Let $T:V \to V$ and let $\mc{B} = (v_{1},\ldots,v_{n})$ be a basis of $V$. Then the matrix of $T$ with respect to the basis $\mc{B}$ is a diagonal matrix if and only if each of the basis elements is an eigenvector. An equivalent statement for matrices is that an $n \times n$ matrix $A$ is similar to a diagonal matrix if and only if $\F^{n}$ admits a basis consisting of eigenvectors of $A$. The proof of this is left as an exercise to the reader.
+
+We can now discuss the computation. For a linear operator $T: V \to V$, $\lambda$ is an eigenvalue of $T$ if and only if there exists a non-zero vector $v$ such that $Tv = \lambda v$. This can be rearranged to give
+\begin{equation}
+    (\lambda I_{v} -T)v = 0.
+\end{equation}
+We can now consider $\lambda I_{v} - T: V \to V$ to be a linear operator which maps $v \mapsto \lambda v - Tv$. If eigenvalues exist, this operator is a singular operator, that is, it contains a non-trivial kernel. The matrix of the operator $\lambda I_{v} - T$ comes out to be $\lambda I_{n} - A$, where $A$ is the matrix of $T$ with respect to the basis $\mc{B}$. This matrix is now singular, so we must have
+\begin{equation}
+    \det(\lambda I_{n} - A) = 0.
+\end{equation}
+The equation $\det(\lambda I_{n} - A)$ is called the \eax{characteristic polynomial} of $A$, and also $T$(?). The roots of this polynomial in $\lambda$ which lie in $\F$ are the eigenvalues of $A$, and $T$ as well.
+
+We would now like to show that similar matrices have the same eigenvalues, that is,
+\begin{equation}
+    \det(\lambda I_{n} - P^{-1}AP) = \det(\lambda I_{n} - A).
+\end{equation}
+This is simple to see as $\det(\lambda I_{n} - P^{-1}AP) = \det(P^{-1}(\lambda I_{n} - A)P) = \det P^{-1} \cdot \det(\lambda I_{n} - A) \cdot \det P = \det(\lambda I_{n} - A)$. The found out eigenvalues from this equation can then be put back and solved for $v$ to get the corresponding eigenvectors.
+
+\begin{proposition}
+    Let $\lambda_{1},\ldots,\lambda_{r}$ be distinct eigenvalues of $T:V \to V$ and let $v_{1},\ldots,v_{r}$ be the corresponding eigenvectors of $T$. Then $(v_{1},\ldots,v_{r})$ is a linearly independent set in $V$.
+\end{proposition}
+\begin{proof}
+    We claim that this is true for $r = 1,2$. Using a form of induciton, we will assume the result for $r-1$. Begin with
+    \begin{align}
+        \alpha_{1}v_{1} + \ldots + \alpha_{r}v_{r} &= 0 \notag \\
+        \implies \alpha_{1}Tv_{1} + \ldots + \alpha_{r}Tv_{r} &= 0 \notag \\
+        \implies \alpha_{1}\lambda_{1}v_{1} + \ldots + \alpha_{r}\lambda_{r}v_{r} &= 0.
+    \end{align}
+    Multiplying the first equation by $\lambda_{1}$ and subtracting it from the current equation, we have
+    \begin{align}
+        (\alpha_{2}\lambda_{2}-\alpha_{2}\lambda_{1})v_{2} + (\alpha_{3}\lambda_{3}-\alpha_{3}\lambda_{1})v_{3} + \ldots + (\alpha_{r}\lambda_{r}-\alpha_{r}\lambda_{1})v_{r} &= 0 \notag \\
+        \implies \alpha_{2}(\lambda_{2}-\lambda_{1}) + \alpha-{3}(\lambda_{3}-\lambda_{1})v_{3} + \ldots + \alpha_{r}(\lambda_{r}-\lambda_{1})v_{r} &= 0.
+    \end{align}
+    By hypothesis, $\alpha_{j}(\lambda_{j}-\lambda_{1}) = 0$. As the eigenvalues are distinct, we must have $\alpha_{j} = 0$ for $j = 2,3,\ldots,r$. We are left with $\alpha_{1}v_{1} = 0$, which gives us $\alpha_{1} = 0$.
+\end{proof}
+When the $n$ eigenvalues found of $A$ are distinct, the corresponding eigenvectors $v_{1},\ldots,v_{n}$ are linearly independent in $\F^{n}$, and hence $\mc{B} = (v_{1},\ldots,v_{n})$ is a basis of $\F^{n}$. The matrix $P^{-1}AP$ is the matrix of the linear operator $T_{A} : \F^{n} \to \F^{n}$ with respect to the basis $\mc{B}$, with the column of $P$ being the eigenvectors $v_{1},\ldots,v_{n}$. As $\mc{B}$ consists of only eigenvectors, $P^{-1}AP$ is a diagonal matrix with the diagonal entries being the $n$ eigenvalues.
+
+We now define the determinant and trace for a linear operator. For such an operator $T$, $\text{tr}T = \text{tr}A$ where $A$ is a matrix of $T$ with respect to some abitrary basis. Note that since $\tr(P^{-1}AP) = \tr(APP^{-1}) = \tr{A}$, the choice of basis is not important. Similarly, we define $\det{T} = \det{A}$.
+
+We can now have a closer look at the characteristic equation. To find the constant term of $\det(xI-A)$, we simply plug in $x=0$ to give us $\det(-A) = (-1)^{n} \det A$. The coefficient of $x^{n-1}$ in $\det(xI-A)$ is $-\tr{A}$ as the coefficients of $x^{n-1}$ come solely from the expansion of $(x-a_{11})(x-a_{22})\cdots(x-a_{nn})$. Clearly, we can conclude that the sum of the eigenvalues is $\tr{A}$ and the product of the eigenvalues is $\det{A}$.
+
+\subsection{Eigenspace}
+For ease, let us denote $\chi_{A}(x)$ to mean $\det(xI-A)$. The \eax{eigenspace} for a given eigenvalue $\lambda$ is defined as
+\begin{equation}
+    E_{\lambda} = \{v \in V : Tv = \lambda v\}.
+\end{equation}
+This is a subspace of the vector space $V$. The \eax{geometric multiplicity} of $\lambda$ is defined as the dimension of $E_{\lambda}$. This geometric multiplicity of $\lambda$ is always less than or equal to its algebraic multiplicity in $\chi_{A}(x)$.
 
 
 \begin{appendices}
