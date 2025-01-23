@@ -505,12 +505,79 @@ We now define the determinant and trace for a linear operator. For such an opera
 We can now have a closer look at the characteristic equation. To find the constant term of $\det(xI-A)$, we simply plug in $x=0$ to give us $\det(-A) = (-1)^{n} \det A$. The coefficient of $x^{n-1}$ in $\det(xI-A)$ is $-\tr{A}$ as the coefficients of $x^{n-1}$ come solely from the expansion of $(x-a_{11})(x-a_{22})\cdots(x-a_{nn})$. Clearly, we can conclude that the sum of the eigenvalues is $\tr{A}$ and the product of the eigenvalues is $\det{A}$.
 
 \subsection{Eigenspace}
-For ease, let us denote $\chi_{A}(x)$ to mean $\det(xI-A)$. The \eax{eigenspace} for a given eigenvalue $\lambda$ is defined as
+\textit{January 23rd.}
+
+For ease, let us denote $\chi_{T}(x)$ to mean $\det(xI-A)$. The \eax{eigenspace} for a given eigenvalue $\lambda$ is defined as
 \begin{equation}
     E_{\lambda} = \{v \in V : Tv = \lambda v\}.
 \end{equation}
-This is a subspace of the vector space $V$. The \eax{geometric multiplicity} of $\lambda$ is defined as the dimension of $E_{\lambda}$. This geometric multiplicity of $\lambda$ is always less than or equal to its algebraic multiplicity in $\chi_{A}(x)$.
+This is a subspace of the vector space $V$. The \eax{geometric multiplicity} of $\lambda$ is defined as the dimension of $E_{\lambda}$. This geometric multiplicity of $\lambda$ is always less than or equal to its algebraic multiplicity in $\chi_{T}(x)$. For recall, the \eax{algebraic multiplicity} of $\lambda$ is the highest power of $(x-\lambda)$ that divides $\chi_{T}(x)$.
 
+\begin{theorem}
+    Let $\lambda$ be an eigenvalue of $T:V \to V$. Then the geometric multiplicity of $\lambda$ is always less than or equal to its algebraic multiplicity.
+\end{theorem}
+\begin{proof}
+    Let $k$ me the geometric multiplicity of $\lambda$. Let $(v_{1},\ldots,v_{k})$ be an ordered basis of $E_{\lambda}$. Extend this to a basis $\mc{B} = (v_{1},\ldots,v_{k},u_{1},\ldots,u_{n-k})$ of $V$. The matrix of $T$ with respect to the basis $\mc{B}$ is of the form $A = \begin{pmatrix}
+        \lambda I_{k} & B \\ O & D
+    \end{pmatrix}$. Thus, the characteristic polynomial looks like
+    \begin{equation}
+        \chi_{T}(x) = \det(xI_{n}-A) = \det \begin{pmatrix}
+            (x-\lambda)I_{k} & -B \\ O & xI_{n-k}-D
+        \end{pmatrix}
+        = (x-\lambda)^{k} \cdot \det(XI_{n-k}-D).
+    \end{equation}
+    This shows that $(x-\lambda)^{k}$ divides $\chi_{T}(x)$, so we must have an algebraic multiplicity greater than or equal to this $k$.
+\end{proof}
+
+\section{Diagonalizability}
+We first define what this means for a linear mapping from $V$ to $V$.
+\begin{definition}
+    A linear operator $T: V \to V$ is said to be a \eax{diagonizable linear operator} if there exists a basis of $V$ consisting of eigenvectors of $T$. This means that the matrix of $T$ with respect to this basis if a digaonal matrix and the matrix of $T$ with respect to any other basis is similar to this diagonal matrix.
+\end{definition}
+A similar definition works for matrices.
+\begin{definition}
+    An $n \times n$ matrix $A$ over $\F$ is said to be a \eax{diagonizable matrix} if $A$ is similar to a diagonal matrix. Equivalently, $\F^{n}$ then admits a basis consisting of eigenvectors of $A$, thinking of $T_{A}:\F^{n} \to \F^{n}$ as a linear operator.
+\end{definition}
+
+Now let us suppose that $T$ is diagonizable. Let $\lambda_{1},\lambda_{2},\ldots,\lambda_{k}$ be the distinct eigenvalues of $T$. There then exists an ordered basis consisting of eigenvectors of $T$ and with respect to this basis, the matrix of $T$ is a diagonal matrix with diagonal entries consisting solely of $\lambda_{1},\lambda_{2},\ldots,\lambda_{k}$.
+
+If $\lambda_{i}$ is of algebraic multiplicity $d_{i}$, then the matrix of $T$ looks like $\begin{pmatrix}
+    \lambda_{1}I_{d_{1}} & & & \\
+     & \lambda_{2}I_{d_{2}} & & \\
+     & & \ldots & \\
+     & & & \lambda_{k}I_{d_{k}}
+\end{pmatrix}$. Thus, the characteristic polynomial then looks like $(x-\lambda_{1})^{d_{1}} (x-\lambda_{2})^{d_{2}} \cdots (x-\lambda_{k})^{d_{k}}$.
+
+The geometric multiplicity of $\lambda_{i}$ is the dimension of $E_{\lambda_{i}}$, that is, the nullity of the operator $(\lambda_{i}I_{n}-A)$. But here, $\ker(\lambda_{i}I_{n}-A) = d_{i}$, which is just the algebraic multiplicity of $\lambda_{i}$. Hence, if $T$ is diagonizable, then each eigenvalue of it has the same algebraic multiplicity and geometric multiplicity.
+
+\begin{proposition}
+    If $E_{\lambda_{1}},\ldots,E_{\lambda_{k}}$ are the eigenspaces corresponding to the distinct eigenvalues, say, $\lambda_{1},\ldots,\lambda_{k}$ of $T$, then $E = E_{\lambda_{1}} + \cdots + E_{\lambda_{k}}$ is a direct sum.
+\end{proposition}
+\begin{proof}
+    It is enough to show that $E_{\lambda_{1}},\ldots,E_{\lambda_{k}}$ are independent. Let $v_{1}+v_{2}+\ldots+v_{k} = 0$, where $v_{i} \in E_{\lambda_{i}}$. As $v_{1},v_{2},\ldots,v_{k}$ come from distinct eigenspaces, they are linearly independent, and our equation must imply that $v_{1} = \ldots = v_{k} = 0$.
+\end{proof}
+\begin{proposition}
+    If $T$ is a diagonizable operator, and if $\lambda_{1},\ldots,\lambda_{k}$ are the distinct eigenvalues of $T$, then
+    \begin{equation}
+        V = E_{\lambda_{1}} \oplus \ldots \oplus E_{\lambda_{k}}.
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    As $T$ is diagonizable, the algebraic and geometric multiplicities are equal for all the eigenvalues $\lambda_{i}$. Denote $\dim E_{\lambda_{i}} = d_{i}$. As $\chi_{T}(x)$ completely factors into linear factors, due to $T$ being diagonizable, we have $n = d_{1} + \ldots + d_{k}$. Also, $E_{\lambda_{1}} + \ldots + E_{\lambda_{k}}$ is a direct sum, that is,
+    \begin{equation}
+        \dim(E_{\lambda_{1}}+\ldots+E_{\lambda_{k}}) = \dim E_{\lambda_{1}} + \ldots + \dim E_{\lambda_{k}} = n.
+    \end{equation}
+    This direct sum is a subspace of $V$ and has the dimension as $V$. This mut mean that the direct sum is exactly $V$.
+\end{proof}
+
+\begin{theorem}
+    Let $T$ be a linear operator on a finite dimensional vector space $V$, and let $\lambda_{1},\ldots,\lambda_{k}$ be the distinct eigenvalues of $T$. Also let $E_{\lambda_{i}}$ be the eigenspace of $\lambda_{i}$. Then, the following are equivalent.
+    \begin{itemize}
+        \item $T$ is diagonizable,
+        \item $\chi_{T}(x) = (x-\lambda_{1})^{d_{1}} \cdots (x-\lambda_{k})^{d_{k}}$ and $\dim E_{\lambda_{i}} = d_{i}$,
+        \item $V = E_{\lambda_{1}} \oplus \ldots \oplus E_{\lambda_{k}}$.
+    \end{itemize}
+\end{theorem}
 
 \begin{appendices}
 
