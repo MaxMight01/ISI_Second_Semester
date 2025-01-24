@@ -35,6 +35,8 @@
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cP}{\mathcal{P}}
 \newcommand{\Var}{\text{Var}}
 \newcommand{\Cov}{\text{Cov}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor} % For flooor
@@ -114,6 +116,9 @@
     \item $EX$, the expectation of the random variable $X$.
     \item $\text{Var}X$, the variance of the random variable $X$.
     \item $N(\mu,\sigma^{2})$, a normal distribution with expectation $\mu$ and variance $\sigma^{2}$.
+    \item $N_{n}(k)$, the number of paths from $(0,0)$ to $(n,k)$ in a simple random walk.
+    \item $N_{n}^{+}(k)$, the number of paths from $(0,0)$ to $(n,k)$ through strictly positive values in a random walk.
+    \item $p_{k}^{X}$, the probability mass function for a random variable $X$.
 \end{notationlist}
 
 \newpage
@@ -128,7 +133,7 @@
 %%-------------------------------------------------------------------------------------------------
 
 
-\chapter{}
+\chapter{RANDOM WALKS AND MISC. RESULTS}
 
 
 \textit{January 3rd.}
@@ -548,6 +553,160 @@ Using this definition of `fair', we look at an example.
         \alpha_{n} = n \log_{2} a_{n} = n \log_{2} n + n \log_{2} \log_{2} n.
     \end{equation}
 \end{example}
+
+\chapter{GENERATING FUNCTIONS}
+
+\textit{January 24th.}
+
+\begin{definition}
+    For a sequence $\{a_{n}\}_{n \geq 0}$, the \eax{generating function} of $\{a_{n}\}$ is given as
+    \begin{equation}
+        A(s) = \sum_{n=0}^{\infty} a_{n}s^{n}
+    \end{equation}
+    for some $-s_{0}<s<s_{0}$.
+\end{definition}
+For this probability course, we will be interested in a particular form; for a random variable $X$ that takes values $k=0,1,\ldots$, the function we look at is
+\begin{equation}
+    \sum_{k=0}^{\infty}P(X=k) s^{k} \text{ for } -1 \leq s \leq 1.
+\end{equation}
+Suppose we have two sequences $\{a_{n}\}$ and $\{b_{n}\}$ with generating functions $A(s)$ and $B(s)$, respectively. If we define a new sequence $\{c_{n}\}$ as
+\begin{equation}
+    c_{n} = a_{0}b_{n} + a_{1}b_{n-1} + \ldots + a_{n-1}b_{1} + a_{n}b_{0} \text{ for all } n \geq 0,
+\end{equation}
+then the sequence $\{c_{n}\}$ is termed the \eax{convolution} of the sequences $\{a_{n}\}$ and $\{b_{n}\}$, and we shall denote it as
+\begin{equation*}
+    \{c_{n}\} = \{a_{n}\} \ast \{b_{n}\}.
+\end{equation*}
+Note that this convolution operation is both associative and commutative. We are now interested in finding the generating function of $\{c_{n}\}$. We have
+\begin{align}
+    C(s) &= \sum_{n=0}^{\infty} c_{n} s^{n} = \sum_{n=0}^{\infty} \left( \sum_{k=0}^{n} a_{k}b_{n-k} \right) s^{n} \notag \\
+    &= \sum_{n=0}^{\infty} \sum_{k=0}^{n} a_{k}s^{k} b_{n-k}s^{n-k} = \sum_{k=0}^{\infty} \sum_{m=0}^{\infty} a_{k}s^{k} b_{m}s^{m} \notag \\
+    \implies C(s) &= \left( \sum_{k=0}^{\infty} a_{k}s^{k} \right) \cdot \left( \sum_{m=0}^{\infty} b_{m}s^{m} \right) = A(s) \cdot B(s).
+\end{align}
+We state this down as a theorem.
+\begin{theorem}
+    $C(s) = A(s) \cdot B(s)$ when $\{c_{n}\} = \{a_{n}\} \ast \{b_{n}\}$.
+\end{theorem}
+Suppose $X$ takes values in $\Z_{+} = \{0,1,\ldots\}$. Denote $P(X=k)$ as $p_{k}$. The generating function is, thus,
+\begin{equation*}
+    \cP (s) = \sum_{k=0}^{\infty} p_{k} s^{k} = E[s^{X}].
+\end{equation*}
+Also,
+\begin{align}
+    \cP (1) &= 1,\\
+    \cP'(1) &= \sum_{k=1}^{\infty} kp_{k} s^{k-1} |_{s=1} = EX.
+\end{align}
+Also note that
+\begin{align}
+    E[X^{2}] = \sum_{k=0}^{\infty} k^{2} p_{k} = \sum k(k-1) p_{k} + \sum k p_{k} = \cP''(1) + \cP'(1)
+\end{align}
+which gives us the variance of $X$ a
+\begin{align}
+    \Var X = E[X^{2}] - (EX)^{2} = \cP ''(1) + \cP'(1) - (\cP '(1))^{2}.
+\end{align}
+The individual probabilities of $X=k$ may also be found as
+\begin{equation}
+    p_{k} = P(X=k) = \frac{1}{k!} \cdot \frac{d^{k}}{ds^{k}} \cP (s) |_{s=0}.
+\end{equation}
+
+Now suppose that $X$ and $Y$ are two independent variables, taking values in $\Z_{+}$. Let $Z = X+Y$. We ask the probability that $Z$ equals $k$. We can find this as
+\begin{equation}
+    P(Z = k) = \sum_{m=0}^{k} P(X=m, Y = k-m) = \sum_{m=0}^{k} P(X = m) \cdot P(Y = k-m).
+\end{equation}
+Therefore, denoting $p_{k}^{(X)}$ to be the probability mass function of $X$, we have
+\begin{equation}
+    \{p_{k}^{(Z)}\} = \{p_{k}^{(X)}\} \ast \{p_{k}^{(Y)}\} \implies \cP^{(Z)}(s) = \cP^{(X)} (s) \cdot \cP^{(Y)} (s).
+\end{equation}
+There is an easier way to see the last equation; we could have started with $Es^{Z} = E[s^{X} \cdot s^{Y}] = E[s^{X}] E[s^{Y}]$.\\
+
+If we have $S_{n} = X_{1} + X_{2} + \ldots + X_{n}$, where the $X_{i}$'s are independently distributed taking values in $\Z_{+}$, it can be shown that
+\begin{equation}
+    \{p_{k}^{(S_{n})}\} = \{p_{k}^{(X)}\}^{n \ast}
+\end{equation}
+\begin{example}
+    Let us compute the generating function of $X \sim \text{Bin}(n,p)$. We have
+    \begin{align}
+        \cP (s) = \sum_{k=0}^{\infty} P(X=k) s^{k} = \sum_{k=0}^{n} \binom{n}{k} p^{k} (1-p)^{n-k} s^{k} = \left( (1-p) + ps \right)^{n}.
+    \end{align}
+    This is the generating function of the binomial distribution. Clearly,
+    \begin{align*}
+        EX &= \cP '(1) = np,\\
+        \Var X &= \cP ''(1) + \cP '(1) - (\cP'(1))^{2} = n(n-1)p^{2} + np - n^{2}p^{2} = np(1-p).
+    \end{align*}
+    Note that using this generating function, we can also show that $\text{Bin}(n,p) + \text{Bin}(m,p) = \text{Bin}(m+n,p)$ when the former terms are independent.
+\end{example}
+\begin{example}
+    We look at $X \sim \text{Poisson}(\lambda)$. We have
+    \begin{align}
+        \cP (s) = \sum_{k=0}^{\infty} e^{-\lambda} \frac{\lambda^{k}}{k!} s^{k} = e^{-\lambda} \sum_{k=0}^{\infty} \frac{(\lambda s)^{k}}{k!} = e^{-\lambda + \lambda s}.
+    \end{align}
+    For this, we can als verify $EX = \Var X = \lambda$. We can also show that $\text{Poisson}(\lambda) + \text{Poisson}(\mu) = \text{Poisson}(\lambda + \mu)$ when the former terms are independent.
+\end{example}
+\begin{example}
+    We look at $X \sim \text{Geo}(p)$. Denote $1-p$ as $q$. The generating function is given as
+    \begin{equation}
+        \cP (s) = \sum_{k=0}^{\infty} pq^{k}s^{k} = \frac{p}{1-qs}.
+    \end{equation}
+    As an extension, let $X_{k}$ denote the number of failures between the $(k-1)^{\text{th}}$ and $k^{\text{th}}$ successes. If we denote $S_{r} = X_{1} + X_{2} + \ldots + X_{r}$, we find that $S_{r} \sim \text{NB}(p,r)$. From direct computation, we know that
+    \begin{equation*}
+        P(S_{r} = k) = \binom{r+k-1}{k} q^{k} p^{r} \text{ for } k = 0,1,\ldots
+    \end{equation*}
+    Let us compute this in another way; $S_{r}$ is the sum of independent geomtric random variables with parameter $p$. We have
+    \begin{equation}
+        \cP^{(S_{r})}(s) = \left( \frac{p}{1-qs} \right)^{r} = p^{r}(1-qs)^{-r} = p^{r} \sum_{k=0}^{\infty} \binom{-r}{k} (-qs)^{k}
+    \end{equation}
+    which tells us that
+    \begin{equation}
+        P(S_{r}=k) = p^{r}\binom{-r}{k} (-q)^{k}.
+    \end{equation}
+\end{example}
+\section{Random Walks, with Generating Functions}
+Here, we consider the paths that have a right step with probability $p$ and a left step with probability $q = 1-p$.
+We first look at the waiting time for the first gain, that is, the event $\{S_{1}\leq 0, S_{2} \leq 0, \ldots, S_{n-1} \leq 0, S_{n} = 1\}$ (Event ($\ast$)). Denote the probability of this event by $\phi_{n}$, and its generating function by $\Phi (s)$. Note that $\phi_{0} = 0$ and $\phi_{1} = p$ lead to trivial cases. We focus on $n > 1$.
+
+We must have $S_{1} = -1$ (Event (1)). Denote, by $\nu < n$, the first return to $0$ (Event (2)). $\nu$ only depends on $X_{0},X_{1},\ldots,X_{\nu}$. We need another $n-\nu$ steps to reach $1$; this depends on $X_{\nu+1},X_{\nu+2},\ldots,X_{n}$ (Event (3)). For some $n > 1$, Event ($\ast$) occurs if and only Event (1) $\cap$ Event (2) $\cap$ Event (3) occurs for some $\nu < n$. The point here is that the three events are independent. For some fixed $\nu < n$,
+\begin{equation}
+    P(\text{Event (1)}) = q, \; P(\text{Event (2)}) = \phi_{\nu -1}, \; P(\text{Event (3)}) = \phi_{n-\nu}.
+\end{equation}
+Thus,
+\begin{equation}
+    \phi_{n} = \sum_{\nu = 2}^{n-1} q \phi_{\nu-1} \phi_{n-\nu}.
+\end{equation}
+We have
+\begin{align}
+    \Phi (s) - ps &= \sum_{n=2}^{\infty} \phi_{n}s^{n} = q\sum_{n=2}^{\infty} (\phi_{1}\phi_{n-2} + \ldots + \phi_{n-2}\phi_{1}) s^{n} = qs \sum_{n=1}^{\infty} \phi_{n}^{2 \ast} s^{n} = qs(\Phi(s))^{2} \\
+    \implies \Phi (s) - ps &= qs(\Phi(s))^{2}.
+\end{align}
+This is a standard quadratic; solving gives us
+\begin{align}
+    \Phi (s) = \dfrac{1 \pm \sqrt{1-4pqs^{2}}}{2qs}.
+\end{align}
+The solution with the `$+$' is rejected; if it was valid, then plugging in $s < 1$ would give us $\Phi (s) > 1$, which is impossible. We expand this using the binomial theorem,
+
+\begin{align}
+    \Phi (s) = \frac{1}{2qs} \left( 1 - \sum_{k=0}^{\infty} \binom{\frac{1}{2}}{k} (-4pqs^{2})^{k}  \right) = \sum_{k=1}^{\infty} \binom{\frac{1}{2}}{k} \frac{(-1)^{k-1} (4pq)^{k}}{2q} s^{2k-1}
+\end{align}
+which tells us that
+\begin{align}
+    \phi_{2k-1} = \frac{(-1)^{k-1}}{2q} \binom{\frac{1}{2}}{k} (4pq)^{k}, \; \phi_{2k} = 0.
+\end{align}
+Thus,
+\begin{equation*}
+    \Phi (1) = \sum \phi_{n} = \frac{1-\sqrt{1-4pq}}{2q} = \frac{1-\abs{p-q}}{2q} = \begin{cases}
+        \frac{p}{q} &\text{ if } p < q,\\
+        1 &\text{ if } p \geq q.
+    \end{cases}
+\end{equation*}
+This gives the probability that, at some point of the random walk, the displacement 1 is reached.
+
+Similarly, for displacement $S_{n}$, we have
+\begin{equation*}
+    P(S_{n} \leq 0 \; \forall n) = \begin{cases}
+        \frac{q-p}{p} &\text{ if } p < q,\\
+        0 &\text{ if } p \geq q.
+    \end{cases}
+\end{equation*}
+
 
 \begin{appendices}
 
