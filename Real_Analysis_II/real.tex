@@ -42,6 +42,8 @@
 \newcommand{\cB}{\mathcal{B}}
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cI}{\mathcal{I}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cF}{\mathcal{F}}
 \newcommand{\osc}{\text{osc}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
@@ -130,6 +132,8 @@
     \item $\cC[a,b]$, the set of all continuous functions over the set $[a,b]$.
     \item $\{a_{n}\}_{n \geq 1}$, a sequence of real numbers.
     \item $T_{P}$, a tag set for the partition $P$.
+    \item $\cD$, the set of all differentiable functions.
+    \item $\cF (\R)$, the set of all real functions.
 \end{notationlist}
 
 \newpage
@@ -505,7 +509,7 @@ In school, the tag set was generally chosen as the left endpoints or right endpo
     \zeta_{j} = a + \frac{b-a}{n}(j-1).
 \end{equation}
 
-\chapter{RIEMANN INTEGRAL}
+\chapter{ANTIDERIVATIVES}
 \textit{January 20th.}\\ \\
 Let us first summarise; let $f$ be a bounded function on the interval $[a,b]$. Then, the following are equivalent---
 \begin{itemize}
@@ -619,6 +623,117 @@ Despite this, $\cI(f^{2}) \neq (\cI(f))^{2}$; $\cI$ is not multiplicative.
         \int_{a}^{b} f \leq U(f,P) = U(f,P_{1}) + U(f,P_{2}) < L(f,P_{1}) + \varepsilon + L(f,P_{2}) + \varepsilon \leq \lambda_{1} + \lambda_{2} + 2\varepsilon.
     \end{align}
     Both inequalities imply that $\abs{\int_{a}^{b} f - (\lambda_{1}+\lambda_{2})} \leq 2\varepsilon$.
+\end{proof}
+\subsection{Results on $f \in \cR[a,b]$}
+Assume that, here, $f \in \cR[a,b]$.
+\begin{enumerate}
+    \item $m(b-a) \leq \int_{a}^{b} f \leq M(b-a)$. This result is left as an exercise to the reader.
+    \item If $f \in \cC[a,b]$, then there exists $c \in [a,b]$ such that $f(c) = \frac{1}{b-a} \int_{a}^{b} f$. This is known as the \eax{mean value theorem}.
+    \begin{proof}
+        Simply start with $m(b-a) \leq \int_{a}^{b} f \leq M(b-a)$, and divide everything by $b-a \neq 0$. There exists $\eta$ and $\zeta$ such that $f(\eta) = m$ and $f(\zeta) = M$, so $f$ takes every value in between.
+    \end{proof}
+\end{enumerate}
+
+\begin{theorem}
+    Let $f:[a,b] \to [c,d]$ and $g:[c,d] \to \R$, and let $f \in \cR[a,b]$ and $g \in \cC[c,d]$. Then $g \circ f \in \cR[a,b]$. Note that for this to be satisfied, $g$ must be continuous on top of Riemann integrable.
+\end{theorem}
+\begin{proof}
+    Clearly, $g \circ f \in \cB[a,b]$. By uniform continuity, for every $\varepsilon > 0$, there exists $\delta > 0$ such that
+    \begin{equation}
+        \abs{g(x)-g(y)} < \frac{\varepsilon}{2(b-a)} \text{ for all } \abs{x-y} < \delta.
+    \end{equation}
+    Also, there exists $P \in \cP[a,b]$ such that
+    \begin{equation}
+        U(f,P) - L(f,P) < \frac{\varepsilon \delta}{4M}
+    \end{equation}
+    where $M = \sup_{[c,d]} g(y)$. We claim that $U(g \circ f, P) - L(g \circ f, P) < \varepsilon$. Let $n$ be the number of intervals of $P$. Write $J = \{1,2,\ldots,n\} = J_{1} \sqcup J_{2}$, where we define
+    \begin{equation*}
+        J_{1} = \{j \in J : \osc_{I_{j}}f < \delta \}, \; J_{2} = \{j \in J : \osc_{I_{j}}f \geq \delta\}.
+    \end{equation*}
+    Now, if $j \in J_{1}$, then 
+    \begin{align}
+        \abs{f(x)-f(y)} &< \delta \text{ for all } x,y \in I_{j} \\
+        \implies \abs{g(f(x)) = g(f(y))} &< \frac{\varepsilon}{2 (b-a)} \text{ for all } x,y \in I_{j} \notag \\
+        \implies \sup_{x,y \in I_{j}} \abs{g(f(x))-g(f(y))} = \osc_{I_{j}} g \circ f &\leq \frac{\varepsilon}{2(b-a)} \notag \\
+        \implies \sum_{j \in J_{1}} \osc_{I_{j}} g \circ f \cdot \abs{I_{j}} &\leq \frac{\varepsilon}{2(b-a)} \cdot \sum_{j \in J_{1}} \abs{I_{j}} \leq \frac{\varepsilon}{2}.
+    \end{align}
+    Now, if $j \in J_{2}$, then
+    \begin{align}
+        \osc_{I_{j}} g \circ f &\leq 2M \\
+        \implies \sum_{j \in J_{2}} \osc_{I_{j}} g \circ f \cdot \abs{I_{j}} &\leq 2M \cdot \sum_{j \in J_{2}} \abs{I_{j}} \leq 2M \cdot \sum_{j \in J_{2}} \abs{I_{j}} \osc_{I_{j}} \cdot \frac{1}{\delta} \notag \\
+        &\leq \frac{2M}{\delta} \cdot \sum_{j \in J} \abs{I_{J}} \osc_{I_{j}} f = \frac{2M}{\delta} (U(f,P)-L(f,P)) < \frac{2M}{\delta} \cdot \frac{\varepsilon \delta}{4 M} \\
+        \implies \sum_{j \in J_{2}} \osc_{I_{j}} g \circ f \cdot \abs{I_{j}} &< \frac{\varepsilon}{2}
+    \end{align}
+    Combining both inequalities, we have
+    \begin{equation}
+        U(g \circ f, P) - L(g \circ f, P) = \sum_{j \in J_{1}} \osc_{I_{j}} g \circ f \cdot \abs{I_{j}} + \sum_{j \in J_{2}} \osc_{I_{j}} g \circ f \cdot \abs{I_{j}} < \varepsilon.
+    \end{equation}
+\end{proof}
+\begin{example}
+    Let $f \in \cR[a,b]$. From the previous theorem, $e^{f}, \sin f, \cos f \in \cR[a,b]$ and for $f \geq 0$, $f^{\frac{1}{n}} \in \cR[a,b]$.
+\end{example}
+\begin{theorem}
+    Let $f,g \in \cB[a,b]$. If $f(x) = g(x)$ for all $x$ but finitely many, then $f \in \cR[a,b]$ if and only if $g \in \cR[a,b]$. Moreover, in this case, $\int_{a}^{b} f = \int_{a}^{b} g$.
+\end{theorem} So, if $f \equiv 0$ except for some finitely many points in $[a,b]$, then $f \in \cR[a,b]$ and $\int_{a}^{b} f = 0$.
+\begin{proof}
+    Without loss of generality, let $c \in [a,b]$ and $f(x) = g(x)$ for all $x \in [a,b]\backslash \{c\}$, and $f(c) \neq g(c)$. Note that it is enough to prove $\overline{\int} f = \overline{\int} g$ and $\underline{\int} f = \underline{\int} g$. Let $\tilde{M} \geq \sup f, \sup g$. For $\varepsilon > 0$, there exists $P \in \cP[a,b]$ such that
+    \begin{equation}
+        U(f,P) < \frac{\varepsilon}{2} + \overline{\int} f.
+    \end{equation}
+    Now set $\delta = \frac{\varepsilon}{8 \tilde{M}}$. Let $\tilde{P} \supset P$ such that $\norm{\tilde{P}} < \delta$. Now $f \equiv g$ except for $x = c$. Let $\{\tilde{I_{j}}\}_{j=1}^{n}$ be the subintervals of $\tilde{P}$. Let $p$ (and possibly $p+1$) be such that $f(x) \neq g(x)$ on $I_{p}$ (and possibly on $I_{p+1})$. Note that
+    \begin{align*}
+        \abs{\sup_{I_{j}} f - \sup_{I_{j}}} g &= 0 \text{ for all } j \neq p, p+1 \text{ or }\\
+        &\leq 2\tilde{M} \text{ for } j = p,p+1.
+    \end{align*}
+    Thus,
+    \begin{align}
+        \abs{U(f,\tilde{P})-U(g,\tilde{P})} &\leq \sum_{j=1}^{n} \abs{I_{j}} \cdot \abs{\sup_{I_{j}}f - \sup_{I_{j}} g} = \sum_{j = p,p+1} \abs{I_{j}} \cdot \abs{\sup_{I_{j}}f - \sup_{I_{j}} g} \leq 4\delta \tilde{M} \\
+        \implies \abs{U(f,\tilde{P}) - U(g,\tilde{P})} &< \frac{\varepsilon}{2}.
+    \end{align}
+    Using this, we have
+    \begin{align}
+        \overline{\int} g &\leq U(g,\tilde{P}) < U(f,\tilde{P}) + \frac{\varepsilon}{2} \leq U(f,P) + \frac{\varepsilon}{2} < \frac{\varepsilon}{2} + \overline{\int} f + \frac{\varepsilon}{2} \notag\\
+        \implies \overline{\int} g &< \overline{\int} f + \varepsilon \text{ for all } \varepsilon > 0 \notag\\
+        \implies \overline{\int} g &\leq \overline{\int} f.
+    \end{align}
+    Note that if we switch $f$ and $g$ around, we would get $\overline{\int} f \leq \overline{\int} g$. Thus, we must have
+    \begin{equation*}
+        \overline{\int} f = \overline{\int} g.
+    \end{equation*}
+\end{proof}
+
+\section{The Fundamental Theorem of Calculus}
+To start off, we will define the set(s) $\cD$ as the set of all differentiable functions, and $\cF(\R)$ is the set of all real valued functions. Recall that we define the integral function as 
+\begin{equation}
+    \cI : \cR[a,b] \to \cF (\R) \text{ defined as } \cI (f) (x) = \int_{a}^{x}f.
+\end{equation}
+We will also define differentiation as a function,
+\begin{equation}
+    \frac{d}{dx} : \cD \to \cF(\R) \text{ defined as } \frac{d}{dx} (f) = \frac{df}{dx}. 
+\end{equation}
+The fundamental theorem of calculus, roughly, states that both $\frac{d}{dx} \circ \cI$ and $\cI \circ \frac{d}{dx}$ are the identity function. There is a little trouble with this rough statement as the composition here makes not much sense.
+\begin{definition}
+    Let $S \subseteq \R$, and let $f:S \to \R$ be a function. A differentiable function $F$ is called the \eax{antiderivative} of $f$ if $f(x) = F'(x)$ for all $x \in S$.
+\end{definition}
+\begin{example}
+    We state some antiderivatives here.
+    \begin{enumerate}
+        \item The antiderivative of $x$ is $\frac{1}{2}x^{2}$.
+        \item Polynomials have an antiderivative.
+        \item Continuous functions have an antiderivative.
+        \item The function $f:\R \to \R$ defined as $f(x) = 0$ if $x \geq 0$ and $f(x) = 1$ if $x < 0$ does not have an antiderivative.
+    \end{enumerate}
+\end{example}
+\begin{theorem}[Darboux.]
+    Let $f:(a,b) \to \R$ be differentiable, and let $a < a_{0} < b_{0} < b$. If $f'(a_{0}) < r < f'(b_{0})$, then there exists $c_{0} \in (a_{0},b_{0})$ such that $f'(c_{0}) = r$.    
+\end{theorem}
+\begin{proof}
+    Construct a new function as $g(x) = - f(x) + rx$ for all $x \in (a,b)$. Note that $g:(a,b) \to \R$ is differentiable, and $g'(x) = -f'(x) + r$ for all $x \in (a,b)$. Also, $g'(a_{0}) > 0$ and $g'(b_{0}) < 0$. Now, $g|_{[a_{0},b_{0}]}$ is uniformly continuous. Using the sign of the derivatives, we have
+    \begin{align}
+        g(a_{0}+h)-g(a_{0}) &> 0 \text{ for some small } h > 0,\\
+        g(b_{0}+h)-g(b_{0}) &> 0 \text{ for some small } h < 0.
+    \end{align}
+    From these two equations, we can see that $g$ attains a maximum at some $c_{0} \in (a_{0},b_{0})$. This implies that $g'(c_{0}) = 0$ and $f'(c_{0}) = r$.
 \end{proof}
 
 \end{enumerate}

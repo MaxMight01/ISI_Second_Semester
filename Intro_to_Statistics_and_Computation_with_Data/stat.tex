@@ -34,6 +34,8 @@
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \newcommand{\eax}[1]{\emph{#1}\index{#1}} % Macro for emphasis and index
 \newcommand{\abs}[1]{\left| #1 \right|} % Absolute value
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\mc}[1]{\mathcal{#1}}
 
 
 % Custom Notation List Environment
@@ -307,7 +309,97 @@ The z-score is helpful it detecting outliers; if the absolute value of the z-sco
 
 For a boxplot, a good detection system is to check for those values greater than $Q_{3} + 1.5\text{IQR}$ or less than $Q_{1} - 1.5\text{IQR}$.
 
+\chapter{PROBABILITY}
+\textit{January 23rd.}
 
+We first discuss the \eax{simple random sampling.} From a set of $N$ elements, a subset of size $n$ is selected such that each subset of size $n$ has equal probability of being the chosen subset. With replacement, this probability is $\frac{1}{N^{n}}$, and without replacement, this probability is $\frac{1}{\binom{N}{n}}$. In practice, this is done iteratively. There are ways to achieve such a sampling; some of these include physically mixing up and making a draw, using a generator, random number tables, or software.
+
+\section{Probabilistic Terms}
+
+\subsection{Random Variables}
+For a probability space $(\Omega, \mathcal{F}, P)$, a \eax{random variable} is simply a function $X: \Omega \to \mathbb{R}$. For a given subset $A \subseteq \R$, the probability $P(X \in A)$ is defined as $P(X \in A) = P(X^{-1}(A))$.
+
+We also define the \eax{cumulative distribution function} of $X$ as
+\begin{equation}
+    F_{X}(a) = P(X \leq a) = P(X \in (-\infty,a]).
+\end{equation}
+If the random variable is discrete, that is, it takes countably many values, then a \eax{probability mass function} can be defined as $p_{X}(x_{i}) = P(X = x_{i})$. If the random variable is continuous, that is, it takes all values in an interval, then a \eax{probability density function} is defined as $\int_{a}^{b} f_{X}(x)dx = F_{X}(b)-F_{X}(a)$.
+
+\subsection{Mean and Variance}
+The mean of a random variable is defined as
+\begin{equation}
+    \mu = EX = \begin{cases}
+        \int_{-\infty}^{\infty} x f_{X}(x) dx &\text{ if $X$ is continuous,}\\
+        \sum_{i} x_{i} p_{X}(x_{i}) &\text{ if $X$ is discrete.}
+    \end{cases}
+\end{equation}
+The variance of a random variable is defined as
+\begin{equation}
+    \sigma^{2} = E[(X-\mu)^{2}] = E[X^{2}] - \mu^{2} = \begin{cases}
+        \int_{-\infty}^{\infty} (x-\mu)^{2} f_{X}(x) dx &\text{ if $X$ is continuous,}\\
+        \sum_{i} (x_{i}-\mu)^{2} p_{X}(x_{i}) &\text{ if $X$ is discrete.}
+    \end{cases}
+\end{equation}
+
+\section{Distributions}
+\subsection{Discrete Distributions}
+\begin{itemize}
+    \item \eax{Binomial distribution}. It consists of $n$ trials, all independent, which result in outcome $0$ or $1$. The probability of success in each trial is the same, $p$. Here, $X$ is the number of successes.
+    \begin{equation*}
+        p_{X}(k) = \binom{n}{k} p^{k}(1-p)^{n-k}, \; EX = np, \; \text{Var}X = np(1-p).
+    \end{equation*}
+    \item \eax{Multinomial distribution}. The random variable is a vector from $\Omega \to \R^{k}$. There are $n$ trials, all independent, with $k$ possible outcomes in each trial. Each outcome as probability $p_{i}$, with $\sum_{i=1}^{k} p_{i} = 1$. The random variable is written as $X = \begin{pmatrix}
+        X_{1} & \ldots & X_{k}
+    \end{pmatrix}$, where $X_{i}$ is the number of times outcome $i$ is observed.
+    \item \eax{Geometric distribution}. A trial is conducted, independently, until a success instead of a failure is observed. $X$ is the number of such trials required.
+    \begin{equation*}
+        p_{X}(k) = p \cdot (1-p)^{k-1}.
+    \end{equation*}
+    \item \eax{Poisson distribution}. The random variable here has the probability mass function defined as
+    \begin{equation*}
+        p_{X}(k) = e^{-\lambda} \frac{\lambda^{k}}{k!}.
+    \end{equation*}
+    \item \eax{Hypergeomtric distribution}. $N$ objects exist, with $M$ of the marked. $n$ are sampled, and $X$ is defined as the number of marked ones picked. The probability is given by
+    \begin{equation*}
+        p_{X}(k) = \frac{\binom{M}{k} \binom{N-M}{n-k}}{\binom{N}{n}}.
+    \end{equation*}
+\end{itemize}
+\subsection{Continuous Distributions}
+We shall define the probability mass functions here.
+\begin{itemize}
+    \item \eax{Uniform distribution}. It has a finite support only. It is given by
+    \begin{equation*}
+        f_{X}(x) = \begin{cases}
+            \dfrac{1}{b-a} &\text{ if } a<x<b, \\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation*}
+    \item \eax{Beta distribution}. It also have a finite support.
+    \begin{equation*}
+        f_{X}(x) = \begin{cases}
+            \dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)} &\text{ if } 0 < x < 1, \\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation*}
+    \item \eax{Exponential distribution}. It has a `rate' denoted by $\lambda$,and a support $\R^{+}$, with proability density function
+    \begin{equation*}
+        f_{X}(x) = \begin{cases}
+            \lambda e^{-\lambda x}  &\text{ if } x > 0,\\
+            0 &\text{ if otherwise}.
+        \end{cases}
+    \end{equation*}
+    \item \eax{Gamma distribution}. Takes two parameters $\lambda$ and $\alpha$, with support of $\R^{+}$, with its funciton defined as
+    \begin{equation*}
+        f_{X}(x) = \begin{cases}
+            \dfrac{e^{-\lambda x} x^{\alpha-1}\lambda^{\alpha}}{\Gamma (\alpha)} &\text{ if } x > 0,\\
+            0 &\text{ if otherwise}.
+        \end{cases}
+    \end{equation*}
+    \item \eax{Normal distribution}. Takes two parameters $\mu$ and $\sigma$, which are the mean and the standard deviation respectively. It is defined as
+    \begin{equation*}
+        f_{X}(x) = \frac{1}{\sqrt{2\pi} \sigma} e^{\dfrac{1}{2\sigma^{2}} (x-\mu)^{2}}
+    \end{equation*}
+\end{itemize}
 
 \begin{appendices}
 
