@@ -735,6 +735,115 @@ The fundamental theorem of calculus, roughly, states that both $\frac{d}{dx} \ci
     \end{align}
     From these two equations, we can see that $g$ attains a maximum at some $c_{0} \in (a_{0},b_{0})$. This implies that $g'(c_{0}) = 0$ and $f'(c_{0}) = r$.
 \end{proof}
+\textit{January 27th.}
+\begin{theorem}[The \eax{first fundamental theorem of calculus}]
+    Let $f \in \cR[a,b]$, $F \in \cC[a,b]$, and let $F$ be an antiderivative of $f$ on $(a,b)$, that is, $F'(x) = f(x)$ for all $x \in (a,b)$. Then
+    \begin{equation}
+        \int_{a}^{b} f = F(b)-F(a).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Let $P \in \cP[a,b]$ defined as $P:a=x_{0}<x_{1}<\ldots<x_{n} = b$. Now,
+    \begin{align}
+        F(b) - F(a) = \sum_{j=1}^{n} F(x_{j}) - F(x_{j-1}) \notag.
+    \end{align}
+    Since $F \in \cC[a,b]$, we have $F|_{[x_{j-1},x_{j}]} \in \cC[x_{j-1},x_{j}] \cap \cD(x_{j-1},x_{j})$. Thus, from the intermediate value theorem, there exists some $\zeta_{j} \in (x_{j-1},x_{j})$ such that
+    \begin{align}
+        F(x_{j})-F(x_{j-1}) = F'(\zeta_{j}) \cdot (x_{j}-x_{j-1}) = f(\zeta_{j}) \cdot (x_{j}-x_{j-1}).
+    \end{align}
+    We choose these $\zeta_{j}$'s to be our tag set. Thus, we shall have
+    \begin{align}
+        F(b)-F(a) &= \sum_{j=1}^{n}F(x_{j})-F(x_{j-1}) = \sum_{j=1}^{n}f(\zeta_{j}) \cdot \abs{I_{j}} \notag \\
+        \implies L(f,P) &\leq F(b)-F(a) \leq U(f,P) \text{ for all } P \in \cP[a,b] \notag \\
+        \implies F(b)-F(a) &= \int_{a}^{b} f.
+    \end{align}
+\end{proof}
+\begin{remark}
+    Note that the first fundamental theorem of calculus implies that $\int_{a}^{b} f$ can be computed simply by finding an antiderivative of $f$. We now ask where the antiderivative is, and even if it exists. The second fundamental theorem of calculus answers this.
+\end{remark}
+\begin{theorem}[The \eax{second fundamental theorem of calculus}]
+    Let $f \in \cR[a,b]$. Define $F:[a,b] \to \R$ as $F(x) = \int_{a}^{x} f(t)dt$ for all $x \in [a,b]$. Then,
+    \begin{enumerate}
+        \item $F \in \cC[a,b]$,
+        \item if $f$ is continuous at $x_{0} \in (a,b)$, then $F$ is differentiable at $x_{0}$ and $F'(x_{0}) = f(x_{0})$,
+        \item if $f$ is continuous from the right at $a$, then $F_{+}'(a) = f(a)$.
+    \end{enumerate}
+\end{theorem}
+\begin{corollary}
+    Let $f \in \cC[a,b]$. Then
+    \begin{equation}
+        \frac{d}{dx} \left( \int_{a}^{x} f(t) dt \right) = f(x).
+    \end{equation}
+\end{corollary}
+This is an interesting corollary that comes in handy. We now prove the theorem.
+\begin{proof}
+    Set $M = \sup_{x \in [a,b]} \abs{f(x)}$. Now,
+    \begin{align}
+        \abs{F(x)-F(y)} = \abs{\int_{x}^{y} f(t) dt}.
+    \end{align}
+    Now start with
+    \begin{align}
+        -M &\leq f(t) \leq M \text{ for all } t \in [a,b] \notag\\
+        \implies -M(y-x) &\leq \int_{x}^{y} f(t) dt \leq M(y-x) \notag\\
+        \implies \abs{F(x)-F(y)} = \abs{\int_{x}^{y}f(t) dt} &\leq M\abs{x-y} \text{ for all } x,y \in [a,b].
+    \end{align}
+    Any function that satisfies thie property is a \eax{lipschitz function}. It can be shown that any lipschitz function is continuous. This part of the proof is left as an exercise. The first part is now proved.
+
+    Let $f$ be continuous on some $x_{0} \in (a,b)$. For some $x \neq x_{0}$, we can start with
+    \begin{align}
+        \frac{F(x)-F(x_{0})}{x-x_{0}} - f(x_{0}) &= \frac{1}{x-x_{0}} \int_{x_{0}}^{x} f(t) dt - \frac{1}{x-x_{0}} \int_{x_{0}}^{x} f(x_{0}) dt = \frac{1}{x-x_{0}} \int_{x_{0}}^{x} (f(t)-f(x_{0}))dt.
+    \end{align}
+    $f$ is continuous at $x_{0}$, so for $\varepsilon > 0$, there exists $\delta > 0$ such that
+    \begin{equation*}
+        \abs{f(t)-f(x_{0})} < \varepsilon \text{ for all } \abs{t-x_{0}} < \delta.
+    \end{equation*}
+    Therefore,
+    \begin{align}
+        \abs{\frac{F(x)-F(x_{0})}{x-x_{0}} - f(x_{0})} &= \abs{\frac{1}{x-x_{0}} \int_{x_{0}}^{x} (f(t)-f(x_{0}))dt} \leq \frac{1}{\abs{x-x_{0}}} \abs{\int_{x_{0}}^{x} \abs{f(t)-f(x_{0})}dt} \notag \\
+        &< \frac{1}{\abs{x-x_{0}}} \abs{\int_{x_{0}}^{x} \varepsilon dt} = \varepsilon \text{ for all } x \in (x_{0}-\delta,x_{0}+\delta) \backslash \{x_{0}\}.
+    \end{align}
+    This must imply that
+    \begin{equation}
+        \lim_{x \to x_{0}} \frac{F(x)-F(x_{0})}{x-x_{0}} = f(x_{0}).
+    \end{equation}
+\end{proof}
+Here is an interesting example.
+\begin{example}
+    Define $f:[0,2] \to \R$ by $f = \chi_{[0,1]}$. Clearly, $f \in \cR[0,2]$. Let $F:[0,2] \to \R$ be defined by $F = \int_{0}^{x} f$. We have
+    \begin{align*}
+        \text{ for all } x \in [0,1], &\; F(x) = \int_{0}^{x} \chi_{[0,1]} = \int_{0}^{x} 1 = x,\\
+        \text{ for all } x \in (1,2], &\; F(x) = \int_{0}^{x} \chi_{[0,1]} = \int_{0}^{1} 1 + \int_{1}^{x} 0 = 1. 
+    \end{align*}
+    The corollary guarantees that the antiderivative of a continuous function is differentiable; if our function is Riemann integrable but not continuous, the antiderivative may not be differentiable.
+\end{example}
+
+\subsection{Some Interesting Methods}
+\begin{theorem}[The method of \eax{integration by parts}]
+    Let $f,g \in \cD[a,b]$ and $f',g' \in \cR[a,b]$. Then,
+    \begin{align}
+        \int_{a}^{b} f'g + \int_{a}^{b} fg' = f(b)g(b) - f(a)g(a).
+    \end{align}
+\end{theorem}
+\begin{proof}
+    Simply start with $\int_{a}^{b} (fg)'$.
+\end{proof}
+\begin{theorem}[The method of \eax{change of variable}]
+    Let $u \in \cD[a,b]$, $u' \in \cR[a,b]$, and let $f \in \cC(u([a,b]))$. Then,
+    \begin{equation}
+        \int_{a}^{b} f(u(t)) u'(t) dt = \int_{u(a)}^{u(b)} f(x) dx.
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    The proof for a constant function $u$ is trivial. So, assume that $u$ is a non-constant function. Note that $(f \circ u) u'$ in Riemann integrable on $[a,b]$. Define $F:u([a,b]) \to \R$ as
+    \begin{equation}
+        F(x) = \int_{u(a)}^{x} f(t) dt \text{ for all } t \in u([a,b]).
+    \end{equation}
+    The second fundamental theorem of calculus tells us that $F' = f$ on $u([a,b])$. Now for $t \in [a,b]$, $(F \circ u)'(t) = F'(u(t)) u'(t)$. By the first fundmental theorem of calculus,
+    \begin{align}
+        \int_{a}^{b} F'(u(t)) u'(t) dt &= \int_{a}^{b} (F \circ u)' (t) dt \\
+        \implies \int_{a}^{b} f(u(t)) u'(t) dt &= F(u(b)) - F(u(a)) = \int_{u(a)}^{u(b)} f(t) dt.
+    \end{align}
+\end{proof}
 
 \end{enumerate}
 
