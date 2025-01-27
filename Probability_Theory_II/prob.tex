@@ -329,7 +329,7 @@ The first of the terms discussed, $P(S_{1}'>0,\; S_{2}'>0, \ldots, S_{m}'>0)$, c
 \begin{align}
     \frac{1}{2}P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) &= P(\tilde{X}=1) \cdot P(S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \notag\\
     &= P(\tilde{X}=1,S_{0} \geq 0, S_{0} \geq 0, \ldots, S_{n-m} \geq 0) \notag\\
-    &= P(\tilde{S_{1}}=1,\tilde{S_{2}}>0,\ldots,\tilde{S_{n-m+1}}>0) \notag\\
+    &= P(\tilde{S_{1}}=1,\tilde{S_{2}}>0,\ldots,\tilde{S}_{n-m+1}>0) \notag\\
     &= P(S_{1}>0,S_{2}>0,\ldots,S_{n-m+1}>0).
 \end{align}
 Thus, we get
@@ -341,7 +341,7 @@ where $m$ is of the form $2k$ or $2k+1$, and $n$ is of the form $2\nu$, with $1 
 
 Plugging in $m = 0$, we get $P(M_{n}=0) = P(S_{1} \leq 0, \ldots, S_{2 \nu} \leq 0) = \frac{1}{2}u_{2\nu}$. For $m=n$, we have $P(M_{n}=n) = P(S_{1}\leq 0, \ldots, S_{2\nu} \leq 0) = \frac{1}{2}u_{2 \nu}$. Let us first compute $u_{2k}$.
 \begin{align}
-    u_{2k} &= P(2k=0) = \frac{\binom{2k}{k}}{2^{2k}} = \frac{(2k)!}{(k!)^{2}2^{2k}} \notag \\
+    u_{2k} &= P(S_{2k}=0) = \frac{\binom{2k}{k}}{2^{2k}} = \frac{(2k)!}{(k!)^{2}2^{2k}} \notag \\
     &\sim \frac{(2k)^{2k+\frac{1}{2}} e^{-2k} \sqrt{2\pi}}{(\sqrt{2\pi} k^{k+\frac{1}{2}} e^{-k})^{2}2^{2k}} = \frac{1}{\sqrt{\pi k}}.
 \end{align}
 For $0 < a < b < 1$, we have
@@ -358,7 +358,7 @@ If we look at this as a cumulative density funtion, the probability density func
 
 We are now interested in $\tilde{M}_{n}$, the last time when maximum up to time $n$ is attained. We can just look at the walk backwards again; in this case, we get
 \begin{equation}
-    P(\frac{\tilde{M}_{n}}{n}) = P\left(\frac{n-\tilde{M}_{n}}{n} \leq t\right) \to \frac{2}{\pi} \arcsin{\sqrt{t}}.
+    P\left(\frac{\tilde{M}_{n}}{n}\right) = P\left(\frac{n-\tilde{M}_{n}}{n} \leq t\right) \to \frac{2}{\pi} \arcsin{\sqrt{t}}.
 \end{equation}
 
 We now ask the probability that the random walk of $n = 2\nu$ steps last visit $0$ at time $2k$. We denote by $K_{n}$ the location of the last return to $0$ in a walk of $n$ steps. Now look at
@@ -441,24 +441,25 @@ Denote by $f_{2n}$ the probability that the first return to 0 occurs at time $2n
     Any continuous function $f:[0,1]\to\R$ is bounded and uniformly continuous. This fact will be useful in proving the previous theorem.
 \end{remark}
 \begin{proof}
-    Start with $X_{1},X_{2},\ldots$ which are independent and identically disitributed Bernoulli random variables, $\text{Ber}(x)$. Let $S_{n} = X_{1} + X_{2} + \ldots + X_{n}$. From the weak law of large numbers, we know that $\frac{S_{n}}{n}$ is approximately $x$. We can expect that $f(x)$ will also be approximately $f(\frac{S_{n}}{n})$. We now have
+    Start with $X_{1},X_{2},\ldots$ which are independent and identically disitributed Bernoulli random variables, $\text{Ber}(x)$. Let $S_{n} = X_{1} + X_{2} + \ldots + X_{n}$. From the weak law of large numbers, we know that $\frac{S_{n}}{n}$ is approximately $x$. We can expect that $f(x)$ will also be approximately $f\left(\frac{S_{n}}{n}\right)$. We now have
     \begin{align}
-        f_{n}(x) &= Ef(\frac{S_{n}}{n}) = \sum_{j=0}^{n} f(\frac{j}{n})P(S_{n}=j) \notag \\
-        &= \sum_{j=0}^{n} f(\frac{j}{n}) \binom{n}{j} x^{j} (1-x)^{n-j}.
+        f_{n}(x) &= Ef\left(\frac{S_{n}}{n}\right) = \sum_{j=0}^{n} f\left(\frac{j}{n}\right)P(S_{n}=j) \notag \\
+        &= \sum_{j=0}^{n} f\left(\frac{j}{n}\right) \binom{n}{j} x^{j} (1-x)^{n-j}.
     \end{align}
     This is now a polynomial; we wish to see how close this is to $f$. Define $A_{\delta}$ to be $\{j : \abs{\frac{j}{n} - x} \leq \delta\}$
     \begin{align}
-        \abs{f_{n}(x)-f(x)} &= \abs{\sum_{j=0}^{n} \left( f(\frac{j}{n}) - f(x) \right)} P(S_{n}=j) \notag \\
-        &= \abs{\sum_{j \in A_{\delta}} \left( f(\frac{j}{n}) - f(x) \right) + \sum_{j \notin A_{\delta}} \left( f(\frac{j}{n}) - f(x) \right)} P(S_{n}=j) \notag \\
-        &\leq \sum_{j \in A_{\delta}} \abs{ f(\frac{j}{n}) - f(x) } P(S_{n}=j) + \sum_{j \notin A_{\delta}} \abs{ f(\frac{j}{n}) - f(x) } P(S_{n}=j).
+        \abs{f_{n}(x)-f(x)} &= \abs{\sum_{j=0}^{n} \left( f\left(\frac{j}{n}\right) - f(x) \right)} P(S_{n}=j) \notag \\
+        &= \abs{\sum_{j \in A_{\delta}} \left( f\left(\frac{j}{n}\right) - f(x) \right) + \sum_{j \notin A_{\delta}} \left( f\left(\frac{j}{n}\right) - f(x) \right)} P(S_{n}=j) \notag \\
+        &\leq \sum_{j \in A_{\delta}} \abs{ f\left(\frac{j}{n}\right) - f(x) } P(S_{n}=j) + \sum_{j \notin A_{\delta}} \abs{ f\left(\frac{j}{n}\right) - f(x) } P(S_{n}=j).
     \end{align}
+
     We have two terms to deal with now. For the first term, choose $\delta > 0$ such that $\abs{x-y} < \delta \implies \abs{f(x)-f(y)} < \varepsilon$; this $\delta$ can be chosen since $f$ is uniformly continuous. Similarly, also choose $M = \sup_{x \in [0,1]} \abs{f(x)}$. $M$ is finite since $f$ is bounded. Thus, we have
     \begin{align}
-        \sum_{j \in A_{\delta}} \abs{f(\frac{j}{n})} P(S_{n}=j) \leq \sum_{j \in A_{\delta}} \varepsilon P(S_{n} = j) \leq \varepsilon
+        \sum_{j \in A_{\delta}} \abs{f\left(\frac{j}{n}\right)-f(x)} P(S_{n}=j) \leq \sum_{j \in A_{\delta}} \varepsilon P(S_{n} = j) \leq \varepsilon
     \end{align}
     and
     \begin{align}
-        \sum_{j \notin A_{\delta}} \leq 2M P(\abs{\frac{S_{n}}{n}-x} > \delta) \leq 2M \frac{\text{Var}(S_{n})}{n^{2}\delta^{2}} = \frac{2Mnx(1-x)}{n^{2}\delta^{2}}.
+        \sum_{j \notin A_{\delta}} \leq 2M P\left(\abs{\frac{S_{n}}{n}-x} > \delta\right) \leq 2M \frac{\text{Var}(S_{n})}{n^{2}\delta^{2}} = \frac{2Mnx(1-x)}{n^{2}\delta^{2}}.
     \end{align}
     Combining the two, and choosing $n$ large enough, we have
     \begin{align}
@@ -530,7 +531,7 @@ Using this definition of `fair', we look at an example.
     We first bound the second term on the right hand side. We have
     \begin{align}
         P(\abs{V_{1} + \ldots + V_{n}} > \frac{1}{2}\varepsilon \alpha_{n}) &\leq P(\bigcup_{i=1}^{n} \{V_{i} \neq 0\}) \leq nP(V_{1} \neq 0) = nP(X_{1} > a_{n}) \\
-        &= \sum_{2^{k}>a_{n}} P(X=2^{k}) \leq \frac{2n}{a_{n}}.
+        &= n\sum_{2^{k}>a_{n}} P(X=2^{k}) \leq \frac{2n}{a_{n}}.
     \end{align}
     Thus, we will require that $a_{n} >> n$. Also,
     \begin{equation}
