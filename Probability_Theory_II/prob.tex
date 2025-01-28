@@ -706,7 +706,104 @@ Similarly, for displacement $S_{n}$, we have
         0 &\text{ if } p \geq q.
     \end{cases}
 \end{equation*}
+\textit{January 28th.}
 
+Recall that we used $u_{k}$ denote the probability that the random walk returns to zero at step $k$. For unequal left-right step probabilities,
+\begin{equation*}
+    u_{k} = P(S_{k}=0) = \begin{cases}
+        0 &\text{ if $k$ is odd},\\
+        \binom{2k}{k} p^{n} q^{n} &\text{ if } k = 2n.
+    \end{cases}
+\end{equation*}
+Thus, the generating function for this is
+\begin{align}
+    U(s) = \sum_{n=0}^{\infty} u_{2n}s^{2n} = \sum_{n=0}^{\infty} \binom{2n}{n} (pqs^{2})^{n} = \sum_{n=0}^{\infty} \binom{-\frac{1}{2}}{n} (-4pqs^{2})^{n} = \frac{1}{\sqrt{1-4pqs^{2}}}.
+\end{align}
+Denote, by $f_{2n}$, the probability that the first return to zero occurs at step $2n$, for some $n \geq 1$. In fact, it consists of subevents; if $X_{1} = 1$, denote it by $f_{2n}^{+}$ and if $X_{1} = -1$, denote it by $f_{2n}^{-}$. If we also recall the definition of our $\phi_{n}$,
+\begin{align}
+    f_{2n}^{-} = P(X_{1}=-1,S_{2}<0,S_{3}<0,\ldots,S_{2n-1}<0,S_{2n}=0) = q \phi_{2n-1}.
+\end{align}
+The generating function of $\{f_{2n}^{-}\}$ will be given as
+\begin{align}
+    F^{-}(s) = \sum_{n=1}^{\infty} f_{2n}^{-} s^{2n} = q\sum_{n=1}^{\infty} \phi_{2n-1}s^{2n} = qs \sum_{n=1}^{\infty} \phi_{2n-1} s^{2n-1} = qs \Phi(s) = \frac{1}{2}(1-\sqrt{1-4pqs^{2}}).
+\end{align}
+It can be shown that $f_{2n}^{+}$ is just $f_{2n}^{-}$ with the probabilities reversed (check!). The generating function of $\{f_{2n}^{+}\}$ is given as
+\begin{align}
+    F^{+}(s) = \sum_{n=0}^{\infty} f_{2n}^{+}s^{2n} = \frac{1}{2}(1-\sqrt{1-4pqs^{2}}).
+\end{align}
+Adding both of these, we get
+\begin{align}
+    F(s) &= F^{+}(s) + F^{-}(s) = 1-\sqrt{1-4pqs^{2}} = 1 - \sum_{n=0}^{\infty} \binom{\frac{1}{2}}{n} (-4pqs^{2})^{n}\\
+    \implies f_{2n} &= (-1)^{n+1} \binom{\frac{1}{2}}{n} (4pq)^{n}.
+\end{align}
+$F(1)$ gives us the probability that walk eventually returns to zero,
+\begin{align}
+    F(1) = \sum_{n=0}^{\infty} f_{2n} = 1-\sqrt{1-4pq} = 1-\abs{p-q}.
+\end{align}
+$F'(1)$ gives us the expected time of return to zero,
+\begin{align}
+    F'(s) = -\frac{1}{2}(1-4pqs^{2})^{-\frac{1}{2}}(-8pqs).
+\end{align}
+If $p = q = \frac{1}{2}$, then
+\begin{equation*}
+    F'(1) = \lim_{s \to 1^{-}} F'(s) = \infty.
+\end{equation*}
+The basic lemma can be proved using the generating functions.
+
+\section{Simple Random Walks in Higher Dimensions}
+Consider the walk in the dimension $d$. A walker starts at the origin in the lattice $\Z^{d}$. The random variables $X_{1},X_{2},\ldots$ are independent and identically distributed with probabilities
+\begin{equation*}
+    P(X_{i} = -e_{d}) + \ldots + P(X_{i} = -e_{2}) + P(X_{i} = -e_{1}) + P(X_{i} = e_{1}) = P(X_{i} = e_{2}) + \ldots + P(X_{i} = e_{d}) = \frac{1}{2d}.
+\end{equation*}
+for all valid $i$. The random walk here is defined as $S_{n} = X_{1} + \ldots + X_{n}$. We ask the probabilitiy that $S_{n}$ returns to the origin. Denote by $u_{2n}$ the probability that $S_{2n} = 0$, and denote by $f_{2n}$ the probability that the first return to the origin occurs at time $2n$. By conditioning,
+\begin{align}
+    u_{2n} = \sum_{k=0}^{n} f_{2k} u_{2n-2k}.
+\end{align}
+If $U(s)$ and $F(s)$ are the appropriate generating functions, then we can show that
+\begin{align}
+    U(s)-1 = F(s)U(s) \implies U(s) = \frac{1}{1-F(s)}.
+\end{align}
+Both $U(s)$ and $F(s)$ are covergent for $\abs{s} < 1$. For each $N$,
+\begin{equation}
+    \sum_{n=0}^{N} u_{2n} \leq \lim_{s \to 1^{-}} U(s) \leq \sum_{n=0}^{\infty} u_{2n}.
+\end{equation}
+
+\begin{lemma}
+    A random walk on $\Z^{d}$ return to the origin with probability 1 if and only if $\sum u_{2n} = \infty$.
+\end{lemma}
+\begin{proof}
+    Suppose $F(1) < 1$. Then, $\lim{s \to 1^{-}} U(s) < \infty$ and, consequently, $\sum_{n=0}^{\infty} u_{2n} < \infty$. The converse can be proved by reversing the steps.
+\end{proof}
+The lemma tells us that to see the probability that the random walk returns to the origin, we only need to compute $\sum_{n=0}^{\infty} u_{2n}$.
+
+For $d = 2$, we need the number of $e_{i}$ jumps to be equal to the number of $-e_{i}$ jumps for $i = 1,2$. We have
+\begin{align}
+    u_{2n} &= \frac{1}{4^{2n}} \sum_{j=0}^{n} \binom{2n}{j} \binom{2n-j}{j} \binom{2n-2j}{n-j} \binom{n-j}{n-j} = \frac{1}{4^{2n}} \binom{2n}{n} \sum_{j=0}^{n} \binom{n}{j}^{2} = \frac{1}{4^{2n}} \binom{2n}{n}^{2} \notag \\
+    &\sim \frac{2}{2\pi} \frac{n^{4n+1}}{n^{4n+2}} = \frac{1}{\pi n}.
+\end{align}
+Since this is any asymptotic relationship, $u_{2n} \geq \frac{(1-\varepsilon)}{\pi n}$ for large $n$. Thus, we can show $\sum u_{2n} = \infty$.
+
+For $d = 3$,
+\begin{align}
+    u_{2n} &= \frac{1}{6^{2n}} \sum_{j,k = 0; j+k \leq n}^{n} \frac{(2n)!}{j! j! k! k! (n-j-k)! (n-j-k)!} = \frac{1}{6^{2n}} \sum_{j,k=0l j+k \leq n}^{\infty} \frac{(2n)!}{(j!)^{2}(k!)^{2}((n-j-k)!)^{2}} \notag \\
+    &= \frac{1}{2^{2n}} \binom{2n}{n} \sum_{j,k;j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2}.
+\end{align}
+$\frac{1}{2^{2n}} \binom{2n}{n}$ behaves asymptotically as $\frac{1}{\sqrt{\pi n}}$. For the rest of the term,
+\begin{align}
+    \sum_{j,k; j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2} \leq t_{n} \sum_{j,k;j+k \leq n} \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}}
+\end{align}
+where $t_{n} = \max_{j,k;j+k \leq n} \frac{n!}{j!k!(n-j-k)!}$. The maximum is attained roughly when $j,k \approx \frac{n}{3}$. Also, the summation behaving as the upper bound is just unity. Thus,
+\begin{align}
+    \sum_{j,k; j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2} \leq t_{n} \approx \frac{n!}{((\frac{n}{3})!)^{3} 3^{n}} \sim \frac{C}{n}
+\end{align}
+for some constant $C$. Therefore,
+\begin{equation}
+    u_{2n} \leq \frac{C^{\ast}}{n^{\frac{3}{2}}} \implies \sum u_{2n} < \infty \implies F(1) < 1.
+\end{equation}
+
+\begin{theorem}[\eax{Polya}]
+    A random walk in 1 or 2 dimensions will always return to the origin with probability 1. A random walk in more than 2 dimensions has a positive probability of never returning to the origin.
+\end{theorem}
 
 \begin{appendices}
 
