@@ -381,14 +381,14 @@ We shall define the probability mass functions here.
             0 &\text{ if otherwise.}
         \end{cases}
     \end{equation*}
-    \item \eax{Exponential distribution}. It has a `rate' denoted by $\lambda$,and a support $\R^{+}$, with proability density function
+    \item \eax{Exponential distribution}. It has a `rate' denoted by $\lambda$, and a support of $\R^{+}$, with proability density function
     \begin{equation*}
         f_{X}(x) = \begin{cases}
             \lambda e^{-\lambda x}  &\text{ if } x > 0,\\
             0 &\text{ if otherwise}.
         \end{cases}
     \end{equation*}
-    \item \eax{Gamma distribution}. Takes two parameters $\lambda$ and $\alpha$, with support of $\R^{+}$, with its funciton defined as
+    \item \eax{Gamma distribution}. Takes two parameters $\lambda$ and $\alpha$, with support of $\R^{+}$, with its function defined as
     \begin{equation*}
         f_{X}(x) = \begin{cases}
             \dfrac{e^{-\lambda x} x^{\alpha-1}\lambda^{\alpha}}{\Gamma (\alpha)} &\text{ if } x > 0,\\
@@ -400,6 +400,30 @@ We shall define the probability mass functions here.
         f_{X}(x) = \frac{1}{\sqrt{2\pi} \sigma} e^{\dfrac{1}{2\sigma^{2}} (x-\mu)^{2}}
     \end{equation*}
 \end{itemize}
+
+\section{Normality}
+\textit{January 28th.}
+We ask if the assumption is reasonable. There are several ways to achieve this;
+\begin{itemize}
+    \item Check if the histogram is symmetric and unimodal (even roughly).
+    \item Check if $\overline{x} \pm s$, $\overline{x} \pm 2s$, and $\overline{x} \pm 3s$ contains close to 67\%, 95\%, and 99\%, respectively, of the data under normality. These are called the \eax{empirical percentages}.
+    \item Check if the ratio of the IQR to the standard deviation is close to $1.3$.
+    \item Check if the skewness is close to 0 and kurtosis is close to 3.
+    \item For datapoints $x_{1},x_{2},\ldots,x_{n}$, we rearrange them such that $x_{(1)}<x_{(2)}<\ldots<x_{(n)}$. This is known as \eax{ranked data}. For this rearrangement, we make a normal probability plot. If the distribution is normal, then we would have $X_{i} = \mu + \sigma Z_{i}$, where $Z_{i} \sim N(0,1)$. Here,
+    \begin{equation}
+        \Phi (z) = P(Z \leq z) \approx \Phi_{n}(z) = \frac{\#\{Z_{i} \leq z\}}{n}.
+    \end{equation}
+    In this case, we have $Z_{(j)} \approx \Phi^{-1}(\frac{j}{n})$. We make a \eax{QQ plot}, plotting the ranked datapoints $x_{(j)}$ against $\Phi^{-1}(\frac{j}{n})$. A \eax{PP plot} can also be made, where we plot $\Phi(x_{j})$ against $\frac{j}{n}$. Both of these are types of normal probability plots.
+\end{itemize}
+
+\section{Sampling Distribution}
+A \eax{parameter} is defined as a finite dimensional object, most commonly scalar, that is a function of the population, mean, variance, skewness, median, etc. An \eax{estimator} is a statistic which is any function of the sample values used to estimate a particular parameter.
+
+\subsection{Law of Large Numbers}
+Let $X_{1},X_{2},\ldots$ be a sequence of random variables, with $EX_{i} = \mu$ and $\text{Var}X_{i} = \sigma^{2} < \infty$. Let $\overline{X}_{n} = \frac{1}{n} \sum_{i=1}^{n} X_{i}$. For $\varepsilon > 0$, the \eax{weak law of large numbers} states that
+\begin{equation}
+    \lim_{n \to \infty} P\left( \abs{\frac{\overline{X}_{n}-\mu}{\mu}} > \varepsilon \right) = 0.
+\end{equation}
 
 \begin{appendices}
 
