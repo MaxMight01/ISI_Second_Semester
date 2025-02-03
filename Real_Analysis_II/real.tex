@@ -847,6 +847,125 @@ Here is an interesting example.
 
 \end{enumerate}
 
+\chapter{IMPROPER INTEGRALS}
+\textit{February 3rd.}
+
+We first state some `assumptions' on Riemann intgerals, which we now consider to be \eax{proper integrals}.
+\begin{enumerate}
+    \item The function to be integrated was bounded, that is, $f \in \cB[a,b]$.
+    \item The interval on which the function was to be integrated was bounded.
+\end{enumerate}
+
+We want to talk about integrals of functions that \textit{don't} follow these assumptions.
+\begin{enumerate}
+    \item Evaluating $\int_{a}^{b} f$ even if $f$ is not bounded on $[a,b]$.
+    \item Evaluating $\int_{a}^{\infty} f$, $\int_{-\infty}^{b} f$, or $\int_{-\infty}^{\infty} f$.
+\end{enumerate}
+\begin{definition}[An \eax{improper integral} of type I.]
+    Let $f \notin \cR[a,b]$, and $f \in \cR[c,b]$ for all $a < c < b$. If
+    \begin{equation}
+        \lim_{\varepsilon \to 0^{+}} \int_{a+\varepsilon}^{b} f \; \left( = \int_{a}^{b} f \right)
+    \end{equation}
+    exists, then we say that the integral $\int_{a}^{b} f$ converges to this value, and diverges otherwise. The convergence is equivalent to saying that $\lim_{c \to a^{+}} \int_{c}^{b} f$ exists.
+
+    Similarly, if $f \notin \cR[a,b]$ and $f \in \cR[a,c]$ for all $a < c < b$, and if
+    \begin{equation}
+        \lim_{\varepsilon \to 0^{+}} \int_{a}^{b-\varepsilon} f \; \left( = \int_{a}^{b} f \right)
+    \end{equation}
+    exists, then we say that the integral $\int_{a}^{b} f$ converges to this value, and diverges otherwise. The convergence is equivalent to saying that $\lim_{c \to b^{-}} \int_{a}^{c} f$ exists.
+
+    If $f$ properly diverges at a point $a < c < b$ in $[a,b]$, then we define
+    \begin{equation}
+        \int_{a}^{b} f = \int_{a}^{c} f + \int_{c}^{b} f
+    \end{equation}
+    provided that \textit{either} of the right hand side integrals exist.
+\end{definition}
+
+\begin{example}
+    We wish to compute $\int_{0}^{1} \frac{1}{x^{2}} dx$. This is an improper integral of type I; the function is unbounded at $x = 0$. Therefore, for small $\varepsilon > 0$,
+    \begin{equation}
+        \int_{\varepsilon}^{1} \frac{1}{x^{2}} dx = \left[ -\frac{1}{x} \right]_{\varepsilon}^{1} = \frac{1}{\varepsilon} - 1.
+    \end{equation}
+    Taking the limit as $\varepsilon$ tends to zero from the positive side, we see that the limit diverges to positive infinity. The improper integral diverges.
+\end{example}
+
+\begin{example}
+    We wish to compute $\int_{0}^{1} \frac{1}{\sqrt{x}} dx$. For $\varepsilon > 0$, small,
+    \begin{align}
+        \int_{\varepsilon}^{1} \frac{1}{\sqrt{x}} dx = \left[ 2\sqrt{x} \right]_{\varepsilon}^{1} = 2-2\sqrt{\varepsilon} \to 2 \text{ as } \varepsilon \to 0^{+}.
+    \end{align}
+    Thus, $\int_{0}^{1} \frac{1}{\sqrt{x}} dx = 2$.
+\end{example}
+
+\begin{example}
+    We wish to compute $\int_{0}^{2} \frac{1}{2x-x^{2}} dx$. Let us split this integral as $\int_{0}^{2} f = \int_{0}^{1} + \int_{1}^{2}$. For $\varepsilon > 0$, small,
+    \begin{equation}
+        \int_{1}^{2-\varepsilon} \frac{1}{x(2-x)}dx = \left[ \frac{1}{2} \ln \left( \frac{x}{2-x} \right) \right]_{1}^{2-\varepsilon} = \frac{1}{2} \ln \left( \frac{2-\varepsilon}{\varepsilon} \right) - \frac{1}{2} \ln 1.
+    \end{equation}
+    This integral diverges, so the entire integral must diverge.
+\end{example}
+
+In general,
+\begin{example}
+    Let $p > 0$. We wish to evaluate $\int_{0}^{1} \frac{1}{x^{p}} dx$. For $\varepsilon > 0$, small,
+    \begin{align}
+        \int_{\varepsilon}^{1} \frac{1}{x^{p}} dx = \begin{cases}
+            \left[ \frac{x^{1-p}}{1-p} \right]_{\varepsilon}^{1} &\text{ if } p \neq 1, \\
+            \left[ \ln x \right]_{\varepsilon}^{1} &\text{ if } p = 1
+        \end{cases} = \begin{cases}
+            \frac{1}{1-p}(1-\varepsilon^{1-p}) &\text{ if } p \neq 1, \\
+            - \ln \varepsilon &\text{ if } p = 1.
+        \end{cases}
+    \end{align}
+    If we apply $\lim_{\varepsilon \to 0^{+}}$, we see that $\int_{0}^{1} \frac{1}{x^{p}}$ converges to $\frac{1}{1-p}$ if $0 < p < 1$, and diverges otherwise.
+\end{example}
+
+\section{Tests of Convergence of Improper Integrals of Type I}
+We now discuss when an improper integral of type I is convergent or not.
+\begin{theorem}[The \eax{comparison test - I}]
+    Let $0 \leq f(x) \leq g(x)$ for all $x \in [a,b)$. Assume that $\int_{a}^{b} g$ and $\int_{a}^{b} g$ are improper integrals solely due to the point $x = b$.
+    \begin{enumerate}
+        \item If $\int_{a}^{b} g$ converges, then $\int_{a}^{b} f$ converges.
+        \item If $\int_{a}^{b} f$ diverges, then $\int_{a}^{b} g$ diverges.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    We prove part the first part only. Set $G(x) = \int_{a}^{x} g$ for all $x \in [a,b)$. As $\int_{a}^{b} g$ converges, and $G$ is non-decreasing function, we have
+    \begin{equation*}
+        \int_{a}^{b} g = \sup \{\int_{a}^{x} g \; | x \in [a,b) \}.
+    \end{equation*}
+    Now, from the inequality, since the integral function is monotonous,
+    \begin{align}
+        0 &\leq \int_{a}^{x} f \leq \int_{a}^{x} g \text{ for all } x \in [a,b) \notag \\
+        \implies 0 &\leq \sup_{x \in [a,b)} \int_{a}^{x} f \leq \int_{a}^{b} g < \infty \\
+        \implies \lim_{c \to b^{-}} \int_{a}^{c} f &< \infty.
+    \end{align}
+\end{proof}
+
+\begin{example}
+    We question whether $\int_{0}^{\frac{\pi}{2}} \frac{\sin x}{x^{p}} dx$ converges for $p > 0$. Firstly, note that
+    \begin{align*}
+        0 \leq \sin x \leq 1 \implies 0 \leq \frac{\sin x}{x^{p}} \leq \frac{1}{x^{p-1}} \text{ for all } x \in (0, \frac{\pi}{2}].
+    \end{align*}
+    Note that the integral of the rightmost term converges for $1 < p < 2$. Also, $\int_{0}^{1} \frac{1}{x^{p}} dx$ also converges for $0 < p < 1$. The case for $p = 1$ is also convergent. Hence, $\int_{0}^{\frac{\pi}{2}} \frac{\sin x}{x^{p}}$ converges if $0 < p < 2$.
+\end{example}
+
+\begin{theorem}[The \eax{limit comparison test - II}].
+    Let $f(x), g(x) \geq 0$ for all $x \in [a,b)$. Suppose
+    \begin{equation*}
+        \lim_{x \to b^{-}} \frac{f(x)}{g(x)} = l \neq 0, \infty.
+    \end{equation*}
+    Then the improper integrals $\int_{a}^{b} f$ and $\int_{a}^{b} g$ converge, or diverge, together.
+\end{theorem}
+\begin{proof}
+    We know $0 < l < \infty$. Pick $\varepsilon > 0$ such that $l- \varepsilon > 0$. There exists $c \in [a,b)$ such that
+    \begin{align}
+        \abs{\frac{f(x)}{g(x)} - l} &< \varepsilon \text{ for all } x \in (c,b) \notag \\
+        \implies l - \varepsilon < \frac{f(x)}{g(x)} &< l+\varepsilon \text{ for all } x \in (c,b).
+    \end{align}
+    Therefore, $0 < (l-\varepsilon) g(x) < f(x)$ for all $x \in (c,b)$. By the comparison test - I, if $\int_{a}^{b} f$, that is, $\int_{c}^{b} f$ converges, then $\int_{c}^{b} (l-\varepsilon) g$, that is, $\int_{a}^{b} (l-\varepsilon) g$ converges. This tells us that $\int_{a}^{b} g$ converges. To show that $\int_{a}^{b} g$ converges implies that converge of $\int_{a}^{b} f$ is left as an exercise to the reader.
+\end{proof}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
