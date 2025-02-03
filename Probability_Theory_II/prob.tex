@@ -707,7 +707,235 @@ Similarly, for displacement $S_{n}$, we have
         0 &\text{ if } p \geq q.
     \end{cases}
 \end{equation*}
+\textit{January 28th.}
 
+Recall that we used $u_{k}$ denote the probability that the random walk returns to zero at step $k$. For unequal left-right step probabilities,
+\begin{equation*}
+    u_{k} = P(S_{k}=0) = \begin{cases}
+        0 &\text{ if $k$ is odd},\\
+        \binom{2k}{k} p^{n} q^{n} &\text{ if } k = 2n.
+    \end{cases}
+\end{equation*}
+Thus, the generating function for this is
+\begin{align}
+    U(s) = \sum_{n=0}^{\infty} u_{2n}s^{2n} = \sum_{n=0}^{\infty} \binom{2n}{n} (pqs^{2})^{n} = \sum_{n=0}^{\infty} \binom{-\frac{1}{2}}{n} (-4pqs^{2})^{n} = \frac{1}{\sqrt{1-4pqs^{2}}}.
+\end{align}
+Denote, by $f_{2n}$, the probability that the first return to zero occurs at step $2n$, for some $n \geq 1$. In fact, it consists of subevents; if $X_{1} = 1$, denote it by $f_{2n}^{+}$ and if $X_{1} = -1$, denote it by $f_{2n}^{-}$. If we also recall the definition of our $\phi_{n}$,
+\begin{align}
+    f_{2n}^{-} = P(X_{1}=-1,S_{2}<0,S_{3}<0,\ldots,S_{2n-1}<0,S_{2n}=0) = q \phi_{2n-1}.
+\end{align}
+The generating function of $\{f_{2n}^{-}\}$ will be given as
+\begin{align}
+    F^{-}(s) = \sum_{n=1}^{\infty} f_{2n}^{-} s^{2n} = q\sum_{n=1}^{\infty} \phi_{2n-1}s^{2n} = qs \sum_{n=1}^{\infty} \phi_{2n-1} s^{2n-1} = qs \Phi(s) = \frac{1}{2}(1-\sqrt{1-4pqs^{2}}).
+\end{align}
+It can be shown that $f_{2n}^{+}$ is just $f_{2n}^{-}$ with the probabilities reversed (check!). The generating function of $\{f_{2n}^{+}\}$ is given as
+\begin{align}
+    F^{+}(s) = \sum_{n=0}^{\infty} f_{2n}^{+}s^{2n} = \frac{1}{2}(1-\sqrt{1-4pqs^{2}}).
+\end{align}
+Adding both of these, we get
+\begin{align}
+    F(s) &= F^{+}(s) + F^{-}(s) = 1-\sqrt{1-4pqs^{2}} = 1 - \sum_{n=0}^{\infty} \binom{\frac{1}{2}}{n} (-4pqs^{2})^{n}\\
+    \implies f_{2n} &= (-1)^{n+1} \binom{\frac{1}{2}}{n} (4pq)^{n}.
+\end{align}
+$F(1)$ gives us the probability that walk eventually returns to zero,
+\begin{align}
+    F(1) = \sum_{n=0}^{\infty} f_{2n} = 1-\sqrt{1-4pq} = 1-\abs{p-q}.
+\end{align}
+$F'(1)$ gives us the expected time of return to zero,
+\begin{align}
+    F'(s) = -\frac{1}{2}(1-4pqs^{2})^{-\frac{1}{2}}(-8pqs).
+\end{align}
+If $p = q = \frac{1}{2}$, then
+\begin{equation*}
+    F'(1) = \lim_{s \to 1^{-}} F'(s) = \infty.
+\end{equation*}
+The basic lemma can be proved using the generating functions.
+
+\section{Simple Random Walks in Higher Dimensions}
+Consider the walk in the dimension $d$. A walker starts at the origin in the lattice $\Z^{d}$. The random variables $X_{1},X_{2},\ldots$ are independent and identically distributed with probabilities
+\begin{equation*}
+    P(X_{i} = -e_{d}) + \ldots + P(X_{i} = -e_{2}) + P(X_{i} = -e_{1}) + P(X_{i} = e_{1}) = P(X_{i} = e_{2}) + \ldots + P(X_{i} = e_{d}) = \frac{1}{2d}.
+\end{equation*}
+for all valid $i$. The random walk here is defined as $S_{n} = X_{1} + \ldots + X_{n}$. We ask the probabilitiy that $S_{n}$ returns to the origin. Denote by $u_{2n}$ the probability that $S_{2n} = 0$, and denote by $f_{2n}$ the probability that the first return to the origin occurs at time $2n$. By conditioning,
+\begin{align}
+    u_{2n} = \sum_{k=0}^{n} f_{2k} u_{2n-2k}.
+\end{align}
+If $U(s)$ and $F(s)$ are the appropriate generating functions, then we can show that
+\begin{align}
+    U(s)-1 = F(s)U(s) \implies U(s) = \frac{1}{1-F(s)}.
+\end{align}
+Both $U(s)$ and $F(s)$ are covergent for $\abs{s} < 1$. For each $N$,
+\begin{equation}
+    \sum_{n=0}^{N} u_{2n} \leq \lim_{s \to 1^{-}} U(s) \leq \sum_{n=0}^{\infty} u_{2n}.
+\end{equation}
+
+\begin{lemma}
+    A random walk on $\Z^{d}$ return to the origin with probability 1 if and only if $\sum u_{2n} = \infty$.
+\end{lemma}
+\begin{proof}
+    Suppose $F(1) < 1$. Then, $\lim{s \to 1^{-}} U(s) < \infty$ and, consequently, $\sum_{n=0}^{\infty} u_{2n} < \infty$. The converse can be proved by reversing the steps.
+\end{proof}
+The lemma tells us that to see the probability that the random walk returns to the origin, we only need to compute $\sum_{n=0}^{\infty} u_{2n}$.
+
+For $d = 2$, we need the number of $e_{i}$ jumps to be equal to the number of $-e_{i}$ jumps for $i = 1,2$. We have
+\begin{align}
+    u_{2n} &= \frac{1}{4^{2n}} \sum_{j=0}^{n} \binom{2n}{j} \binom{2n-j}{j} \binom{2n-2j}{n-j} \binom{n-j}{n-j} = \frac{1}{4^{2n}} \binom{2n}{n} \sum_{j=0}^{n} \binom{n}{j}^{2} = \frac{1}{4^{2n}} \binom{2n}{n}^{2} \notag \\
+    &\sim \frac{2}{2\pi} \frac{n^{4n+1}}{n^{4n+2}} = \frac{1}{\pi n}.
+\end{align}
+Since this is any asymptotic relationship, $u_{2n} \geq \frac{(1-\varepsilon)}{\pi n}$ for large $n$. Thus, we can show $\sum u_{2n} = \infty$.
+
+For $d = 3$,
+\begin{align}
+    u_{2n} &= \frac{1}{6^{2n}} \sum_{j,k = 0; j+k \leq n}^{n} \frac{(2n)!}{j! j! k! k! (n-j-k)! (n-j-k)!} = \frac{1}{6^{2n}} \sum_{j,k=0l j+k \leq n}^{\infty} \frac{(2n)!}{(j!)^{2}(k!)^{2}((n-j-k)!)^{2}} \notag \\
+    &= \frac{1}{2^{2n}} \binom{2n}{n} \sum_{j,k;j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2}.
+\end{align}
+$\frac{1}{2^{2n}} \binom{2n}{n}$ behaves asymptotically as $\frac{1}{\sqrt{\pi n}}$. For the rest of the term,
+\begin{align}
+    \sum_{j,k; j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2} \leq t_{n} \sum_{j,k;j+k \leq n} \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}}
+\end{align}
+where $t_{n} = \max_{j,k;j+k \leq n} \frac{n!}{j!k!(n-j-k)!}$. The maximum is attained roughly when $j,k \approx \frac{n}{3}$. Also, the summation behaving as the upper bound is just unity. Thus,
+\begin{align}
+    \sum_{j,k; j+k \leq n} \left( \frac{n!}{j!k!(n-j-k)!} \frac{1}{3^{n}} \right)^{2} \leq t_{n} \approx \frac{n!}{((\frac{n}{3})!)^{3} 3^{n}} \sim \frac{C}{n}
+\end{align}
+for some constant $C$. Therefore,
+\begin{equation}
+    u_{2n} \leq \frac{C^{\ast}}{n^{\frac{3}{2}}} \implies \sum u_{2n} < \infty \implies F(1) < 1.
+\end{equation}
+
+\begin{theorem}[\eax{Polya}]
+    A random walk in 1 or 2 dimensions will always return to the origin with probability 1. A random walk in more than 2 dimensions has a positive probability of never returning to the origin.
+\end{theorem}
+
+\section{.}
+\textit{January 31st.}\\
+Recall that in the first course, we studied that if $X_{n} \sim \text{Bin}(n,p_{n})$ with $np_{n} \to \lambda$ as $n \to \infty$, then
+\begin{equation}
+    \lim_{n \to \infty} P(X_{n} = k) = P(\text{Poisson}(\lambda) = k) \text{ for } k \geq 0. 
+\end{equation}
+We now extend upon this idea.
+\begin{theorem}[\eax{Continuity theorem}]
+    Suppor for each $n$ the sequence $a_{0,n}, a_{1,n}, \ldots$ is a probability distribution, that is,
+    \begin{equation}
+        a_{k,n} \geq 0 \text{ for all } k \text{ and } \sum_{k=0}^{\infty} a_{k,n} = 1.
+    \end{equation}
+    Let $A^{(n)}(s)$ denote the generating function for $\{a_{k,n}\}_{k \geq 0}$, that is,
+    \begin{equation}
+        A^{(n)}(s) = \sum_{k=0}^{\infty} a_{k,n} s^{k} \text{ for all } n.
+    \end{equation}
+    Then $a_{k} = \lim_{n \to \infty} a_{k,n}$ exists for all $k$ (\emph{statement $\star$}) if and only if $A(s) = \lim_{n \to \infty} A^{(n)}(s)$ exists for all $0 < s < 1$ (\emph{statement $\star \star$}). In this case, $A(s) = \sum_{k = 0}^{\infty} a_{k} s^{k}$.
+\end{theorem}
+\begin{proof}
+    Assume statement $\star$. Thus, $\abs{a_{k,n} - a_{k}} \leq 1$ for all $n$ large enough. If we now fix $0 < s < 1$, then for some $K$ and a fixed $\varepsilon > 0$, we have
+    \begin{align}
+        \abs{A^{(n)}(s) - A(s)} &= \abs{\sum_{k=0}^{\infty} a_{k,n} s^{k} - \sum_{k=0}^{\infty} a_{k} s^{k}} \\
+        &= \abs{\sum_{k=0}^{K} a_{k,n} s^{k} + \sum_{k=K+1}^{\infty} a_{k,n} s^{k} - \sum_{k=0}^{K} a_{k}s^{k} - \sum_{k=K+1}^{\infty} a_{k}s^{k}} \notag \\
+        &\leq \abs{\sum_{k=0}^{K} a_{k,n} s^{k} - \sum_{k=0}^{K} a_{k}s^{k}} + \abs{\sum_{k=K+1}^{\infty} (a_{k,n}-a_{k}) s^{k}} \notag \\
+        &\leq \abs{\sum_{k=0}^{K} a_{k,n} s^{k} - \sum_{k=0}^{K} a_{k}s^{k}} + \frac{s^{K+1}}{1-s}.
+    \end{align}
+    We can choose $K$ such that the second term becomes less than $\varepsilon$, and we can choose $N$ such that for all $n \geq N$, the first term becomes smaller than $\varepsilon$. Therefore, the entire term becomes less than $2\varepsilon$.
+
+    For the converse, assume statement $\star \star$. $A(s)$ is monotonic in $s$; $A(0) = \lim_{s \to 0^{-}} A(s)$. We sandwich as follows---
+    \begin{align}
+        a_{0,n} &\leq A^{(n)}(s) \leq a_{0,n} + \frac{s}{1-s} \notag \\
+        \implies A^{(n)}(s) - \frac{s}{1-s} &\leq a_{0,n} \leq A^{(n)}(s) \notag.
+    \end{align}
+    Letting $n$ grow to infinity,
+    \begin{align}
+        A(s) - \frac{s}{1-s} &\leq \liminf_{n \to \infty} a_{0,n} \leq \limsup_{n \to \infty} a_{0,n} \leq A(s).
+    \end{align}
+    If $s \to 0$, note that $\lim_{n \to \infty} a_{0,n} = A(0)$. Now define
+    \begin{align}
+        B^{(n)}(s) = \frac{A^{(n)}(s) - a_{0,n}}{s} \to \frac{A(s)-A(0)}{s} \to A'(0).
+    \end{align}
+    Working similarly,
+    \begin{align}
+        a_{1,n} &\leq B^{(n)}(s) \leq a_{1,n} + \frac{s}{1-s} \\
+        \implies B^{(n)}(s) - \frac{s}{1-s} &\leq a_{1,n} \leq B^{(n)}(s).
+    \end{align}
+    If we again proceed as shown, we will get $B(0) = \lim_{n \to \infty} a_{1,n}$ and $a_{1,n} \to A'(0) = a_{1}$. Thus, induction is in play here.
+\end{proof}
+\begin{example}
+    Let us work with the binomial distribution example given before. We have $X_{n} \sim \text{Bin}(n,p_{n})$ with $np_{n} \to \lambda$. We have
+    \begin{align}
+        A^{(n)}(s) &= \sum_{k=0}^{\infty} P(X_{n} = k) s^{k} = ((1-p_{n}) + p_{n}s)^{n} = (1+p_{n}(s-1))^{n} \notag \\
+        \implies \lim_{n \to \infty} A^{(n)}(s) &= \lim_{n \to \infty} \left( 1 + \frac{np_{n}}{n}(s-1) \right)^{n} = e^{\lambda (s-1)} = E[s^{\text{Poisson}(\lambda)}].
+    \end{align}
+    Thus, we have shown the prior statement.
+\end{example}
+\begin{example}
+    We have $X_{1}^{(n)}, X_{2}^{(n)}, \ldots, X_{n}^{(n)}$ independent, with $X_{i}^{(n)} \sim \text{Ber}(p_{i}^{(n)})$ for $1 \leq i \leq n$. Let $S_{n} = X_{1}^{(n)} + X_{2}^{(n)} + \ldots X_{n}^{(n)}$. We have
+    \begin{align}
+        E[s^{S_{n}}] = \prod_{i=1}^{n} E[s^{X_{i}^{(n)}}] = \prod_{i=1}^{n} \left( (1-p_{i}^{(n)}) + p_{i}^{(n)} s \right) = \exp \left( \ln \prod_{i=1}^{n} (\ldots) \right).
+    \end{align}
+    Assume that $\lim_{n \to \infty} \sum_{i=1}^{n} p_{i}^{(n)} = \lambda$ and $\lim_{n \to \infty} \max_{i} p_{i}^{(n)} = 0$. Thus,
+    \begin{align}
+        \exp \left( \sum_{i=1}^{n} \ln (1 + p_{i}^{(n)} (s-1)) \right) &= \exp \left( \sum_{i=1}^{n} p_{i}^{(n)}(s-1) - \frac{(p_{i}^{(n)}(s-1))^{2}}{2} + \ldots \right) \notag \\
+        &= \exp \left( (s-1)\sum_{i=1}^{n} p_{i=1}^{n} - \sum_{i=1}^{n} o(p_{i}^{(n)}(s-1))  \right) \\
+        &\to e^{\lambda (s-1)}.
+    \end{align}
+\end{example}
+\begin{example}
+    Let $X^{(n)} \sim \text{NB}(r_{n},p)_{n}$, the number of successes before the $r_{n}^{\text{th}}$ success in trials with success probability $p_{n}$. Let $p_{n} \to 1$ and $r_{n} \to \infty$ such that $r_{n}(1-p_{n}) \to \lambda$, where $\lambda$ is fixed. We would then have $P(X^{(n)} = k) \to P(\text{Poisson}(\lambda) = k)$.
+\end{example}
+
+\section{Gambler's Ruin}
+We take a look at a gambler, who has starting capital $z$. His probability of a success $(+1)$ is $p$, and of a failure $(-1)$ is $q$. We ask the probability $q_{z}$ that the gambler reaches $0$ before $a$ when he starts at capital $z$. Note that $q_{z}$ satisfies
+\begin{equation}
+    q_{z} = pq_{z+1}+qq_{z-1} \text{ for } 1 < z < a-1\; (\text{statement }\star), \text{ with } q_{0} = 1,\; q_{a} = 0\; (\text{statement }\star \star).
+\end{equation}
+We look at two cases, beginning with the case when $p \neq q$. Note that $q_{z} = 1$ for $1 \leq z \leq a-1$ solves for statement $\star$, ignoring statement statement $\star \star$ and ignoring probaility for now. $q_{z} = (\frac{q}{p})^{z}$ for $1 \leq z \leq a-1$ also solves for statement $\star$. Therefore, $A+B(\frac{q}{p})^{z}$ solves statement $\star$. Now, we plug in the boundary conditions given by statement $\star \star$. Solving the equations $A+B = 1$ and $A + B(\frac{q}{p})^{a} = 0$ gives us
+\begin{equation}
+    B = \frac{1}{1-(\frac{q}{p})^{a}},\; A = 1 - \frac{1}{1-(\frac{q}{p})^{a}}.
+\end{equation}
+Plugging this in, gives us
+\begin{equation}
+    q_{z} = \frac{(\frac{q}{p})^{a} - (\frac{q}{p})^{z}}{(\frac{q}{p})^{a} - 1}.
+\end{equation}
+Note that we were working the case when $p \neq q$. For $p = q$, this solution does not work.
+
+We work the case for when $p = q = \frac{1}{2}$. Again, $q_{z} = 1$ for $1 \leq z \leq a-1$ satisfies statement $\star$. We also find that $q_{z} = z$ for $1 \leq z \leq a-1$ also satisfies this statement. Hence, we look for $A+Bz$ which satisfies boundary condition given by statement $\star \star$. Solving, this gives us
+\begin{align}
+    q_{z} = 1 - \frac{z}{a}.
+\end{align}
+Note that we are yet to show $p_{z} + q_{z} = 1$. If we instead focus on a \textit{second} gambler playing against our gambler, we would have a gambler with capital $a-z$, and probability of success $q$ and probability of failure $p$. Replacing $z$ by $a-z$ and $q$ by $p$ and $p$ by $q$ in our formed equations would give us $p_{z} + q_{z} = 1$.
+
+Let us intuitively look at our equations with a table of examples.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        \textbf{$p$} & \textbf{$q$} & \textbf{$z$} & $a$ & $q_{z}$ \\ 
+        \hline
+        0.45 & 0.55 & 9 & 10 & 0.21 \\
+        0.45 & 0.55 & 90 & 100 & 0.866 \\
+        0.45 & 0.55 & 99 & 100 & 0.182 \\
+        0.5 & 0.5 & 9 & 10 & 0.1 \\
+        0.5 & 0.5 & 90 & 100 & 0.1 \\
+        0.5 & 0.5 & 99 & 100 & 0.01
+    \end{tabular}
+    \caption{Probability of ruin ($q_{z}$) given initial parameters.}
+\end{table}
+
+Note that the expected net gain is given by
+\begin{equation}
+    (a-z)(1-q_{z}) - zq_{z} = a(1-q_{z})-z.
+\end{equation}
+If we plug in this into our first three rows of our table, we would have $-1.1,\; -77,\; -18$. If one is gambling under such condition, we must start with big capital $z$ and low target $a-z$.
+
+\subsection{Duration of the Game}
+We look at $D_{z}$, the expected duration of a game starting at $z$; the expected time before the gambler hits $a$ or $0$. The linear recurrance satisfied here is
+\begin{equation}
+    D_{z} = pD_{z+1} + qD_{z-1} + 1 \text{ with boundary conditions } D_{0} = 0,\; D_{a} = 0.
+\end{equation}
+For $p \neq q$,
+\begin{equation}
+    D_{z} = \frac{z}{q-p} - \frac{a}{q-p} \left( \frac{1-(\frac{q}{p})^{z}}{1-(\frac{q}{p})^{n}} \right).
+\end{equation}
+For $p = q = \frac{1}{2}$,
+\begin{equation}
+    D_{z} = z(a-z).
+\end{equation}
+Look at this
 
 \begin{appendices}
 
