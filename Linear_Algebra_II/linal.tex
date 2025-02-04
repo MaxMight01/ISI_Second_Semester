@@ -733,6 +733,141 @@ and we must have $\deg m_{T}(x) \leq n^{2}$.
     which implies that the operator $\det{B}$ is zero on all the basis vectors, and hence it is the zero vecotr. Thus, since $\chi_{T}(T) = \det{B}$, $\chi_{T}(T)$ is also the zero operator.
 \end{proof}
 
+\textit{February 4th.}
+\begin{proposition}
+    If the minimal polynomial $m_{T}(x) \in \F[x]$ of a linear operator $T: V \to V$ splits into distinct linear factors, then $T$ is diagonalizable.
+\end{proposition}
+\begin{proof}
+    Let $m_{T}(x) = (x-\lambda_{1})(x-\lambda_{2}) \cdots (x-\lambda_{k})$ where the $\lambda_{i}$'s are distinct. We are to show that $V = E_{\lambda_{1}} \oplus \ldots \oplus E_{\lambda_{k}}$. We wish to find polynomials $h_{1}(x), \ldots, h_{k}(x)$ such that
+    \begin{enumerate}
+        \item $h_{1}(x) + \ldots + h_{k}(x) = 1$,
+        \item $(x-\lambda_{i}) \cdot h_{i}(x)$ is divisible by $m_{T}(x)$ for all $1 \leq i \leq k$.
+    \end{enumerate}
+    The second condition implies that $(T-\lambda_{i}I) \cdot h_{i}(T)$ is the zero operator. The first condition implies that $\sum_{i=1}^{k} h_{i}(T)(v) = v$. But the second condition again implies that $h_{i}(T)(v)$ is an eigenvector corresponding to $\lambda_{i}$, that is, $h_{i}(T)(v) \in E_{\lambda_{i}}$. If we can find these $h_{i}$'s satisfying the two conditions then we can say that $V$ is the direct sum of the eigenspaces.
+
+    For $1 \leq i \leq k$, let $f_{i}(x) = \frac{m_{T}(x)}{(x-\lambda_{i})} = \prod_{j \neq i} (x-\lambda_{j})$. As the $\lambda_{i}$'s are distinct, the $f_{i}$'s are relatively prime, so there exist $g_{1}, \ldots, g_{k}$ such that
+    \begin{equation}
+        f_{1}(x)g_{1}(x) + \ldots + f_{k}(x) g_{k}(x) = 1.
+    \end{equation}
+    Let $h_{i}(x) = f_{i}(x) g_{i}(x)$ for all $1 \leq i \leq k$. Both the conditions hold, and the result follows.
+\end{proof}
+
+\begin{corollary}
+    Let $T:V \to V$ be a linear operator on a finite dimensional complex vector space such that $T^{m} = I$ for some positive integral $m$. Then $T$ is diagonalizable.
+\end{corollary}
+
+\begin{proposition}
+    Let $T:V \to V$ be  linear operator, and let $U$ be an invariant subspace of $T$, that is, $T(U) \subseteq U$ (or equivalently, $T(u) \in U$ for all $u \in U$). The minimal polynomial $m_{T|_{U}}(x)$ of the operator $T|_{U} : U \to U$ divides the minimal polynomial $m_{T}(x)$ of the operator $T: V \to V$ in $\F[x]$.
+\end{proposition}
+\begin{proof}
+    Note that $m_{T}(T)(u) = 0$ for all $u \in U$ as $U \subseteq V$. Thus, $m_{T}(T) = 0$ on the subspace $U$. So $m_{T}(x)$ annihilates $T|_{U}$. So, as $m_{T|_{U}}(x)$ is the minimal polynomial of $T|_{U}$, it should divide all annihilators of $T|_{U}$ and thus divides $m_{T}(x)$ in $\F[x]$.
+\end{proof}
+
+\section{Triangularizability}
+A similar definition works as in the case of diagonalizability.
+\begin{definition}
+    A linear operator $T: V \to V$ is said to be a \eax{triangularizable linear operator} if there exists a basis of $V$ with respect to which the matrix of $T$ is a triangular matrix, be it upper or lower.
+\end{definition}
+If our basis is $\mc{B} = (v_{1},v_{2},\ldots,v_{n})$, then we can show that $Tv_{k} \in \text{span}(v_{1},\ldots,v_{k})$.
+
+\begin{theorem}
+    A linear operator $T: V \to V$ is triangularizable if and only if the minimal polynomial splits into linear factors.
+\end{theorem}
+\begin{proof}
+    Let $T:V \to V$ be triangularizable, that is, there exists a basis with respect to which the matrix of $T$ is a triangular matrix, with diagonal entries $\lambda_{1}, \ldots, \lambda_{n}$, say. Then the characteristic polynomial of $T$ is $(x-\lambda_{1})(x-\lambda_{2}) \cdots (x-\lambda_{n})$ where the $\lambda_{i}$'s are not necessarily distinct. But $m_{T}(x)$ divides $\chi_{T}(x)$, hence is again a product of linear factors.
+
+    Conversely, let $m_{T}(x) = (x-\lambda_{1})(x-\lambda_{2}) \cdots (x-\lambda_{k})$ where the $\lambda_{i}$'s are not necessarily distinct. We prove by induction on the number of factors of $m_{T}(x)$. If $k = 1$, then $m_{T}(x) = x-\lambda_{1}$; as $m_{T}(T) = 0$, $T = \lambda_{1}I$, matrix of $T$ is the scalar matrix. Now let $k > 1$, and let the result hold for smaller positive integers. Let $U = \text{Im} (T-\lambda_{k}I)$. We find that $U$ is a proper subspace of $V$. Note that $U$ is an invariant subspace of $T$; if we let $u = (T-\lambda_{k}I)(v)$ for some $v \in V$, then
+    \begin{equation}
+        T(u) = T(T-\lambda_{k}I)(v) = (T-\lambda_{k}I)T(v) \in U.
+    \end{equation}
+    The minimal polynomial $m_{T|_{U}}(x)$ of $T|_{U}$ divides $m_{T}(x)$, and hence $m_{T|_{U}}(x) = (x-\alpha_{1}) \cdots (x-\alpha_{l})$, where $l \leq k$, and $\alpha_{1},\ldots,\alpha_{l} \in \{\lambda_{1},\ldots,\lambda_{k}\}$. By hypothesis, $T|_{U}$ is triangularizable. So there exists a basis of $U$, say $(u_{1},\ldots,u_{m})$ with respect to which the matrix of $T|_{U}$ is a triangular matrix. So $T|_{U}(u_{k}) \in \text{span}(u_{1},\ldots,u_{k})$. Extend this to a basis $\mc{B} = (u_{1},\ldots,u_{m},v_{m+1},\ldots,v_{n})$. If we rewrite $Tv_{j} = (T-\lambda_{k}I)v_{j} + \lambda_{k}Iv_{j}$, we see that $(T-\lambda_{k}I)v_{j} \in U = \text{span}(u_{1},\ldots,u_{m})$, and $Tv_{j} \in \text{span}(u_{1},\ldots,u_{m},v_{j})$; the matrix of $T$ with respect to $\mc{B}$ is a triangular matrix. 
+\end{proof}
+\begin{corollary}
+    Every operator $T:V \to V$, where $V$ is a complex finite dimensional vector space, is triangularizable.
+\end{corollary}
+
+\chapter{PARTITIONED MATRICES}
+
+\section{The Determinant}
+\begin{proposition}
+    Let $\Gamma = \begin{pmatrix}
+        A & O \\ O & I
+    \end{pmatrix}$ or $\Gamma = \begin{pmatrix}
+        I & O \\ O & A
+    \end{pmatrix}$, where $A$ is a square matrix. Then we necessarily have $\det{\Gamma} = \det{A}$.
+\end{proposition}
+\begin{proof}
+    Let $\Gamma$ be of order $(n+1) \times (n+1)$ and $A$ be of order $n \times n$. By definition,
+    \begin{equation}
+        \det{\Gamma} = \sum_{\sigma \in S_{n+1}} \epsilon(\sigma) g_{1 \sigma(1)} \cdots g_{(n+1) \sigma(n+1)}.
+    \end{equation}
+    Note that $g_{(n+1)\sigma(n+1)}$ is 1 if $\sigma(n+1) = n+1$, and $0$ otherwise. Also, $\epsilon(\sigma)$ remains the same when $\sigma$ is considered to be an element of $S_{n}$. Thus,
+    \begin{equation}
+        \det \Gamma = \sum_{\sigma \in S_{n}} \epsilon(\sigma) g_{1 \sigma(1)} \cdots g_{n \sigma(n)} = \det A.
+    \end{equation}
+    Iterating this, we get the desired result. A similar proof works for the other type of matrix stated.
+\end{proof}
+
+\begin{proposition}
+    Let $\Gamma = \begin{pmatrix}
+        A & B \\ O & D
+    \end{pmatrix}$ where $A$ and $D$ are square matrices. Then we necessarily have $\det \Gamma = \det{A} \cdot \det{D}$.
+\end{proposition}
+\begin{proof}
+    Let the orders be $A_{k \times k}$, $D_{l \times l}$, $B_{k \times l}$ and $O_{l \times k}$. Note that $\Gamma$ can be broken up as
+    \begin{equation}
+        \Gamma = \begin{pmatrix}
+            I_{k} & O_{k \times l} \\
+            O_{l \times k} & D_{l \times l}
+        \end{pmatrix} \begin{pmatrix}
+            I_{k} & B_{k \times l} \\
+            O_{l \times k} & I_{l}
+        \end{pmatrix} \begin{pmatrix}
+            A_{k \times k} & O_{k \times l} \\
+            O_{l \times k} & I_{l}
+        \end{pmatrix}.
+    \end{equation}
+    The determinant is multiplicative, so $\det \Gamma = \det D \cdot \det A$ as the determinant of the middle matrix can be shown to be 1.
+\end{proof}
+
+\begin{proposition}
+    Let $\Gamma = \begin{pmatrix}
+        A & B \\ C & D
+    \end{pmatrix}$ where $A$ and $D$ are square matrices. If $A$ is invertible, then we necessarily have $\det \Gamma = \det A \cdot \det (D - CA^{-1}B)$.
+\end{proposition}
+\begin{proof}
+    Again, we break down $\Gamma$.
+    \begin{equation}
+        \Gamma = \begin{pmatrix}
+            I & O \\ CA^{-1} & I
+        \end{pmatrix} \begin{pmatrix}
+            A & O \\ O & D-CA^{-1}B
+        \end{pmatrix} \begin{pmatrix}
+            I & A^{-1}B \\ O & I
+        \end{pmatrix}.
+    \end{equation}
+    From here, it is clear that $\det \Gamma = \det{A} \cdot \det(D-CA^{-1}B)$.
+\end{proof}
+
+\begin{proposition}
+    Let $\Gamma = \begin{pmatrix}
+        A & B \\ C & D
+    \end{pmatrix}$ where $A$ and $D$ are square matrices. If $D$ is invertible, then we necessarily have $\det \Gamma = \det D \cdot \det (A - BD^{-1}C)$.
+\end{proposition}
+\begin{proof}
+    Yet again, we break down $\Gamma$.
+    \begin{equation}
+        \Gamma = \begin{pmatrix}
+            I & BD^{-1} \\ O & I
+        \end{pmatrix} \begin{pmatrix}
+            A-BD^{-1}C & O \\ O & D
+        \end{pmatrix} \begin{pmatrix}
+            I & O \\ D^{-1}C & I
+        \end{pmatrix}.
+    \end{equation}
+    From here, it is clear that $\det \Gamma = \det{D} \cdot \det(A-BD^{-1}C)$.
+\end{proof}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
