@@ -934,7 +934,102 @@ For $p = q = \frac{1}{2}$,
 \begin{equation}
     D_{z} = z(a-z).
 \end{equation}
-Look at this
+
+\chapter{JOINT CONTINUOUS DISTRIBUTIONS}
+
+\section{Introduction}
+\textit{February 4th.}
+
+Recall that $X:\Omega \to \R$ is \eax{continuous random variable} if it has a probability density function $f_{X}:\R \to \R_{\geq 0}$. In this case, if $A \subseteq \R$, then
+\begin{equation}
+    P(X \in A) = \int_{A} f_{X}(x) dx.
+\end{equation}
+For a minute $dx$,
+\begin{equation}
+    P(X \in [x,x+dx]) \approx f_{X}(x) dx.
+\end{equation}
+Two random variables $X$ and $Y$ are termed \eax{jointly continuous} if there exists a function $f:\R^{2} \to R$ such that for $A \subseteq \R^{2}$,
+\begin{equation}
+    P((X,Y) \in A) = {\iint}_{A} f(x,y) dx dy.
+\end{equation}
+In this case, $f$ is termed the \eax{joint probability density function} of $X$ and $Y$. In particular, if $B,C \subseteq \R$, then
+\begin{equation}
+    P(X \in C, \; Y \in B) = P((X,Y) \in C \times B) = \int_{B} \int_{C} f(x,y) dx dy.
+\end{equation}
+The \eax{joint cumulative density function} is given as
+\begin{equation}
+    F(a,b) = P(X \leq a, \; Y \leq b) = P((X,Y) \in (-\infty, a] \times (-\infty, b]) = \int_{-\infty}^{b} \int_{-\infty}^{a} f(x,y) dx dy.
+\end{equation}
+There is, again, joint analagous versions of the single random variables cases;
+\begin{equation}
+    \frac{\partial^{2}}{\partial{a} \partial{b}} F(a,b) = f(a,b)
+\end{equation}
+and
+\begin{equation}
+    P(X \in [a,a+da], \; Y \in [b,b+db]) \approx f(a,b) da db.
+\end{equation}
+Note that $(X,Y)$ being jointly continuous implies that both $X$ and $Y$ are continuous. Indeed, if $A \subseteq \R$, then
+\begin{equation}
+    P(X \in A) = P(X \in A, \; Y \in \R) = \int_{A} \int_{\R} f(x,y) dy dx = \int_{A} f_{X}(x) dx.
+\end{equation}
+In this case, the inner intergral becomes the probability density funciton of $X$.
+
+\begin{example}
+    We are given the joint probability density function of $X$ and $Y$ as
+    \begin{equation*}
+        f(x,y) = \begin{cases}
+            2e^{-x}e^{-2y} &\text{ if } 0 < x < \infty, \; 0 < y < \infty,\\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation*}
+    We are to compute $P(X>1,Y<1)$, $P(X<Y)$ and $P(X<a)$. This is left as an exercise.
+\end{example}
+
+\begin{example}
+    Suppose $(X,Y)$ represents a random points inside a circle of radius $R$. The probability density function is given by
+    \begin{equation*}
+        f(x,y) = \begin{cases}
+            \frac{1}{\pi R^{2}} &\text{ if } x^{2}+y^{2} \leq R^{2},\\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{equation*}
+    Compute $f_{X},f_{Y}$ and $f_{D}$ where $D = \sqrt{X^{2}+Y^{2}}$.
+\end{example}
+We call $X$ and $Y$ indepedent if, for $A,B \subseteq \R$,
+\begin{equation}
+    P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B).
+\end{equation}
+If we take $A = (-\infty, a], B = (-\infty, b]$, then
+\begin{equation*}
+    F(a,b) = F_{X}(a) F_{Y}(b) \implies f(a,b) = f_{X}(a) f_{Y}(b).
+\end{equation*}
+In fact, all three conditions are equivalent. Note that everything discussed so far may be extended to more than two random variables. If $A \subseteq \R^{n}$ and $(X_{1},X_{2},\ldots,X_{n})$ are jointly continuous, then
+\begin{equation}
+    P((X_{1},X_{2},\ldots,X_{n}) \in A) = \idotsint_{A} f(x_{1},x_{2},\ldots,x_{n}) dx_{1} \cdots dx_{n}
+\end{equation}
+where $f: \R^{n} \to \R_{\geq 0}$.
+
+\subsection{Buffin's Needle Problem}
+Suppose we have a table of width $D$ and length sufficient. We throw a needle of length $L \leq D$ randomly (and necessarily) on this table. We are to find the probability that the needle will hand over either side of the table separated by width $D$. Denote by $X$ the distance of the midpoint of the needle from the nearest edge, and denote by $\theta$ the angle is subtends with respect to the vertical.
+
+Note that $X \in [0,\frac{D}{2}]$, and $\theta \in [0,\frac{\pi}{2}]$. By the procedure, one can assume these are independent. We look at the probability that the length of half the needle is greater than the length of the hypotenuse determined by $X$ and $\theta$---
+\begin{equation}
+    P(\frac{L}{2} > \frac{X}{\cos \theta}) = \int_{0}^{\frac{\pi}{2}} \int_{0}^{\frac{L}{2} \cos \theta} \frac{2}{D} \cdot \frac{2}{\pi} dx d\theta = \frac{2L}{D \pi} \int_{0}^{\frac{\pi}{2}} \cos \theta d \theta = \frac{2L}{D \pi}.
+\end{equation}
+
+\begin{proposition}
+    The jointly continuous random variables $X$ and $Y$ are independent if and only the probability density function can be factored into functions of $x$ and $y$ respectively.
+\end{proposition}
+
+Suppose that $X$ and $Y$ are independent and jointly continuous random variables. Then $f(x,y) = f_{X}(x) f_{Y}(y)$. Let us compute the cumulative density function of $X+Y$.
+\begin{equation}
+    P(X+Y \leq a) = \int_{-\infty}^{\infty} \int_{-\infty}^{a-x} f_{X}(x) f_{Y}(y) dydx = \int_{-\infty}^{\infty} f_{X}(x) F_{Y}(a-x) dx = \int_{-\infty}^{\infty} f_{Y}(y) F_{X}(a-y) dy.
+\end{equation}
+Differentiating to give the probability density function of $X+Y$,
+\begin{equation}
+    \frac{d}{da} F_{X+Y}(a) = \int_{-\infty}^{\infty} f_{X}(x) f_{Y}(a-x) dx = \int_{-\infty}^{\infty} f_{X}(a-y) f_{Y}(y) dy.
+\end{equation}
+This is the convolution of $f_{X}$ and $f_{Y}$.
 
 \begin{appendices}
 
