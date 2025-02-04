@@ -461,6 +461,37 @@ For $X_{1},\ldots,X_{n}$ indenpendent and identically distributed, the method of
     This is the estimator for $\sigma^{2}$.
 \end{example}
 
+\chapter{POINT \& INTERVAL ESTIMATION}
+\textit{February 4th.}
+
+An estimator $\hat{\theta}$ of $\theta$ is called an \eax{unbiased estimator} if $E{\hat{\theta}} = \theta$, and is called a \eax{biased estimator} otherwise. Note that a variable may have several valid unbiased estimators. Typically, we look for estimators with small variances. We introduce three terms.
+\begin{itemize}
+    \item $\text{Bias}(\hat{\theta}) = E\hat{\theta} - \theta$, the bias of the estimator. It is zero for an unbiased estimator.
+    \item $\text{Var}(\hat{\theta}) = E[(\hat{\theta}-E\hat{\theta})^{2}]$, the variance of the estimator.
+    \item $\text{MSE}(\hat{\theta}) = E[(\hat{\theta}-\theta)^{2}]$, the mean squared error of the estimator.
+\end{itemize}
+In fact, the three are related as
+\begin{equation}
+    \text{MSE}(\hat{\theta}) = \text{Var}(\hat{\theta}) + \text{Bias}^{2}(\hat{\theta}) = E[(\hat{\theta}-\theta)^{2}] = E[(\hat{\theta}-E\hat{\theta})^{2}] + (E\hat{\theta} - \theta)^{2}.
+\end{equation}
+A good property is to look for small MSE, and pick the estimator with the smallest MSE. If unbiasednes is important, then we restrict the class of unbiased estimators and pick the one witht he smallest variance. We may also desire some asymptotic properties; as $n \to \infty$, we want $\hat{\theta}_{n} \to \theta$ either in probability or almost surely.
+
+In interval estimation, an estimate of $\theta$ is an interval of the form
+\begin{equation}
+    P(\hat{\Theta}_{1} < \theta < \hat{\Theta}_{2}) = 1-\alpha
+\end{equation}
+where $\alpha$ is an appropriately small value. We refer to this interval as a $(1-\alpha)100\%$ \eax{confidence interval} for $\theta$.
+
+\begin{enumerate}
+    \item Point estimates generally do not equal parameter values.
+    \item We look for intervals, based on sample statistics, which cover the parameter with high probability.
+    \item Ideally, we would like that probability to be 1, but that will lead to very broad intervals.
+\end{enumerate}
+Some additional comments may also be noted.
+\begin{enumerate}
+    \item If $\sigma$ is known then the confidence interval is exact. Otherwise, we can estimate $\sigma$ via $s$ to get the approximate confidence interval, due to the strong law of large numbers.
+    \item If $n$ is large, then we do not need to assume the normality of $X_{i}$'s. For large $n$, $\overline{X}$ is approximately normal irrespective of the parent distribution.
+\end{enumerate}
 
 \begin{appendices}
 
