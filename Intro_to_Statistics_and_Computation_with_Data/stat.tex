@@ -493,6 +493,35 @@ Some additional comments may also be noted.
     \item If $n$ is large, then we do not need to assume the normality of $X_{i}$'s. For large $n$, $\overline{X}$ is approximately normal irrespective of the parent distribution.
 \end{enumerate}
 
+\textit{February 5th.}
+
+If $X_{1},\ldots,X_{n}$ are independent and identically distributed standard normal distributions ($N(0,1)$), then
+\begin{itemize}
+    \item $\overline{X} \sim N(0, \frac{1}{n})$,
+    \item $\sum_{i=1}^{n} X_{i}^{2} \sim \chi_{n}^{2}$ where $\chi_{n}^{2} \equiv \text{Gamma}(\frac{n}{2},\frac{1}{2})$,
+    \item $(n-1)s^{2} = \sum_{i=1}^{n} (X_{i}-\overline{X})^{2} \sim \chi_{n-1}^{2}$ which is independent of $\overline{X}$,
+    \item If $X \sim N(0,1)$ and $Y \sim \chi_{n}^{2}$, then $\frac{X}{\sqrt{Y/n}} \sim t_{n}$. $t_{n}$ is a distribution which is symmetric around 0 and is unimodal.
+    \item If $X \sim \chi_{n}^{2}$ and $Y \sim \chi_{m}^{2}$ and $X \sqcup Y$, then $\frac{X/n}{Y/n} \sim F_{m,n}$.
+\end{itemize}
+
+\section{Interval Estimation for Specified $\alpha$}
+\begin{enumerate}
+    \item The confidence interval for $\mu$ when $n$ is large. Suppose that $X_{1},\ldots,X_{n}$ are independently and identically distributed random variables. From the central limit theorem, $\overline{X} \sim N$, and from the strong law of large numbers, $\sigma \approx s$. For a specificed $\alpha$, the confidence interval may be given as
+    \begin{equation}
+        P(\overline{X}-z_{1-\frac{\alpha}{2}} \frac{s}{\sqrt{n}} < \mu < \overline{X}+z_{1-\frac{\alpha}{2}} \frac{s}{\sqrt{n}}) \approx 1-\alpha
+    \end{equation}
+    where $z_{1-\frac{\alpha}{2}} = \text{qnorm}(1-\frac{\alpha}{2}, 0, 1)$. For $\alpha = 0.05$, $z_{1-\frac{\alpha}{2}} = 1.96$, and for $\alpha = 0.1$, $z_{1-\frac{\alpha}{2}} = 1.68$.
+    
+    \item The confidence interval for $\mu$ when $n$ is small. We assume that the $X_{1},\ldots,X_{n}$ are independent and identically distrbuted normal distrubtions $N(\mu,\sigma^{2})$. Here, $\overline{X}$ is a method of moments estimator (point estimate). Note that here, we would have $\frac{\overline{X}-\mu}{\sigma/\sqrt{n}} \sim N(0,1)$ and $\frac{(n-1)s^{2}}{\sigma^{2}} \sim \chi_{n-1}^{2}$. These are independent, so we would have
+    \begin{equation}
+        \dfrac{\frac{\sqrt{n} (\overline{X}-\mu)}{\sigma}}{\sqrt{\frac{(n-1)s^{2}}{\sigma^{2}} \frac{1}{n-1}}} = \frac{\sqrt{n}(\overline{X}-\mu)}{s} \sim t_{n-1}.
+    \end{equation}
+    The confidence interval will be given as
+    \begin{equation}
+        P(\overline{X}-t_{n-1,1-\frac{\alpha}{2}}\frac{s}{\sqrt{n}} < \mu < \overline{X}-t_{n-1,1+\frac{\alpha}{2}}\frac{s}{\sqrt{n}}) \approx 1 - \alpha.
+    \end{equation}
+\end{enumerate}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
