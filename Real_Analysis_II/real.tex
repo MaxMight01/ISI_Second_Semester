@@ -861,7 +861,10 @@ We want to talk about integrals of functions that \textit{don't} follow these as
     \item Evaluating $\int_{a}^{b} f$ even if $f$ is not bounded on $[a,b]$.
     \item Evaluating $\int_{a}^{\infty} f$, $\int_{-\infty}^{b} f$, or $\int_{-\infty}^{\infty} f$.
 \end{enumerate}
-\begin{definition}[An \eax{improper integral} of type I.]
+
+\section{Improper Integrals of Type I}
+
+\begin{definition}[An \eax{improper integral of type I}.]
     Let $f \notin \cR[a,b]$, and $f \in \cR[c,b]$ for all $a < c < b$. If
     \begin{equation}
         \lim_{\varepsilon \to 0^{+}} \int_{a+\varepsilon}^{b} f \; \left( = \int_{a}^{b} f \right)
@@ -920,9 +923,9 @@ In general,
     If we apply $\lim_{\varepsilon \to 0^{+}}$, we see that $\int_{0}^{1} \frac{1}{x^{p}}$ converges to $\frac{1}{1-p}$ if $0 < p < 1$, and diverges otherwise.
 \end{example}
 
-\section{Tests of Convergence of Improper Integrals of Type I}
+\subsection{Tests of Convergence}
 We now discuss when an improper integral of type I is convergent or not.
-\begin{theorem}[The \eax{comparison test - I}]
+\begin{theorem}[The \eax{comparison test I}]
     Let $0 \leq f(x) \leq g(x)$ for all $x \in [a,b)$. Assume that $\int_{a}^{b} g$ and $\int_{a}^{b} g$ are improper integrals solely due to the point $x = b$.
     \begin{enumerate}
         \item If $\int_{a}^{b} g$ converges, then $\int_{a}^{b} f$ converges.
@@ -950,7 +953,7 @@ We now discuss when an improper integral of type I is convergent or not.
     Note that the integral of the rightmost term converges for $1 < p < 2$. Also, $\int_{0}^{1} \frac{1}{x^{p}} dx$ also converges for $0 < p < 1$. The case for $p = 1$ is also convergent. Hence, $\int_{0}^{\frac{\pi}{2}} \frac{\sin x}{x^{p}}$ converges if $0 < p < 2$.
 \end{example}
 
-\begin{theorem}[The \eax{limit comparison test - II}].
+\begin{theorem}[The \eax{limit comparison test I}].
     Let $f(x), g(x) \geq 0$ for all $x \in [a,b)$. Suppose
     \begin{equation*}
         \lim_{x \to b^{-}} \frac{f(x)}{g(x)} = l \neq 0, \infty.
@@ -965,6 +968,99 @@ We now discuss when an improper integral of type I is convergent or not.
     \end{align}
     Therefore, $0 < (l-\varepsilon) g(x) < f(x)$ for all $x \in (c,b)$. By the comparison test - I, if $\int_{a}^{b} f$, that is, $\int_{c}^{b} f$ converges, then $\int_{c}^{b} (l-\varepsilon) g$, that is, $\int_{a}^{b} (l-\varepsilon) g$ converges. This tells us that $\int_{a}^{b} g$ converges. To show that $\int_{a}^{b} g$ converges implies that converge of $\int_{a}^{b} f$ is left as an exercise to the reader.
 \end{proof}
+
+\textit{February 6th.}
+\begin{definition}
+    An improper integral $\int_{a}^{b} f$ is absolutely convergent if the improper integral $\int_{a}^{b} \abs{f}$ converges.
+\end{definition}
+
+\begin{theorem}
+    The absolute convergence of an improper integral implies the convergence of the improper integral.
+\end{theorem}
+\begin{proof}
+    Let $\int_{a}^{b}f$ be an improper integral at $a$. Now, $-\abs{f(x)} \leq f(x) \leq \abs{f(x)}$ implies that $0 \leq \abs{f(x)} + f(x) \leq 2\abs{f(x)}$ for all $x \in (a,b]$. Therefore, for all $a < c < b$,
+    \begin{align}
+        0 \leq \int_{c}^{b} (\abs{f(x)}+f(x))dx \leq 2 \int_{c}^{b} \abs{f(x)} dx.
+    \end{align}
+    If the rightmost integral converges, then by the comparison test, $\int_{a}^{b} \abs{f}+f$ converges. Finally,
+    \begin{align}
+        \int_{c}^{b} f(x)dx &= \int_{c}^{b} (\abs{f(x)}+f(x)) dx - \int_{c}^{b} \abs{f(x)} dx \notag \\
+        \implies \lim_{c \to a^{+}} \int_{c}^{b} f(x)dx &= \int_{a}^{b} (\abs{f(x)}+f(x)) dx - \int_{a}^{b} \abs{f(x)} dx.
+    \end{align}
+\end{proof}
+
+\section{Improper Integrals of Type II}
+
+\begin{definition}[An \eax{improper integral of type II}.]
+    Fix $a \in \R$ and let $f \in \cR[a,r]$ for all $r > a$. If $\lim_{r \to \infty} \int_{a}^{r} f$ exists, then we say that $\int_{a}^{\infty} f$ converges and we write
+    \begin{align}
+        \int_{a}^{\infty} f = \lim_{r \to \infty} \int_{a}^{r} f.
+    \end{align}
+    If the limit diverges, then we say that the integral diverges. Similarly, we define
+    \begin{align}
+        \int_{-\infty}^{b} = \lim_{r \to \infty} \int_{-r}^{a} f
+    \end{align}
+    provided that the limit exists.
+\end{definition}
+
+\begin{definition}
+    Let $f \in \cR[a,b]$ for all $a < b \in \R$. If there exists a $c \in \R$ such that $\int_{-\infty}^{c} f$ and $\int_{c}^{\infty} f$ exist, then we say that $\int_{-\infty}^{\infty} f$ exists and define
+    \begin{align}
+        \int_{-\infty}^{\infty} f= \int_{-\infty}^{c} f + \int_{c}^{\infty} f.
+    \end{align}
+    Note that the value of the integral, if it exists, is independent of the choice of $c$; this result is left as an exercise to the reader.
+\end{definition}
+
+\begin{example}
+    We wish to compute $\int_{0}^{\infty} \sin x dx$. Note that, by the fundamental theorem of calculus,
+    \begin{align}
+        \int_{0}^{r} \sin x dx = [-\cos x]_{0}^{r} = 1 - \cos r.
+    \end{align}
+    The right hand side does not converge as $r \to \infty$, so we conclude that the integral does not converge.
+\end{example}
+\begin{example}
+    We wish to compute $\int_{-\infty}^{0} e^{-x} dx$. Note that $e^{-x} \in \cR[-r,0]$ for all $r > 0$. Also,
+    \begin{align}
+        \int_{-r}^{0} e^{-x} dx = [-e^{-x}]_{-r}^{0} = e^{r}-1 \to \infty \text{ as } r \to \infty.
+    \end{align}
+    Therefore, the integral diverges.
+\end{example}
+\begin{example}
+    We wish to compute $\int_{-\infty}^{\infty} \frac{dx}{1+x^{2}}$. Let us take $c = 0$ to be out `split'; evaluating the integrals, we have
+    \begin{align}
+        \int_{0}^{\infty} \frac{dx}{1+x^{2}} = \lim_{r \to \infty} \int_{0}^{r} \frac{dx}{1+x^{2}} = \left[ \arctan x \right]_{0}^{r} = \arctan r \to \frac{\pi}{2} \text{ as } r \to \infty,\\
+        \int_{-\infty}^{0} \frac{dx}{1+x^{2}} = \lim_{r \to \infty} \int_{-r}^{0} \frac{dx}{1+x^{2}} = \left[ \arctan x \right]_{-r}^{0} = \arctan r \to \frac{\pi}{2} \text{ as } r \to \infty.
+    \end{align}
+    Thus,
+    \begin{align}
+        \int_{-\infty}^{\infty} \frac{dx}{1+x^{2}} = \int_{-\infty}^{0} \frac{dx}{1+x^{2}} + \int_{0}^{\infty} \frac{dx}{1+x^{2}} = \frac{\pi}{2} + \frac{\pi}{2} = \pi.
+    \end{align}
+\end{example}
+We say that $f \in \cR[a,\infty)$ if $f \in \cR[a,r]$ for all $r > a$; this is just another notation.
+
+\subsection{Tests of Convergence}
+\begin{theorem}[The \eax{comparison test II}]
+    Let $a \in \R$ and let $f,g \in \cR[a,\infty)$. Suppose that $0 \leq f(x) \leq g(x)$ for all $x \in [a,\infty)$.
+    \begin{enumerate}
+        \item If $\int_{a}^{\infty} g$ converges, then $\int_{a}^{\infty} f$ converges.
+        \item If $\int_{a}^{\infty} f$ diverges, then $\int_{a}^{\infty} g$ diverges.
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    For all $t > a$, it follows that
+    \begin{align}
+        0 \leq \int_{a}^{t} f(x)dx \leq \int_{a}^{t} g(x)dx.
+    \end{align}
+    Denote the two depicted integrals by $F(t)$ and $G(t)$ respectively, for all $t > a$. The result follows.
+\end{proof}
+\begin{example}
+    We question whether $\int_{a}^{\infty} \frac{dx}{e^{x}+1}$. Note that $\frac{1}{e^{x}+1} \leq e^{-x}$ for all $x \in [a,\infty)$. Evaluting the integral of the right hand side function,
+    \begin{align}
+        \int_{a}^{\infty} e^{-x}dx = \lim_{r \to \infty} \int_{a}^{r} e^{-x} dx = \lim_{r \to \infty} (e^{-a}-e^{-r}) = e^{-a}.
+    \end{align}
+    It converges, so our original integral also converges.
+\end{example}
+
 
 \begin{appendices}
 
