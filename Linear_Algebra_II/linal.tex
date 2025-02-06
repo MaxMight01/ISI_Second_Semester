@@ -786,9 +786,8 @@ If our basis is $\mc{B} = (v_{1},v_{2},\ldots,v_{n})$, then we can show that $Tv
     Every operator $T:V \to V$, where $V$ is a complex finite dimensional vector space, is triangularizable.
 \end{corollary}
 
-\chapter{PARTITIONED MATRICES}
+\subsection{Determinant of Partitioned Matrices}
 
-\section{The Determinant}
 \begin{proposition}
     Let $\Gamma = \begin{pmatrix}
         A & O \\ O & I
@@ -867,6 +866,68 @@ If our basis is $\mc{B} = (v_{1},v_{2},\ldots,v_{n})$, then we can show that $Tv
     \end{equation}
     From here, it is clear that $\det \Gamma = \det{D} \cdot \det(A-BD^{-1}C)$.
 \end{proof}
+
+\section{On the Characteristic and Minimal Polynomials}
+\textit{February 6th.}
+\begin{theorem}
+    Let $A$ be a $m \times n$ matrix and $B$ be a $n \times m$ matrix with $m \leq n$. Then,
+    \begin{equation}
+        \chi_{BA}(x) = x^{n-m} \chi_{AB}(x).
+    \end{equation}
+\end{theorem}
+\begin{proof}
+    Note that there exist non-singular matrices $P$ and $Q$ such that $PAQ = \begin{pmatrix}
+        I_{r} & O \\ O & O
+    \end{pmatrix}$, where $r$ is the rank of $A$. Partition $Q^{-1}BP^{-1}$ as $\begin{pmatrix}
+        C & D \\ E & G
+    \end{pmatrix}$ where $C$ is of order $r \times r$, with the other submatrices being of appropriate order. Then,
+    \begin{equation}
+        PABP^{-1} = PAQQ^{-1}BP^{-1} = \begin{pmatrix}
+            I_{r} & O \\ O & O
+        \end{pmatrix} \begin{pmatrix}
+            C_{r \times r} & D \\ E & G
+        \end{pmatrix} = \begin{pmatrix}
+            C & D \\ O & O
+        \end{pmatrix}.
+    \end{equation}
+    Similarly,
+    \begin{equation}
+        Q^{-1}BAQ = Q^{-1}BP^{-1}PAQ = \begin{pmatrix}
+            C_{r \times r} & D \\ E & G
+        \end{pmatrix} \begin{pmatrix}
+            I_{r} & O \\ O & O
+        \end{pmatrix} = \begin{pmatrix}
+            C & O \\ E & O
+        \end{pmatrix}.
+    \end{equation}
+    Thus,
+    \begin{equation}
+        \chi_{AB}(x) = \chi_{PABP^{-1}}(x) = \det \begin{pmatrix}
+            xI_{r} - C & -D \\ O & xI
+        \end{pmatrix} = x^{m-r} \det(xI-C)
+    \end{equation}
+    and
+    \begin{equation}
+        \chi_{BA}(x) = \chi_{Q^{-1}BAQ}(x) = \det \begin{pmatrix}
+            xI - C & O \\ -E & xI
+        \end{pmatrix} = x^{n-r} \det(xI-C)
+    \end{equation}
+    which tells us that $\chi_{BA}(x) = x^{n-m} \chi_{AB}(x)$.
+\end{proof}
+
+\begin{enumerate}
+    \item Suppose $T:V \to V$ and $U \subseteq V$.
+    \begin{enumerate}
+        \item If $U \subseteq \ker T$, then $U$ is $T$-invariant.
+        \item If $T(V) \subseteq U$, then $U$ is $T$-invariant.
+    \end{enumerate}
+    \item If $V_{1},\ldots,V_{m}$ are $T$-invariant subspaces, then $V_{1} + \ldots + V_{m}$ is $T$-invariant.
+    \item Let $P:V \to V$ be a linear operator such that $P^{2} = P$;  then the eigenvalues of $P$ are 0 or 1.
+    \item Let $T:V \to V$ be an invertible operator. Then $\lambda$ is an eigenvalue of $T$ if and only if $\frac{1}{\lambda}$ is an eigenvalue of $T^{-1}$.
+    \item Let $T:V \to V$, with $0 \neq v \in V$. Then $W = \text{span}(v, Tv, T^{2}v, \ldots)$ is $T$-invariant, and is the smallest $T$-invariant subspace of $V$ containing $v$.
+    \item Let $T:V \to V$ and $\text{rank}T = k \leq n$, where $n$ is the dimension of $V$. Then $T$ has at most $k+1$ distinct eigenvalues.
+    \item 
+\end{enumerate}
 
 \begin{appendices}
 
