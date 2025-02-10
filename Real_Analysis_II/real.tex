@@ -953,7 +953,7 @@ We now discuss when an improper integral of type I is convergent or not.
     Note that the integral of the rightmost term converges for $1 < p < 2$. Also, $\int_{0}^{1} \frac{1}{x^{p}} dx$ also converges for $0 < p < 1$. The case for $p = 1$ is also convergent. Hence, $\int_{0}^{\frac{\pi}{2}} \frac{\sin x}{x^{p}}$ converges if $0 < p < 2$.
 \end{example}
 
-\begin{theorem}[The \eax{limit comparison test I}].
+\begin{theorem}[The \eax{limit comparison test I}]
     Let $f(x), g(x) \geq 0$ for all $x \in [a,b)$. Suppose
     \begin{equation*}
         \lim_{x \to b^{-}} \frac{f(x)}{g(x)} = l \neq 0, \infty.
@@ -1054,13 +1054,121 @@ We say that $f \in \cR[a,\infty)$ if $f \in \cR[a,r]$ for all $r > a$; this is j
     Denote the two depicted integrals by $F(t)$ and $G(t)$ respectively, for all $t > a$. The result follows.
 \end{proof}
 \begin{example}
-    We question whether $\int_{a}^{\infty} \frac{dx}{e^{x}+1}$. Note that $\frac{1}{e^{x}+1} \leq e^{-x}$ for all $x \in [a,\infty)$. Evaluting the integral of the right hand side function,
+    We question whether $\int_{a}^{\infty} \frac{dx}{e^{x}+1}$ converges. Note that $\frac{1}{e^{x}+1} \leq e^{-x}$ for all $x \in [a,\infty)$. Evaluting the integral of the right hand side function,
     \begin{align}
         \int_{a}^{\infty} e^{-x}dx = \lim_{r \to \infty} \int_{a}^{r} e^{-x} dx = \lim_{r \to \infty} (e^{-a}-e^{-r}) = e^{-a}.
     \end{align}
     It converges, so our original integral also converges.
 \end{example}
 
+\textit{February 10th.}
+\begin{theorem}[The \eax{limit comparison test II}]
+    Let $f,g \in \cR[a,\infty)$ and suppose $f(x),g(x) \geq 0$ for all $x \in [0,\infty)$. Also suppose
+    \begin{equation*}
+        \lim_{x \to \infty} \frac{f(x)}{g(x)} > 0.
+    \end{equation*}
+    Then the imporper integrals $\int_{a}^{\infty} f$ and $\int_{a}^{\infty} g$ converge, or diverge, together.
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{example}
+    We wish to test the convergence of $\int_{1}^{\infty} \frac{dx}{x\sqrt{x^{2}+1}}$. Let $f(x) = \frac{1}{x\sqrt{x^{2}+1}}$ and let $g(x) = \frac{1}{x^{2}}$. We see that
+    \begin{equation}
+        \frac{f(x)}{g(x)} = \frac{1}{\sqrt{1+\frac{1}{x^{2}}}} \to 1 > 0 \text{ as } x \to \infty.
+    \end{equation}
+    As $\int_{1}^{\infty} \frac{1}{x^{2}} dx$ is convegent, then by the limit comparison test, $\int_{1}^{\infty}\frac{dx}{x\sqrt{x^{2}+1}}$ must also converge.
+\end{example}
+
+\begin{theorem}
+    Let $f \in \cR[a,\infty)$. If $\int_{a}^{\infty} \abs{f}$ converges, then $\int_{a}^{\infty} f$ also converges. The converse is not true.
+\end{theorem}
+
+
+\chapter{REFINING OF CONVERGENCE}
+
+Recall the following:
+\begin{enumerate}
+    \item The \eax{Cauchy limit criterion}; $\lim_{x \to a} f(x)$ exists if and only if for all $\varepsilon > 0$, there exists a $\delta > 0$ such that
+    \begin{equation}
+        \abs{f(x_{1})-f(x_{2})} < \varepsilon \text{ for all } x_{1},x_{2} \in (a-\delta,a+\delta)\backslash \{a\}.
+    \end{equation}
+
+    \item We say $\lim_{x \to \infty} f(x) = l$ if for every $\varepsilon > 0$, there exiss $M > 0$ such that
+    \begin{equation}
+        \abs{f(x)-l} < \varepsilon \text{ for all } x > M.
+    \end{equation}
+
+    \item Also, $\lim_{x \to \infty} f(x) = l$ if and only if for every $\varepsilon > 0$, there exists $M > 0$ such that
+    \begin{equation}
+        \abs{f(x_{1})-f(x_{2})} < \varepsilon \text{ for all } x_{1},x_{2} > M.
+    \end{equation}
+\end{enumerate}
+
+\begin{theorem}[\eax{Cauchy test for convergence of integrals}]
+    Let $f \in \cR[a,\infty)$. Then $\int_{a}^{\infty} f$ converges if and only if for every $\varepsilon > 0$, there exists $M > 0$ such that
+    \begin{equation*}
+        \abs{\int_{R_{1}}^{R_{2}} f} < \varepsilon \text{ for all } R_{1},R_{2} > M.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    We can easily see that $\int_{a}^{\infty} f$ converges $\iff$ $\lim_{R \to \infty} \int_{a}^{R} f$ converges $\iff$ for every $\varepsilon > 0$, there exists $M > 0$ such that
+    \begin{equation}
+        \abs{\int_{a}^{R_{1}} f - \int_{a}^{R_{2}} f} < \varepsilon \text{ for all } R_{1},R_{2} > M.
+    \end{equation}
+    But the left hand side is just $\int_{R_{1}}^{R_{2}} f$.
+\end{proof}
+
+\begin{theorem}
+    Let $\int_{a}^{b} f$ be an improper integral at $b$. Then $\int_{a}^{b} f$ exists if and only if for all $\varepsilon > 0$, there exists $\delta > 0$ such that $a < b - \delta$ and
+    \begin{equation*}
+        \abs{\int_{x_{1}}^{x_{2}} f} < \varepsilon \text{ for all } x_{1},x_{2} \in (b-\delta,b).
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{theorem}[\eax{Absolute convergence test}]
+    Let $\varphi \in \cB[a,\infty) \cap \cR[a,\infty)$. If $\int_{a}^{\infty} f$ is absolutely convergent, then $\int_{a}^{\infty} \varphi f$ is also absolutely convergent.
+\end{theorem}
+\begin{proof}
+    Set $M$ to be $\sup_{x \in [a,\infty)} \abs{\varphi(x)}$. Then, we must have $\abs{(\varphi f)(x)} \leq M\abs{f(x)}$ for all $x \in [a,\infty)$. By the limit comparison test, we are done.
+\end{proof}
+
+\begin{theorem}[The \eax{first mean value theorem}]
+    Let $f,g \in \cR[a,b]$ and suppose that $f$ keeps the same sign over $[a,b]$. Then there exists $\zeta \in [\inf g, \sup g]$ such that
+    \begin{equation*}
+        \int_{a}^{b} fg = \zeta \int_{a}^{b} f.
+    \end{equation*}
+\end{theorem}
+\begin{remark} Before proving the first mean value theorem, we have a remark.
+    \begin{enumerate}
+        \item If $g \in \cC[a,b]$, then $\int_{a}^{b} fg = g(c) \int_{a}^{b} f$ for some $c \in [a,b]$.
+        \item If $f \equiv 1$, and $g \in \cC[a,b]$, then there exists $c \in [a,b]$ such that
+        \begin{equation*}
+            g(c) = \frac{1}{b-a} \int_{a}^{b} g.
+        \end{equation*}
+    \end{enumerate}
+\end{remark}
+\begin{proof}
+    Let $m = \inf_{[a,b]} g$ and let $M = \sup_{[a,b]} g$. Thus, $m \leq g(x) \leq M$ for all $x \in [a,b]$. Without loss of generality, assume that $f > 0$. The inequality implies that
+    \begin{align}
+        mf(x) \leq f(x) g(x) \leq M f(x) \implies m\int_{a}^{b} f \leq \int_{a}^{b} fg \leq M \int_{a}^{b} f.
+    \end{align}
+    Thus, there exists a $\zeta \in [m,M]$ such that $\int_{a}^{b} fg = \zeta \int_{a}^{b} f$.
+\end{proof}
+
+\begin{example}
+    Let $r \in (0,1)$. Then,
+    \begin{align}
+        \frac{\pi}{6} \leq \int_{0}^{\frac{1}{2}} \frac{dx}{\sqrt{(1-x^{2})(1-rx^{2})}} \leq \frac{\pi}{6} \frac{1}{\sqrt{1-\frac{r}{4}}}.
+    \end{align}
+    To show this, let $f(x) = \frac{1}{\sqrt{1-x^{2}}}$ and let $g(x) = \frac{1}{\sqrt{1-rx^{2}}}$ for all $x \in [0,\frac{1}{2}]$. Clearly, $f,g \in \cC[0,\frac{1}{2}]$ and $f > 0$. Let us denote $\int_{0}^{\frac{1}{2}} fg$ by $I$. So, by the first mean value theorem, $I = g(c) \int_{0}^{\frac{1}{2}} f = g(c) \frac{\pi}{6}$ for some $c \in [0,\frac{1}{2}]$. For $c \leq \frac{1}{2}$, notice that $c^{2} \leq \frac{1}{4} \implies rc^{2} \leq \frac{r}{4}$ which will give us $g(c) \leq \frac{1}{\sqrt{1-\frac{r}{4}}}$.
+
+    For the left inequality, we observe $0 \leq f \leq fg \implies \frac{\pi}{6} \leq \int_{0}^{\frac{1}{2}} fg = I$.
+\end{example}
 
 \begin{appendices}
 
