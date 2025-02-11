@@ -1009,13 +1009,14 @@ In fact, all three conditions are equivalent. Note that everything discussed so 
 \end{equation}
 where $f: \R^{n} \to \R_{\geq 0}$.
 
-\subsection{Buffin's Needle Problem}
+\begin{example}[\eax{Buffin's needle problem}]
 Suppose we have a table of width $D$ and length sufficient. We throw a needle of length $L \leq D$ randomly (and necessarily) on this table. We are to find the probability that the needle will hand over either side of the table separated by width $D$. Denote by $X$ the distance of the midpoint of the needle from the nearest edge, and denote by $\theta$ the angle is subtends with respect to the vertical.
 
 Note that $X \in [0,\frac{D}{2}]$, and $\theta \in [0,\frac{\pi}{2}]$. By the procedure, one can assume these are independent. We look at the probability that the length of half the needle is greater than the length of the hypotenuse determined by $X$ and $\theta$---
 \begin{equation}
     P(\frac{L}{2} > \frac{X}{\cos \theta}) = \int_{0}^{\frac{\pi}{2}} \int_{0}^{\frac{L}{2} \cos \theta} \frac{2}{D} \cdot \frac{2}{\pi} dx d\theta = \frac{2L}{D \pi} \int_{0}^{\frac{\pi}{2}} \cos \theta d \theta = \frac{2L}{D \pi}.
 \end{equation}
+\end{example}
 
 \begin{proposition}
     The jointly continuous random variables $X$ and $Y$ are independent if and only the probability density function can be factored into functions of $x$ and $y$ respectively.
@@ -1029,7 +1030,125 @@ Differentiating to give the probability density function of $X+Y$,
 \begin{equation}
     \frac{d}{da} F_{X+Y}(a) = \int_{-\infty}^{\infty} f_{X}(x) f_{Y}(a-x) dx = \int_{-\infty}^{\infty} f_{X}(a-y) f_{Y}(y) dy.
 \end{equation}
-This is the convolution of $f_{X}$ and $f_{Y}$.
+This is the convolution of $f_{X}$ and $f_{Y}$.\\ \\
+\textit{February 11th.}
+
+Suppose we have $U_{1},U_{2},\ldots,U_{n}$ which are independent and have the distribution $\text{Uniform}(0,1)$. From $\{1,2,\ldots,n\}$, if we choose a subset of size $k$, then each subset of size $k$ has probability $\frac{1}{\binom{n}{k}}$. We will generate $I_{1},I_{2},\ldots,I_{n}$, where exactly $k$ of them are 1. $I_{1}$ is defined as
+\begin{equation}
+    I_{1} = \begin{cases}
+        1 &\text{ if } U_{1} < \frac{k}{n},\\
+        0 &\text{ if otherwise}.
+    \end{cases}
+\end{equation}
+Once $I_{1},I_{2}<\ldots,I_{i}$ are determined, we can define
+\begin{equation}
+    I_{i+1} = \begin{cases}
+        1 &\text{ if } U_{i+1} < \frac{k-(I_{1}+I_{2}+\ldots+I_{i})}{n-1},\\
+        0 &\text{ if otherwise}.
+    \end{cases}
+\end{equation}
+Notice that if $I_{1}+I_{2}+\ldots+I_{i} = k$, then $I_{i+1},I_{i+2},\ldots = 0$. Note that $P(I_{1}=1) = \frac{k}{n}$, and
+\begin{equation}
+    P(I_{i+1}=1|I_{1},I_{2},\ldots,I_{i}) = \frac{k-\sum_{r=1}^{i} I_{r}}{n-i}, \text{ for } 1 < i \leq n.
+\end{equation}
+If we do induction on $k+n$, we know the case $k+n = 2$ to be true ($k=1,n=1$). We assume for all the cases $k+n \leq l$, and suppose that $k+n = l+1$. Consider any subset of size $k$, say, $i_{1} \leq i_{2} \leq \ldots \leq i_{k}$.
+\begin{itemize}
+    \item Case I, where $i_{1} = 1$. Here,
+    \begin{align}
+        &P(I_{i_{1}}=I_{i_{2}}=\ldots=I_{i_{k}} = 1, I_{j} = 0 \text{ otherwise}) \notag \\ \notag
+        =\; &P(I_{1}=1) \cdot P(I_{i_{2}}=\ldots=I_{i_{k}} = 1, I_{j} = 0 \text{ otherwise} |I_{1}=1) \notag \\
+        =\; &\frac{k}{n} \frac{1}{\binom{n-1}{k-1}} = \frac{1}{\binom{n}{k}}. \notag
+    \end{align}
+
+    \item Case II, where $i_{1} > 1$. In this case,
+    \begin{align}
+        &P(I_{i_{1}}=0,I_{i_{2}}=\ldots=I_{i_{k}} = 1, I_{j} = 0 \text{ otherwise}) \notag \\ \notag
+        =\; &P(I_{1}=0) \cdot P(I_{i_{2}}=\ldots=I_{i_{k}} = 1, I_{j} = 0 \text{ otherwise} |I_{1}=0) \notag \\
+        =\; &\left(1-\frac{k}{n}\right) \frac{1}{\binom{n-1}{k}} = \frac{1}{\binom{n}{k}}. \notag
+    \end{align}
+\end{itemize}
+
+\section{Some Distributions}
+\subsection{Gamma Random Variable}
+We have $X \sim \text{Gamma}(t,\lambda)$ where $\lambda > 0$ and $t > 0$. The probability density function is defined as
+\begin{equation}
+    f_{X}(x) = \frac{\lambda e^{-\lambda y} (\lambda y)^{t-1}}{\Gamma(t)} \text{ for } 0 < y < \infty.
+\end{equation}
+Here, $\Gamma$ is the gamma function.
+\begin{proposition}
+    If $X \sim \emph{Gamma}(s,\lambda)$ and $Y \sim \emph{Gamma}(t,\lambda)$, then $X+Y \sim \emph{Gamma}(s+t,\lambda)$.
+\end{proposition}
+\begin{proof}
+    Via convolution, we know that
+    \begin{align}
+        f_{X+Y}(a) &= \int_{0}^{a} f_{X}(a-y)f_{Y}(y) dy \notag \\
+        &= \frac{1}{\Gamma(t) \Gamma(s)} \int_{0}^{a} \lambda e^{-\lambda(a-y)}(\lambda(a-y))^{t-1} \lambda e^{-\lambda y} (\lambda y)^{s-1} dy \notag \\
+        &= \frac{\lambda e^{-\lambda a} (\lambda a)^{s+t-1}}{\Gamma(t+s)} \frac{\Gamma(t+s)}{\Gamma(t) \Gamma(s)} \int_{0}^{a} \frac{(a-y)^{t-1}y^{s-1}}{a^{s+t-1}} dy \notag \\
+        &= \frac{\lambda e^{-\lambda a} (\lambda a)^{s+t-1}}{\Gamma(t+s)} \frac{\Gamma(t+s)}{\Gamma(t) \Gamma(s)} \int_{0}^{1} (1-u)^{t-1}u^{s-1} du \notag.
+    \end{align}
+    If we integrate this probability distribution function, we must have
+    \begin{align}
+        \int_{0}^{\infty} f_{X+Y}(a)da &= 1 \\
+        \implies \frac{\Gamma(s+t)}{\Gamma(s)\Gamma(t)} \int_{0}^{1} (1-u)^{t-1}u^{s-1} du = 1.
+    \end{align}
+    This gives rise to the Beta function, defined as $\int_{0}^{1} (1-u)^{t-1}u^{s-1}du = B(t,s) = \frac{\Gamma(s)\Gamma(t)}{\Gamma(s+t)}$.
+\end{proof}
+One corollary that can be inferred from here is that if $X_{1},X_{2},\ldots,X_{n}$ are independent $\text{Gamma}(t_{i},\lambda)$ distributions, then $\sum_{i=1}^{n} X_{i} \sim \text{Gamma}(\sum_{i=1}^{n} t_{i}, \lambda)$. We also notice that $X \sim \text{Exp}(\lambda) = \text{Gamma}(1,\lambda)$. If we take the $X_{i}$'s to be all the exponential distribution, then $S_{n} = X_{1} + X_{2} + \ldots + X_{n} \sim \text{Gamma}(n,\lambda)$. The density of $S_{n}$ is given by
+\begin{equation}
+    g_{n}(y) = \frac{\lambda(\lambda y)^{n-1}e^{-\lambda y}}{\Gamma(n)} = \frac{\lambda(\lambda y)^{n-1}e^{-\lambda y}}{(n-1)!} \text{ for } 0 < y < \infty
+\end{equation}
+with the cumulative distribution function
+\begin{equation}
+    G_{n}(y) = \frac{1}{(n-1)!} \int_{0}^{y} \lambda (\lambda a)^{n-1} e^{-\lambda a} da.
+\end{equation}
+
+\begin{example}
+    Suppose we have buses that each take time $X_{i} \sim \text{Exp}(\lambda)$. Suppose we fix a time $t$, and define $N(t)$ to be the number of buses seen up to time $t$. We ask the probability $P(N(t)=n)$.
+    \begin{align}
+        P(N(t)=n) &= P(X_{1}+X_{2}+\ldots+X_{n} \leq t, X_{1}+X_{2}+\ldots+X_{n+1}>t) \\
+        &= P(X_{1}+\ldots+X_{n} \leq t) - P(X_{1}+\ldots+X_{n} \leq t, X_{1}+\ldots+X_{n+1}\leq t) \notag \\
+        &= P(X_{1}+\ldots+X_{n} \leq t) - P(X_{1} + \ldots + X_{n+1} \leq t) \notag \\
+        &= G_{n}(t) - G_{n+1}(t) = e^{-\lambda t} \frac{(\lambda t)^{n}}{n!}.
+    \end{align}
+\end{example}
+Notice that there is a unique $k$ for which $S_{k-1} < t \leq S_{k}$. Define $X_{k}$ to be $S_{k} - S_{k-1}$.
+\begin{proposition}
+    The $X_{k}$ satisfying $S_{k-1} < t \leq S_{k}$ has density
+    \begin{equation}
+        v_{t}(x) = \begin{cases}
+            \lambda^{2}xe^{-\lambda x} &\text{ if } 0 < x \leq t,\\
+            \lambda(1+\lambda t) e^{-\lambda x} &\text{ if } x > t.
+        \end{cases}
+    \end{equation}
+\end{proposition}
+\begin{proof}
+    Let $k$ denote the index for which $S_{k-1} < t \leq S_{k}$. Define $L_{t} = S_{k} - S_{k-1}$. Let us first compute the cumulative distribution function.
+    \begin{itemize}
+        \item Case I, when $x < t$. Note that $L_{t} \leq x \iff$ there exist $n,y$ such that $t-x \leq y < t$, $S_{n} = y$, $t-y \leq X_{n+1} \leq x$.
+        \begin{align}
+            P(L_{t} \leq x) &= \sum_{n=1}^{\infty} \int_{t-x}^{t} \int_{t-y}^{x} f_{S_{n},X_{n+1}}(y,z) dz dy \notag \\
+            &= \sum_{n=1}^{\infty} \int_{t-x}^{t} \int_{t-y}^{x} g_{n}(y) f_{X_{n+1}}(z) dz dy \notag \\
+            &= \sum_{n=1}^{\infty} \int_{t-x}^{t} g_{n}(y) [e^{-\lambda(t-y)} - e^{-\lambda x}] dy \notag \\
+            &= \lambda \int_{t-x}^{t} [e^{-\lambda(t-y)}-e^{-\lambda y}] dy.
+        \end{align}
+        
+        \item Case II, when $x > t$. Note that
+        \begin{equation}
+            \{L_{t} \leq x\} = \{t < S_{1} \leq x \} \cup \bigcup_{n=1}^{\infty} \{\text{bus $n$ arrives at $y < t$ and $t-y < X_{n+1}\leq x$}\}.
+        \end{equation}
+        These are all disjoint events. $P(t < S_{1} \leq x) = e^{-\lambda t} - e^{-\lambda x}$, and
+        \begin{equation}
+            P(\text{bus $n$ arrives at $y < t$ and $t-y < X_{n+1}\leq x$}) = \int_{0}^{t} \int_{t-y}^{x} g_{n}(y) f_{X_{n+1}}(z) dz dy.
+        \end{equation}
+        Adding up the probabilities of the disjoint events, we have
+        \begin{align}
+            P(L_{t} \leq x) &= e^{-\lambda t} - e^{-\lambda x} + \sum_{n=1}^{\infty} \int_{0}^{t} g_{n}(y) [e^{-\lambda(t-y)} - e^{-\lambda x}] dy \notag \\
+            &= e^{-\lambda t} - e^{-\lambda x} + \lambda \int_{0}^{t} [e^{-\lambda(t-y)}-e^{-\lambda x}]dy \notag \\
+            &= e^{-\lambda t} - e^{-\lambda x} + 1 - e^{-\lambda t} - \lambda t e^{-\lambda x}.
+        \end{align}
+    \end{itemize}
+\end{proof}
+
 
 \begin{appendices}
 
