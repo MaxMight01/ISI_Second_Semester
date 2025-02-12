@@ -1137,6 +1137,7 @@ Recall the following:
     Set $M$ to be $\sup_{x \in [a,\infty)} \abs{\varphi(x)}$. Then, we must have $\abs{(\varphi f)(x)} \leq M\abs{f(x)}$ for all $x \in [a,\infty)$. By the limit comparison test, we are done.
 \end{proof}
 
+\section{The Mean Value Theorems}
 \begin{theorem}[The \eax{first mean value theorem}]
     Let $f,g \in \cR[a,b]$ and suppose that $f$ keeps the same sign over $[a,b]$. Then there exists $\zeta \in [\inf g, \sup g]$ such that
     \begin{equation*}
@@ -1165,10 +1166,103 @@ Recall the following:
     \begin{align}
         \frac{\pi}{6} \leq \int_{0}^{\frac{1}{2}} \frac{dx}{\sqrt{(1-x^{2})(1-rx^{2})}} \leq \frac{\pi}{6} \frac{1}{\sqrt{1-\frac{r}{4}}}.
     \end{align}
-    To show this, let $f(x) = \frac{1}{\sqrt{1-x^{2}}}$ and let $g(x) = \frac{1}{\sqrt{1-rx^{2}}}$ for all $x \in [0,\frac{1}{2}]$. Clearly, $f,g \in \cC[0,\frac{1}{2}]$ and $f > 0$. Let us denote $\int_{0}^{\frac{1}{2}} fg$ by $I$. So, by the first mean value theorem, $I = g(c) \int_{0}^{\frac{1}{2}} f = g(c) \frac{\pi}{6}$ for some $c \in [0,\frac{1}{2}]$. For $c \leq \frac{1}{2}$, notice that $c^{2} \leq \frac{1}{4} \implies rc^{2} \leq \frac{r}{4}$ which will give us $g(c) \leq \frac{1}{\sqrt{1-\frac{r}{4}}}$.
-
-    For the left inequality, we observe $0 \leq f \leq fg \implies \frac{\pi}{6} \leq \int_{0}^{\frac{1}{2}} fg = I$.
+    To show this, let $f(x) = \frac{1}{\sqrt{1-x^{2}}}$ and let $g(x) = \frac{1}{\sqrt{1-rx^{2}}}$ for all $x \in [0,\frac{1}{2}]$. Clearly, $f,g \in \cC[0,\frac{1}{2}]$ and $f > 0$. Let us denote $\int_{0}^{\frac{1}{2}} fg$ by $I$. So, by the first mean value theorem, $I = g(c) \int_{0}^{\frac{1}{2}} f = g(c) \frac{\pi}{6}$ for some $c \in [0,\frac{1}{2}]$. For $c \leq \frac{1}{2}$, notice that $c^{2} \leq \frac{1}{4} \implies rc^{2} \leq \frac{r}{4}$ which will give us $g(c) \leq \frac{1}{\sqrt{1-\frac{r}{4}}}$. For the left inequality, we observe $0 \leq f \leq fg \implies \frac{\pi}{6} \leq \int_{0}^{\frac{1}{2}} fg = I$.
 \end{example}
+
+\textit{February 12th.}
+\begin{lemma}[\eax{Abel's lemma}]
+    Fix $\alpha, \beta \in \R$ and let $\{\omega_{j}\}_{j=1}^{n} \subseteq \R$. If
+    \begin{equation*}
+        \alpha \leq \sum_{j=1}^{m} \omega_{j} \leq \beta \text{ for all } m = 1,2,\ldots,n,
+    \end{equation*}
+    then for all decreasing $a_{1} \leq a_{2} \leq \ldots \leq a_{n} \leq 0$, we have
+    \begin{equation*}
+        a_{1}\alpha \leq \sum_{j=1}^{n} a_{j}\omega_{j} \leq a_{1}\beta.
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Set $S_{m} = \sum_{j=1}^{m} \omega_{j}$. We are given that $\alpha \leq S_{m} \leq \beta$ for all $m = 1,2,\ldots,n$. Thus,
+    \begin{align}
+        \sum_{j=1}^{n} a_{j}\omega_{j} &= a_{1}S_{1} + a_{2}(S_{2}-S_{1}) + \ldots + a_{n}(S_{n}-S_{n-1}) \notag \\
+        &= (a_{1}-a_{2})S_{1} + (a_{2}-a_{3})S_{2} + \ldots + (a_{n-1}-a_{n})S_{n-1} + a_{n}S_{n} \notag \\
+        &\leq \beta(a_{1}-a_{2}+a_{2}-a_{3} + \ldots -a_{n}+a_{n}) = \beta a_{1} \text{ and }\\
+        &\geq \alpha(a_{1}-a_{2}+a_{2}-a_{3} + \ldots -a_{n}+a_{n}) = \alpha a_{1}.
+    \end{align}
+    Thus, we have shown both the inequalities.
+\end{proof}
+\begin{theorem}[The \eax{Bonnet form of the second mean value theorem}]
+    Let $f, \varphi \in \cR[a,b]$. Assume that $\varphi \geq 0$ and monotonically decreasing. Then there exists $\zeta \in [a,b]$ such that
+    \begin{equation*}
+        \int_{a}^{b} \varphi f = \varphi(a) \int_{a}^{\zeta} f.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Fix a partition $P \in \cP[a,b]$ defined as $P:a=x_{0} < x_{1} < \ldots < x_{n} = b$. Consider a tag set $\{\zeta_{j}\}_{j \in \{1,\ldots,n\}}$ of $P$. Assume that $a = \zeta_{1}$. Now,
+    \begin{align}
+        m_{j}(x_{j}-x_{j-1}) &\leq \int_{x_{j-1}}^{x_{j}} f \leq M(x_{j}-x_{j-1}) \text{ for all } j \text{ and } \\
+        m_{j}(x_{j}-x_{j-1}) &\leq f(\zeta_{j}) \abs{I_{j}} \leq M(x_{j}-x_{j-1}) \text{ for all } j.
+    \end{align}
+    These equations imply
+    \begin{align}
+        \sum_{j=1}^{t} m_{j}\abs{I_{j}} &\leq \int_{a}^{x_{t}} f \leq \sum_{j=1}^{t} M_{j}\abs{I_{j}} \text{ for all } t \text{ and }\\
+        \sum_{j=1}^{t} m_{j}\abs{I_{j}} &\leq \sum_{j=1}^{t} f(\zeta_{j}) \abs{I_{j}} \leq \sum_{j=1}^{t} M_{j} \abs{I_{j}} \text{ for all } t \\
+        \implies \abs{\int_{a}^{x_{t}} f - \sum_{j=1}^{t} f(\zeta_{j}) \abs{I_{j}}} &\leq \sum_{j=1}^{t} (M_{j}-m_{j}) \abs{I_{j}} \text{ for all } t = 1,\ldots,n \notag \\
+        \implies \abs{\int_{a}^{x_{t}} f - \sum_{j=1}^{t} f(\zeta_{j})\abs{I_{j}}} &\leq \osc_{P} f \\
+        \implies \int_{a}^{x_{t}} f - \osc_{P}f &\leq \sum_{j=1}^{t} f(\zeta_{j}) \abs{I_{j}} \leq \int_{a}^{x_{t}} f + \osc_{P}f.
+    \end{align}
+    Recall that the map $F:[a,b] \to \R$ defined by $x \mapsto \int_{a}^{x} f$ is continuous on $[a,b]$. Set $\delta_{1} = \inf_{[a,b]} F$ and set $\delta_{2} = \sup_{[a,b]} F$. Thus,
+    \begin{align}
+        \delta_{1} - \osc_{P}f \leq \sum_{j=1}^{t} f(\zeta_{j})\abs{I_{j}} \leq \delta_{2} + \osc_{P}f.
+    \end{align}
+    Set $\omega_{j} = f(\zeta_{j}) \abs{I_{j}}$ and $a_{j} = \varphi(\zeta_{j})$. for all $j = 1,\ldots,n$. By assumption, $a_{1} \geq a_{2} \geq \ldots \geq a_{n} \geq 0$. By Abel's lemma,
+    \begin{align}
+        \varphi(\alpha)(\delta_{1}-\osc_{P}f) \leq \sum_{j=1}^{n} \omega_{j} a_{j} \leq \varphi(a)(\delta_{2} + \osc_{P}f).
+    \end{align}
+    As $\norm{P} \to 0$, we shall have
+    \begin{align}
+        \varphi(a)\delta_{1} &\leq \int_{a}^{b} f \varphi \leq \varphi(a) \delta_{2} \\
+        \implies \delta_{1} &\leq \frac{1}{\varphi(a)} \int_{a}^{b} f\varphi \leq \delta_{2}.
+    \end{align}
+    Recall that the $\delta_{1}$ and $\delta_{2}$ are simply the infimum and supremum of the continuous function $F$ over $[a,b]$, so there exists a $\zeta \in [a,b]$ such that $F(\zeta)$ equals the middle value, or,
+    \begin{equation}
+        \varphi(a) \int_{a}^{\zeta} f = \int_{a}^{b} \varphi f.
+    \end{equation}
+\end{proof}
+
+\begin{theorem}[The \eax{Weierstrass form of the second mean value thoerem}]
+    Let $f,\varphi \in \cR[a,b]$ and suppose that $\varphi$ is montonic. Then there exists a $\zeta \in [a,b]$ such that
+    \begin{equation*}
+        \int_{a}^{b} \varphi f = \varphi(a) \int_{a}^{\zeta} f + \varphi(b) \int_{\zeta}^{b} f.
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    Let, without loss of generality, $\varphi$ be increasing. Set $\tilde{\varphi}(x) = \varphi(b)-\varphi(x)$ for all $x \in [a,b]$. By Bonnet form of the second mean value theorem,
+    \begin{align}
+        \int_{a}^{b} \tilde{\varphi}f &= \tilde{\varphi}(a) \int_{a}^{\zeta} f \text{ for some } \varphi \in [a,b] \\
+        \implies \varphi(b) \int_{a}^{b} f - \int_{a}^{b} \varphi f &= (\varphi(b) - \varphi(a)) \int_{a}^{\zeta} f \notag \\
+        \implies \int_{a}^{} \varphi f &= \varphi(a) \int_{a}^{\zeta} f + \varphi(b) \int_{\zeta}^{b} f.
+    \end{align}
+\end{proof}
+
+\section{More Tests for Improper Integrals of Type II}
+\begin{theorem}[\eax{Abel's test}]
+    Let $\varphi \in \cB[a,\infty) \cap \cR[a,\infty)$ be a monotonic function. If $\int_{a}^{\infty} f$ converges, then $\int_{a}^{\infty} \varphi f$ also converges.
+\end{theorem}
+\begin{proof}
+    Let $R_{2} > R_{1} > a$. By the second mean value theorem,
+    \begin{align}
+        \int_{R_{1}}^{R_{2}} \varphi f = \varphi(R_{1}) \int_{R_{1}}^{\zeta} f + \varphi(R_{2}) \int_{\zeta}^{R_{2}} f
+    \end{align}
+    for some $\zeta(R_{1},R_{2}) \in [R_{1},R_{2}]$. Let $M = \sup_{[a,\infty)} \abs{\varphi}$. Fix $\varepsilon > 0$. As $\int_{a}^{\infty} f$ converges, there exists a real $R_{0} > 0$ such that
+    \begin{equation}
+        \abs{\int_{B_{1}}^{B_{2}} f} < \frac{\varepsilon}{2M} \text{ for all } B_{1},B_{2} > R_{0}.
+    \end{equation}
+    Thus, for all $R_{1},R_{2} > R_{0}$, we have
+    \begin{equation}
+        \abs{\int_{R_{1}}^{R_{2}} \varphi f} = \abs{\varphi(R_{1})\int_{R_{1}}^{\zeta} + \varphi(R_{2})\int_{\zeta}^{R_{2}}f} \leq M \frac{\varepsilon}{2M} + M \frac{\varepsilon}{2M} = \varepsilon.
+    \end{equation}
+    Hence, by the Cauchy criterion, $\int_{a}^{\infty} \varphi f$ converges.
+\end{proof}
 
 \begin{appendices}
 
