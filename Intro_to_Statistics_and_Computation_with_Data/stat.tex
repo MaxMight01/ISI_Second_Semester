@@ -529,11 +529,11 @@ We need to find some idea of $\frac{\sigma}{s}$, then we can solve to find $n$.
     We need to know the mean driving distance of a new type of gold balls to within 3 yards with 95\% confidence. A previous study had a standard deviation of 25 yards. How many balls should we test? Note that we have $z_{0.975} \frac{s}{\sqrt{n}} < 3$ which gives us $n > (\frac{1.96 \cdot 25}{3})^{2} \approx 266.78$.
 \end{example}
 
-Two sample problems
+\section{Two Sample Problems}
 
 $X_{1},\ldots,X_{n}$ are independent and identically distributed to $F$ with $EX_{i} = \mu_{1}$ and $\text{Var}X_{i} = \sigma_{1}^{2}$. Similarly, $Y_{1},\ldots,Y_{m}$ are independent and identically distributed to $G$ with $EY_{1} = \mu_{2}$ and $\text{Var}Y_{i} = \sigma_{2}^{2}$.
 \begin{enumerate}
-    \item To estimate $\theta = \mu_{1} - \mu_{2}$, $\overline{X}-\overline{Y}$ is the unbiased method of moments point estimator. If $m$ and $N$ are both large, then
+    \item To estimate $\theta = \mu_{1} - \mu_{2}$, $\overline{X}-\overline{Y}$ is the unbiased method of moments point estimator. If $m$ and $n$ are both large, then
     \begin{equation}
         \frac{\overline{X}-\mu_{1}}{\sigma_{1}/\sqrt{n}}, \frac{\overline{Y}-\mu_{2}}{\sigma_{2}/\sqrt{m}} \sim N(0,1).
     \end{equation}
@@ -545,6 +545,19 @@ $X_{1},\ldots,X_{n}$ are independent and identically distributed to $F$ with $EX
     \begin{equation}
         P(\mu_{1}-\mu_{2} \in (\overline{X}-\overline{Y} \pm z_{1-\frac{\alpha}{2}} \sqrt{\frac{s_{1}^{2}}{n} + \frac{s_{2}^{2}}{m}})) = 1-\alpha.
     \end{equation}
+
+    \item If both $m$ and $n$ are small, the confidence interval for $\mu_{1} - \mu_{2}$ is given by
+    \begin{equation}
+        P\left( \mu_{1}-\mu_{2} \in (\overline{X}-\overline{Y} \pm t_{m+n-2,1-\frac{\alpha}{2}} s_{p} \sqrt{\frac{1}{n}+\frac{1}{m}}) \right) = 1 - \alpha.
+    \end{equation}
+    where
+    \begin{equation}
+        s_{p}^{2} = \frac{(n-1)s_{X}^{2} + (m-1)s_{Y}^{2}}{m+n-2}.
+    \end{equation}
+
+    \item For paired samples $X_{i}$'s and $Y_{i}$'s, we work with the differences $d_{i} = X_{i} - Y_{i}$ where $Ed_{i} = \mu_{1}-\mu_{2}$ and $\text{Var}d_{i} = \sigma_{1}^{2}+\sigma_{2}^{2}-2\sigma_{1,2}$. IN this case, for large $n$, we use $\overline{d} \pm z_{1-\frac{\alpha}{2}} s/\sqrt{n}$ and for small $n$ and approximately normal distributions, we use $\overline{d} \pm t_{1-\frac{\alpha}{2},n-1} s/\sqrt{n}$.
+    
+    \item Suppose we have $X_{1},\ldots,X_{n} \sim F(\mu_{1},\sigma_{1}^{2})$ and $Y_{1},\ldots,Y_{m} \sim G(\mu_{2},\sigma_{2}^{2})$. We assume that $F \equiv G \equiv N$ and all the observations are independent. If we want to find a confidence interval for $\theta = \frac{\sigma_{2}^{2}}{\sigma_{1}^{2}}$, and notice that $(n-1)\frac{s_{1}^{2}}{\sigma_{1}^{2}} \sim \chi_{n-1}^{2}$ and $(m-1)\frac{s_{2}^{2}}{\sigma_{2}^{2}} \sim \chi_{m-1}^{2}$, then we will have $\frac{s_{1}^{2}\sigma_{2}^{2}}{s_{2}^{2}\sigma_{1}^{2}} \sim F_{n-1,m-1}$.
 \end{enumerate}
 
 
