@@ -551,7 +551,7 @@ Assume that, here, $f,g \in \cR[a,b]$ and $r \in \R$.
     \end{align}
     This result is regardless of choice of tag set $T_{P}$. Thus, $rf+g \in \cR[a,b]$. Now, we show the linearity of $\cI$.
     \begin{align}
-        \abs{S(rf+g,P) -r\int f - \int g} &= \abs{r(S(f,P)-\int f) + (S(g,P) - \int g)} \leq \abs{r}\abs{S(f,P)-\int f} + \abs{S(g,P)- \int g} \\
+        \abs{S(rf+g,P) -r\int f - \int g} &= \abs{r(S(f,P)-\int f) + (S(g,P) - \int g)} \notag \\ &\leq \abs{r}\abs{S(f,P)-\int f} + \abs{S(g,P)- \int g} \\
         \implies S(rf+g,P) &\to r \int f + \int g \text{ as } \norm{P} \to 0.
     \end{align}
 \end{proof}
@@ -926,7 +926,7 @@ In general,
 \subsection{Tests of Convergence}
 We now discuss when an improper integral of type I is convergent or not.
 \begin{theorem}[The \eax{comparison test I}]
-    Let $0 \leq f(x) \leq g(x)$ for all $x \in [a,b)$. Assume that $\int_{a}^{b} g$ and $\int_{a}^{b} g$ are improper integrals solely due to the point $x = b$.
+    Let $0 \leq f(x) \leq g(x)$ for all $x \in [a,b)$. Assume that $\int_{a}^{b} f$ and $\int_{a}^{b} g$ are improper integrals solely due to the point $x = b$.
     \begin{enumerate}
         \item If $\int_{a}^{b} g$ converges, then $\int_{a}^{b} f$ converges.
         \item If $\int_{a}^{b} f$ diverges, then $\int_{a}^{b} g$ diverges.
