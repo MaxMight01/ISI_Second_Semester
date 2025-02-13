@@ -45,7 +45,11 @@
 \newcommand{\tr}{\text{tr}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
 \newcommand{\adj}{\text{adj}}
+\newcommand{\ip}[1]{\langle #1 \rangle}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -928,6 +932,111 @@ If our basis is $\mc{B} = (v_{1},v_{2},\ldots,v_{n})$, then we can show that $Tv
     \item Let $T:V \to V$ and $\text{rank}T = k \leq n$, where $n$ is the dimension of $V$. Then $T$ has at most $k+1$ distinct eigenvalues.
     \item 
 \end{enumerate}
+
+\chapter{INNER PRODUCT SPACES}
+\textit{February 13th.}
+
+\section{An Introduction}
+The function $\ip{,} : \R^{n} \times \R^{n} \to \R$ defined as
+\begin{equation}
+    \ip{X,Y} = x_{1}y_{1} + x_{2}y_{2} + \ldots + x_{n}y_{n}
+\end{equation}
+is called an inner product. Specifically, this is the dot product on the vector space over the reals. It satisfies the following properties;
+\begin{enumerate}
+    \item $\ip{X,X} \geq 0$ for all $X \in \R^{n}$.
+    \item $\ip{X,X} = 0$ if and only if $X = 0$.
+    \item $\ip{X,Y} = \ip{Y,X}$.
+    \item $\ip{X_{1}+X_{2},Y} = \ip{X_{1},Y} + \ip{X_{2},Y}$.
+    \item $\ip{\alpha X, Y} = \alpha \ip{X,Y}$.
+\end{enumerate}
+In $\C^{n}$, we have the product
+\begin{equation}
+    \ip{Z,W} = z_{1}\conj{w_{1}} + z_{2}\conj{w_{2}} + \ldots + z_{n}\conj{w_{n}}.
+\end{equation}
+This satisfies the properties---
+\begin{enumerate}
+    \item $\ip{Z,Z} \geq 0$.
+    \item $\ip{Z,Z} = 0$ if and only if $Z = 0$.
+    \item $\ip{Z,W} = \conj{\ip{W,Z}}$.
+    \item $\ip{Z_{1}+Z_{2},W} = \ip{Z_{1},W} + \ip{Z_{2},W}$.
+    \item $\ip{\alpha Z, W} = \alpha \ip{Z,W}$.
+\end{enumerate}
+These properties are, respectively, called the positivity, the definiteness, the conjugate symmetry, the additivity, and the homogeneity of the inner product over the complex vector space. We now define a general inner product.\\
+
+Let the underlying field be either $\R$ or $\C$, and let $V$ be a vector space over this field. An \eax{inner product} on $V$ is simply a function $\ip{,}:V \times V \to \F$ such that it satisfies the following properties for all $v,u,v_{1},v_{2} \in V$ and $\alpha \in \F$---
+\begin{enumerate}
+    \item $\ip{v,v} \geq 0$,
+    \item $\ip{v,v} = 0$ if and only if $v = 0$,
+    \item $\ip{v_{1}+v_{2},u} = \ip{v_{1},u} + \ip{v_{2},u}$,
+    \item $\ip{\alpha v, u} = \alpha \ip{v,u}$, and
+    \item $\ip{v,u} = \conj{\ip{u,v}}$.
+\end{enumerate}
+A vector space over $\F$, $\F$ being either $\R$ or $\C$, is called an \eax{inner product space} if $V$ is equipped with a valid inner product. As seen earlier, on $\R^{n}$, the usual dot product makes $\R^{n}$ an inner product space. As another example, if $V$ is the space of all real valued continuous function $f:(-1,1) \to \R$, then the inner product on here can be defined as
+\begin{equation}
+    \ip{f,g} = \int_{-1}^{1} f(x)g(x) dx.
+\end{equation}
+On $\C^{m \times n}$, we can define the inner product as
+\begin{align}
+    \ip{A,B} = \tr(B^{\ast}A).
+\end{align}
+Every inner product $\ip{u,v}$ for any vector space $V$ will look like
+\begin{align}
+    \ip{u,v} = Y^{\ast} AX,
+\end{align}
+where $Y$ and $X$ are the coordinate vectors of $v$ and $u$ with respect to some basis $\mc{B}$. This will be proved later.
+
+For an inner product space $V$, the following properties may be derived from the basic properties;
+\begin{enumerate}
+    \item $\ip{0,v} = 0$ for all $v \in V$.
+    \item Fix $v \in V$. Define $f_{v}:V \to \F$ as $u \mapsto \ip{u,v}$. Then $f_{v}$ is a linear mapping from the space $V$ to the space $\F$ for any $v \in V$.
+    \item Let $v = \alpha_{1}v_{2} + \alpha_{2}v_{2} + \ldots + \alpha_{k}v_{k}$ and $u = \beta_{1}u_{1} + \beta_{2}u_{2} + \ldots + \beta_{l}u_{l}$ where $u,v,u_{j},v_{i} \in V$ and $\alpha_{i},\beta_{j} \in \F$. Then,
+    \begin{align}
+        \ip{v,u} = \sum_{i=1}^{k} \sum_{j=1}^{l} \alpha_{i}\conj{\beta_{j}} \ip{v_{i},u_{j}}.
+    \end{align}
+\end{enumerate}
+
+\section{The Notion of Length and Orthogonality}
+Let $(V,\ip{,})$ be an inner product space. We define the \eax{norm} of a vector $v \in V$, denoted by $\norm{v}$, as
+\begin{equation}
+    \norm{v} = \sqrt{\ip{v,v}}.
+\end{equation}
+For $V$ being either $\R^{n}$ or $\C^{n}$, we can easily verify that the norm becomes the usual Euclidean length of a vector. Note that $\norm{v} = 0$ if and only if $v$ is the zero vector in $V$. It can also be shown that $\norm{\lambda v} = \abs{\lambda} \norm{v}$ for some $\lambda \in \F$.
+
+\begin{definition}
+    We say that two vectors $v,w \in V$ are \eax{orthogonal vectors} if $\ip{v,w} = 0$.
+\end{definition}
+Note that the zero vector is orthogonal to every vector in the vector space, even itself; in fact, it is the only vector othogonal to itself. We can also make sense of a Pythogrean theorem here. If $u,v \in V$ are orthogonal, then we can show that
+\begin{align}
+    \norm{u+v}^{2} = \norm{u}^{2} + \norm{v}^{2}.
+\end{align}
+Given two vectos $u,v \in V$, we can write $u$ as the sum of a scalar multiple of $v$, say $cv$, and a vector $w$ such that $\ip{w,v} = 0$. If we rewrite $u$ as $u = cv + (u-cv)$, and impose that $\ip{u-cv,v} = 0$, then we get $c = \dfrac{\ip{u,v}}{\norm{v}^{2}}$ fulfulling our conditions.
+
+We also have a \eax{Cauchy-Schwarz} inequality. It says that for any $u,v \in V$, then
+\begin{align}
+    \abs{\ip{u,v}} \leq \norm{u}\norm{v}
+\end{align}
+and equality holds if and only if one of the vectors is a scalar multile of the other.
+\begin{proof}
+    If either one of the vectors is the zero vector, both sides are just zero. Hence, assume that neither vector is zero, and note that we can write
+    \begin{equation}
+        u = \frac{\ip{u,v}}{\norm{v}^{2}}v + w
+    \end{equation}
+    where $\ip{w,v} = 0$. Thus,
+    \begin{align}
+        \norm{u}^{2} = \ip{\frac{\ip{u,v}}{\norm{v}^{2}}v + w, \frac{\ip{u,v}}{\norm{v}^{2}}v + w} = \frac{\ip{u,v}\conj{\ip{u,v}}}{\norm{v}^{4}}\ip{v,v} + \ip{w,w} = \frac{\abs{\ip{u,v}}^{2}}{\norm{v}^{2}} + \ip{w,w} \geq \frac{\abs{\ip{u,v}}^{2}}{\norm{v}^{2}}.
+    \end{align}
+    The inequality follows. The equality is left as an exercise to the reader.
+\end{proof}
+
+Let $V$ be an inner product space, and let $\mc{B} = (v_{1},\ldots,v_{n})$ be a basis of $V$. Let $X = (x_{1},\ldots,x_{n})^{t}$ and $Y = (y_{1},\ldots,y_{n})^{t}$ be the coordinate vectors of $v,w \in V$, respectively, with respect to the basis $\mc{B}$ Then,
+\begin{align}
+    \ip{v,w} = Y^{\ast}AX \text{ where } A = (a_{ij}) \text{ and } a_{ij} = \ip{v_{j},v_{i}}.
+\end{align}
+This can be seen since
+\begin{align}
+    \ip{v,w} = \ip{\sum_{i=1}^{n} x_{i}v_{i}, \sum_{j=1}^{n} y_{j}v_{j}} = \sum_{i=1}^{n} \sum_{j=1}^{n} x_{i} \conj{v_{j}} \ip{v_{i},v_{j}}.
+\end{align}
+Conversely, let $V$ be a vector space of dimension $n$ and $\mc{B}$ be a basis of $V$. Then defining $\ip{v,w} = Y{^t}AX$, where $A$ is of order $n \times n$ satisfying $A^{\ast} = A$, gives an inner product
 
 \begin{appendices}
 
