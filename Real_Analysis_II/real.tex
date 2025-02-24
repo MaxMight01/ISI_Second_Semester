@@ -1264,6 +1264,100 @@ Recall the following:
     Hence, by the Cauchy criterion, $\int_{a}^{\infty} \varphi f$ converges.
 \end{proof}
 
+\textit{February 24th.}
+
+\begin{theorem}[\eax{Dirichlet test}]
+    Let $\varphi \in \cB[a,\infty)$ be a monotonic function and let $\lim_{x \to \infty} \varphi(x) = 0$. Suppose $f \in \cR[a,\infty)$ and $x \mapsto \int_{a}^{x}f$ is bounded on $[a,\infty)$. Then, $\int_{a}^{\infty} \varphi f$ converges.
+\end{theorem}
+\begin{proof}
+    Define $M$ to be $\sup_{x \in [a,\infty)} \abs{\int_{a}^{x} f}$. For $\varepsilon \to 0$, as $\{\varphi(x) \to 0 \text{ as } x \to \infty\}$, there exists $m_{0} \in \R$ such that
+    \begin{equation}
+        \abs{\varphi(x)} < \frac{\varepsilon}{4M} \text{ for all } x \geq m_{0}.
+    \end{equation}
+    Therefore, for all $R_{1},R_{2} > m_{0}$, there exists a $\zeta$ in between $R_{1}$ and $R_{2}$ such that 
+    \begin{align}
+        \int_{R_{1}}^{R_{2}} \varphi f &= \varphi(R_{1}) \int_{R_{1}}^{\zeta} f + \varphi(R_{2}) \int_{\zeta}^{R_{2}} f \\
+        \implies \abs{\int_{R_{1}}^{R_{2}} \varphi f} &\leq \abs{\varphi(R_{1})} \abs{\int_{R_{1}}^{\zeta} f} + \abs{\varphi(R_{2})} \abs{\int_{\zeta}^{R_{2}} f} < \frac{\varepsilon}{4M} \left( \int_{R_{1}}^{\zeta} f + \int_{\zeta}^{R_{2}} f \right) \notag \\
+        &< \frac{\varepsilon}{4M} \left( \abs{\int_{a}^{\zeta}f} + \abs{\int_{a}^{R_{1}} f} + \abs{\int_{a}^{R_{2}} f} + \abs{\int_{a}^{\zeta} f} \right) < \varepsilon \text{ for all } R_{1},R_{2} > m_{0}.
+    \end{align}
+    By Cauchy criterion, $\int_{a}^{\infty} \varphi f$ converges.
+\end{proof}
+
+\begin{example}
+    We wish to determine whether $\int_{1}^{\infty} \frac{1}{x} \sin x \log x dx$ converges. Here, we shall let $f(x) = \sin x$ and $\varphi(x) = \frac{\log x}{x}$. We know that $\varphi$ is decreasing monotonically to $0$ as $x \to \infty$. Also, $\abs{\int_{1}^{x} \sin t dt} = \abs{\cos x - \cos 1} \leq 2$. Thus, $x \mapsto \int_{1}^{x} \sin t$ is uniformly bounded tells us that, by the Dirichlet test, the integral converges.
+\end{example}
+
+\begin{example}
+    We determine the $p$ for which $\int_{1}^{\infty} \frac{\sin x}{x^{p}} dx$ converges. We let $f(x) = \sin x$ and $\varphi(x) = \frac{1}{x^{p}}$ and focus only on the case when $p > 0$. Notice that $\varphi$ monotonically decreases to $0$ as $x \to \infty$. Therefore, $\int_{1}^{\infty} \frac{\sin x}{x^{p}}$ converges for all $p > 0$.
+
+    Note that since $\int_{0}^{1} \frac{\sin x}{x} dx$ converges, $\int_{0}^{\infty} \frac{\sin x}{x} dx$ also converges. By the comparison test, $\int_{1}^{\infty} \frac{\sin x}{x^{p}} dx$ is absolutely convergent for all $p > 1$. We question whether the integral absolutely converges for $0 < p \leq 1$.
+
+    Let us fix $0 < p \leq 1$. Now, $\abs{\sin x} \geq \sin^{2}x$ for all $x \in \R$. Therefore,
+    \begin{align}
+        \abs{\frac{\sin x}{x^{p}}} \geq \frac{\sin^{2}x}{x^{p}} = \frac{1-\cos 2x}{2x^{p}} = \frac{1}{2x^{p}} - \frac{\cos 2x}{2x^{p}}.
+    \end{align}
+    But the left term on the right hand side converges if and only $p > 1$. Thus, $\int_{1}^{\infty} \abs{\frac{\sin x}{x^{p}}}dx$ diverges for $0 < p \leq 1$. We provide a more slick proof of this.\\
+
+    Set $f(x) = \frac{\sin x}{x}$. We claim that $\int_{0}^{\infty} \abs{f}$ is not convergent. Fix a natural $n$. Therefore,
+    \begin{align}
+        \int_{0}^{n\pi} \abs{f} = \int_{0}^{\pi} f + \int_{\pi}^{2\pi} f + \ldots + \int_{(n-1)\pi}^{n\pi} f.
+    \end{align}
+    For all $1 \leq m \leq n$,
+    \begin{align}
+        \int_{(m-1)\pi}^{m\pi} \abs{f} = \int_{(m-1)\pi}^{m\pi} \frac{\abs{\sin x}}{x} dx = \int_{0}^{\pi} \frac{\sin x}{(m-1)\pi + x}dx
+    \end{align}
+    Now for all $x \in [0,\pi]$, $(m-1)\pi + x \leq m\pi \implies \frac{1}{(m-1)\pi+x} \geq \frac{1}{m\pi}$
+    \begin{align}
+        \implies \int_{(m-1)\pi}^{m\pi} \abs{f} \geq \int_{0}^{\pi} \frac{\sin x}{m \pi} dx = \frac{2}{m \pi} \text{ for all } m = 1,2, \ldots, n.
+    \end{align}
+    Therefore,
+    \begin{align}
+        \int_{0}^{\pi} \abs{f} \geq \frac{2}{\pi} \sum_{m=1}^{n} \frac{1}{m}.
+    \end{align}
+    This tells us that $\lim_{n \to \infty} \int_{0}^{n \pi} \abs{f} = \infty$.
+\end{example}
+
+\begin{example}
+    Consider the function $f:[0,1] \to \R$ defined as
+    \begin{align}
+        f(x) = \begin{cases}
+            0 &\text{ if } x = 0,\\
+            (-1)^{n+1}(n+1) &\text{ if } x \in (\frac{1}{n+1},\frac{1}{n}] \text{ for some } n \in \N.
+        \end{cases}
+    \end{align}
+    Clearly, $\int_{0}^{1} \abs{f}$ and $\int_{0}^{1} f$ are improper integrals of type I at 0. Pick $0 < \varepsilon < 1$. Let $n$ be a natural number such that $\frac{1}{n+1} < \varepsilon \leq \frac{1}{n}$. Thus,
+    \begin{align}
+        \int_{\varepsilon}^{1} \abs{f} &= \int_{\varepsilon}^{\frac{1}{n}} \abs{f} + \int_{\frac{1}{n}}^{\frac{1}{n-1}} \abs{f} + \ldots + \int_{\frac{1}{3}}^{\frac{1}{2}} \abs{f} + \int_{\frac{1}{2}}^{1} \abs{f} \\
+        &= (n+1)\left( \frac{1}{n}-\varepsilon \right) + n\left( \frac{1}{n-1} - \frac{1}{n}  \right) + \ldots + 3 \left( \frac{1}{2}-\frac{1}{3} \right) + 2\left(1-\frac{1}{2}\right) \notag \\
+        &= (n+1) \left( \frac{1}{n}-\varepsilon \right) + \sum_{m=1}^{n-1} \frac{1}{m} > \sum_{m=1}^{n-1} \frac{1}{m}.
+    \end{align}
+    As $\varepsilon \to 0^{+}$, $n \to \infty$ implies that $\int_{0}^{1} \abs{f}$ diverges. Again,
+    \begin{align}
+        \int_{\varepsilon}^{1} f &= \int_{\varepsilon}^{\frac{1}{n}} (-1)^{n+1}(n+1)dx + \int_{\frac{1}{n}}^{\frac{1}{n-1}} (-1)^{n} n dx + \ldots + \int_{\frac{1}{2}}^{1} 2 dx \\
+        &= (-1)^{n+1}(n+1)\left( \frac{1}{n}-\varepsilon \right) + \sum_{m=1}^{n-1} \frac{(-1)^{m+1}}{m} \notag \\
+        \implies \abs{\int_{\varepsilon}^{1} f - \sum_{m=1}^{n-1} \frac{(-1)^{m-1}}{m}} &= (n+1)\left( \frac{1}{n}-\varepsilon \right) < (n+1) \left( \frac{1}{n}-\frac{1}{n+1} \right) = \frac{1}{n} \\
+        \implies \int_{0}^{1} f &= \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}.
+    \end{align}
+\end{example}
+
+\begin{theorem}[\eax{Cauchy-Maclaurin test}]
+    Let $f:[1,\infty) \to \R$ be a decreasing function with $f > 0$. Then the improper integral $\int_{1}^{\infty} f$ converges if and only if the the infinite series $\sum_{n=1}^{\infty} f(n)$ converges.
+\end{theorem}
+
+
+\section{The Gamma Function}
+Recall that for all natural $n \geq 1$, $n!$ is defined as $n \cdot (n-1) \cdots 2\cdot1$. We wish to extend this notation of the factorial for all $x \in \R$. We know that
+\begin{align}
+    \int_{0}^{\infty} t^{n} e^{-t} dt = n! \text{ for all natural } n \geq 1.
+\end{align}
+Thus, we propose this as the extended definition.
+\begin{definition}
+    For all $x > 0$, the \eax{Gamma function} $\Gamma$ is defined as
+    \begin{align}
+        \Gamma(x) = \int_{0}^{\infty} t^{x-1}e^{-t} dt.
+    \end{align}
+\end{definition}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
