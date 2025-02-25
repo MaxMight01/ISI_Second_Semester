@@ -1149,6 +1149,96 @@ Notice that there is a unique $k$ for which $S_{k-1} < t \leq S_{k}$. Define $X_
     \end{itemize}
 \end{proof}
 
+\section{Conditional Distribution}
+\textit{February 25th.}
+
+Let $X$ and $Y$ hae a joint probability density function given by $f(x,y)$. The \eax{conditional probability density function} of $X$ given $Y=y$ is
+\begin{align}
+    f_{X|Y}(x|y) = \frac{f(x,y)}{f_{Y}(y)}
+\end{align}
+and it is defined for $f_{Y}(y) > 0$. The motivation behind defining this is as follows---
+\begin{align}
+    f_{X|Y}(x|y)dx = \frac{f(x,y)dxdy}{f_{Y}(y)dy} = \frac{P(x \leq X \leq x + dx, y \leq Y \leq y + dy)}{P(y \leq Y \leq y + dy)} = P(x \leq X \leq x + dx | y \leq Y \leq y + dy).
+\end{align}
+If one is given the conditional probability density function, we can do the following computation as well,
+\begin{align}
+    P(X \in A | Y = y) = \int_{A} f_{X|Y}(x|y) dx.
+\end{align}
+We can also make sense of a \eax{conditional cumulative distribution function} of $X$ given $Y=Y$.
+\begin{align}
+    F_{X|Y}(a|y) = P(X \leq a | Y = y) = \int_{-\infty}^{a} f_{X|Y}(x|y)dx
+\end{align}
+
+\begin{remark}
+    If $X$ and $Y$ are independent, then the joint density factorizes into the product of the marginals which results in
+    \begin{align}
+        f_{X|Y}(x|y) = \frac{f(x,y)}{f_{Y}(y)} = \frac{f_{X}(x)f_{Y}(y)}{f_{Y}(y)} = f_{X}(x).
+    \end{align}
+\end{remark}
+
+\begin{example}
+    Suppose the joint density of $X$ and $Y$ is given as
+    \begin{align}
+        f(x,y) = \begin{cases}
+            e^{-\frac{x}{y}}e^{-y}y^{-1} &\text{ if } 0 < x < \infty, 0 < y < \infty\\
+            0 &\text{ if otherwise.}
+        \end{cases}
+    \end{align}
+    Let us compute $P(X > 1 | Y = y)$ for $0 < y < \infty$.
+    \begin{align}
+        f_{X|Y}(x|y) = \frac{f(x,y)}{f_{Y}(y)} = \frac{e^{-\frac{x}{y}}e^{-y}}{y \int_{0}^{\infty}\frac{e^{-\frac{x}{y}}e^{-y}}{y}dx} = \frac{1}{y}e^{-\frac{x}{y}} \text{ for } 0 < x < \infty.
+    \end{align}
+    Thus,
+    \begin{align}
+        P(X > 1 | Y = y) = \int_{1}^{\infty} \frac{1}{y} e^{-\frac{x}{y}} dx = e^{-\frac{1}{y}}.
+    \end{align}
+\end{example}
+
+\subsection{The $t$-distribution}
+Suppose we have $Y \sim \chi_{n}^{2} \equiv \text{Gamma}(\frac{n}{2},\frac{1}{2})$ and $Z \sim N(0,1)$ with both independent. Then the \eax{$t$-distribution} with $n$ degrees of freedom is defined as
+\begin{align}
+    T = \frac{Z}{\sqrt{Y/n}} = \sqrt{n} \frac{Z}{\sqrt{Y}}.
+\end{align}
+If a $Y = y$ is fixed, then $T = \sqrt{\frac{n}{y}}Z \sim N(0, \frac{n}{y})$. Thus,
+\begin{align}
+    f_{T|Y}(t|y) &= \frac{1}{\sqrt{2\pi \frac{n}{y}}} e^{-\frac{1}{2}\frac{t^{2}y}{n}} \\
+    \implies f_{T,Y}(t,y) &= f_{T | Y}(t|y)f_{Y}(y) = \frac{1}{\sqrt{2\pi \frac{n}{y}}} e^{-\frac{1}{2}\frac{t^{2}y}{n}} \left( \frac{e^{-\frac{y}{2}}y^{\frac{n}{2}-1}}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})} \right) \text{ for } t \in \R, y > 0.
+\end{align}
+Thus, the probability density function for $T$ can be found out as
+\begin{align}
+    f_{T}(t) = \int_{0}^{\infty} f_{T|Y}(t|y)dy = \int_{0}^{\infty} \frac{1}{\sqrt{2\pi n}} \cdot \frac{e^{-\frac{1}{2}(1+\frac{t^{2}}{n})y}y^{\frac{n-1}{2}}}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}dy.
+\end{align}
+If we let $c = \frac{1}{2}(1+\frac{t^{2}}{n})$ and make the change of variable from $x$ to $cy$, the intergral transforms as
+\begin{align}
+    \frac{c^{-\frac{n+1}{2}}}{\sqrt{\pi n} 2^{\frac{n+1}{2}} \Gamma(\frac{n}{2})} \int_{0}^{\infty} e^{-x} x^{\frac{(n-1)}{2}} dx = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi n} \Gamma(\frac{n}{2})} \left( 1+\frac{t^{2}}{n} \right)^{-\frac{n+1}{2}}.
+\end{align}
+Note that as $n \to \infty$,
+\begin{align}
+    f_{T}(t) \to \frac{1}{\sqrt{2\pi}} e^{-\frac{t^{2}}{2}}.
+\end{align}
+
+\section{The Bivariate Normal Distribution}
+Five parameters are used here--- $\mu_{x},\mu_{y} \in \R$, $\sigma_{x}, \sigma_{y} > 0$, and $-1 < \rho < 1$. The joint probability density function is given by
+\begin{align}
+    f(x,y) = \frac{1}{2\pi \sigma_{x}\sigma_{y}\sqrt{1-\rho^{2}}} \exp \left( -\frac{1}{2(1-\rho^{2})} \left( \left( \frac{x-\mu_{x}}{\sigma_{x}} \right)^{2} + \left( \frac{y-\mu_{y}}{\sigma_{y}} \right)^{2} -2\rho \left( \frac{(x-\mu_{x})(y-\mu_{y})}{\sigma_{x} \sigma_{y}} \right) \right) \right).
+\end{align}
+We find the conditional density of $X$ given $Y = y$.
+\begin{align}
+    f_{X|Y}(x|y) &= \frac{f(x,y)}{f_{Y}(y)} = c_{1}(y)f(x,y) \\
+    &= c_{2}(y) \exp \left( -\frac{1}{2(1-\rho^{2})} \left( \left( \frac{x-\mu_{x}}{\sigma_{x}} \right)^{2} - 2\rho \frac{x(y-\mu_{y})}{\sigma_{x}\sigma_{y}} \right)  \right) \notag\\
+    &= c_{2}(y) \exp \left( -\frac{1}{2(1-\rho^{2}) \sigma_{x}^{2}} \left( x^{2}-2x\mu_{x} + \mu_{x}^{2} - 2\frac{\rho \sigma_{x}}{\sigma_{y}} x(y-\mu_{y}) \right)  \right) \notag\\
+    &= c_{3}(y) \exp \left( -\frac{1}{2(1-\rho^{2}) \sigma_{x}^{2}} \left( x^{2} -2x (\mu_{x} + \rho \frac{\sigma_{x}}{\sigma_{y}} (y - \mu_{y})) \right)  \right) \notag\\
+    &= c_{4}(y) \exp \left( -\frac{1}{2(1-\rho^{2}) \sigma_{x}^{2}} \left( x - \left( \mu_{x} + \rho \frac{\sigma_{x}}{\sigma_{y}} (y - \mu_{y}) \right) \right)^{2}  \right).
+\end{align}
+The integral of the last term must be 1, so we can conclude that it is the probability density function must be that of the normal distribution.
+\begin{align}
+    X|Y=y &\sim N\left( \mu_{x} + \rho \frac{\sigma_{x}}{\sigma_{y}}(y-\mu_{y}), \sigma_{x}^{2}(1-\rho^{2}) \right),\\
+    Y|X=x &\sim N\left( \mu_{y} + \rho \frac{\sigma_{y}}{\sigma_{x}}(x-\mu_{x}), \sigma_{y}^{2}(1-\rho^{2}) \right).
+\end{align}
+Note that $X$ and $Y$ are independent if and only if $\rho = 0$. Also,
+\begin{align}
+    f_{X}(x) = \frac{f(x,y)}{f_{Y|X}(y|x)} = \frac{1}{\sqrt{2\pi \sigma_{x}^{2}}} \exp \left(  -\frac{1}{2\sigma_{x}^{2}} (x-\mu_{x})^{2} \right).
+\end{align}
 
 \begin{appendices}
 
