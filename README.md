@@ -4,25 +4,26 @@ Welcome to the **Second Semester** repository. This repo contains comprehensive 
 
 ## 📚 Subjects
 
-1. **Introduction to Statistics and Computation with Data**
-   - Files: `stat.tex`, `stat.pdf`; also contains `.R` files for R studio lectures.
-   - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/SCD.html)
-
-2. **Probability Theory II**
+1. **Probability Theory II**
    - Files: `prob.tex`, `prob.pdf`
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/PT2.html)
 
-3. **Real Analysis II**
+2. **Real Analysis II**
    - Files: `real.tex`, `real.pdf`
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/RA2.html)
 
-4. **Numerical Computing**
+3. **Numerical Computing**
    - Files: `.ipynb`; subfolders are named after the dates of the lectures.
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/NC.html)
 
-5. **Linear Algebra II**
+4. **Linear Algebra II**
    - Files: `linal.tex`, `linal.pdf`
    - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/LAlg2.html)
+   
+5. ~~**Introduction to Statistics and Computation with Data**~~ _(Discontinued)_
+   - Files: `stat.tex`, `stat.pdf`; also contains `.R` files for R studio lectures.
+   - 📄 [Coursework Link](https://www.isibang.ac.in/~adean/infsys/database/Bmath/SCD.html)
+   - **Note**: The notes for this subject have been **discontinued** due to unforseen challenges in documenting the material effectively. Apologies for any inconvenience this may cause.
 
 ## 🤝 Contributions
 Contributions are welcomed and encouraged. Pull requests may be submitted for:
