@@ -1217,7 +1217,7 @@ Note that as $n \to \infty$,
     f_{T}(t) \to \frac{1}{\sqrt{2\pi}} e^{-\frac{t^{2}}{2}}.
 \end{align}
 
-\section{The Bivariate Normal Distribution}
+\subsection{The Bivariate Normal Distribution}
 Five parameters are used here--- $\mu_{x},\mu_{y} \in \R$, $\sigma_{x}, \sigma_{y} > 0$, and $-1 < \rho < 1$. The joint probability density function is given by
 \begin{align}
     f(x,y) = \frac{1}{2\pi \sigma_{x}\sigma_{y}\sqrt{1-\rho^{2}}} \exp \left( -\frac{1}{2(1-\rho^{2})} \left( \left( \frac{x-\mu_{x}}{\sigma_{x}} \right)^{2} + \left( \frac{y-\mu_{y}}{\sigma_{y}} \right)^{2} -2\rho \left( \frac{(x-\mu_{x})(y-\mu_{y})}{\sigma_{x} \sigma_{y}} \right) \right) \right).
@@ -1239,6 +1239,74 @@ Note that $X$ and $Y$ are independent if and only if $\rho = 0$. Also,
 \begin{align}
     f_{X}(x) = \frac{f(x,y)}{f_{Y|X}(y|x)} = \frac{1}{\sqrt{2\pi \sigma_{x}^{2}}} \exp \left(  -\frac{1}{2\sigma_{x}^{2}} (x-\mu_{x})^{2} \right).
 \end{align}
+
+\section{Order Statistics}
+\textit{February 28th.}
+
+Suppose we have $X_{1},X_{2},\ldots,X_{n}$ independent and identically distributed continuous random variables with common probability density function $f$ and cumulative distribution function $F$. We order the $X_{i}$'s in such a way that $X_{(1)}<X_{(2)}<\ldots<X_{(n)}$. These are termed the \eax{order statistics} corresponding to $X_{1},X_{2},\ldots,X_{n}$, and $X_{(k)}$ is termed the $k^{\text{th}}$ order statistic. Note that $X_{(1)},X_{(2)},\ldots,X_{(n)}$ takes the values $x_{1}\leq x_{2} \leq \ldots \leq x_{n}$ if and only if for some permutation $(i_{1},i_{2},\ldots,i_{n})$ of $(1,2,\ldots,n)$ we have $X_{1} = x_{i_{1}},X_{2}=x_{i_{2}},\ldots,X_{n}=x_{i_{n}}$. Also, for sufficiently small $\varepsilon > 0$,
+\begin{align}
+    & P\left(x_{i_{1}}-\frac{\varepsilon}{2} < X_{1} < x_{i_{1}} + \frac{\varepsilon}{2}, x_{i_{2}} - \frac{\varepsilon}{2} < X_{2} < x_{i_{2}} + \frac{\varepsilon}{2}, \ldots, x_{i_{n}} - \frac{\varepsilon}{2} < X_{n} < x_{i_{n}} + \frac{\varepsilon}{2}\right) \notag \\
+    &\approx \varepsilon^{n} f(x_{i_{1}}) f(x_{i_{2}}) \cdots f(x_{i_{n}}) = \varepsilon^{n} f(x_{1}) f(x_{2}) \cdots f(x_{n}).
+\end{align}
+Therefore, for $x_{1} < x_{2} < \ldots < x_{n}$, we have
+\begin{align}
+    & P\left(x_{1}-\frac{\varepsilon}{2} < X_{(1)} < x_{1} + \frac{\varepsilon}{2}, x_{2} - \frac{\varepsilon}{2} < X_{(2)} < x_{2} + \frac{\varepsilon}{2}, \ldots, x_{n} - \frac{\varepsilon}{2} < X_{(n)} < x_{n} + \frac{\varepsilon}{2}\right) \notag \\
+    &\approx n! \varepsilon^{n} f(x_{1}) \ldots f(x_{n}) \\
+    &\implies f_{(X_{(1)},X_{(2)},\ldots,X_{(n)})}(x_{1},x_{2},\ldots,x_{n}) = n! f(x_{1})f(x_{2}) \cdots f(x_{n}).
+\end{align}
+
+\begin{example}
+    Three people are distributed on a 1 mile long rong, uniformly. Fix $d \leq \frac{1}{2}$. We are to find the probability that no two people are less distance $d$ apart. Note that the probability density function is $f_{(X_{(1)},X_{(2)},X_{(3)})}(x_{1},x_{2},x_{3}) = 6$ for $0 \leq x_{1} < x_{2} < x_{3} \leq 1$. The probability is then given us
+    \begin{align}
+        P(X_{(2)}-X_{(1)} \geq d, X_{(3)} - X_{(2)} \geq d) &= \int_{0}^{1} \int_{x_{1}+d}^{1} \int_{x_{2}+d}^{1} 6 dx_{3} dx_{2} dx_{1} = (1-2d)^{3}.
+    \end{align}
+\end{example}
+The marginal density of $X_{(k)}$ is given as $f_{X_{(k)}}(y_{k}) = $
+\begin{align}
+    \idotsint_{x_{1} < \ldots < x_{k-1} < y_{k} < x_{k+1} < \ldots < x_{n}} f_{(X_{(1)},\ldots,X_{(n)})}(x_{1},\ldots,x_{k-1},y_{k},x_{k+1},\ldots,x_{n}) dx_{1} \cdots dx_{k-1} dx_{k+1} \cdots dx_{n}.
+\end{align}
+If we note that
+\begin{align}
+    F_{(X_{n})}(y) = P(X_{(n)} \leq y) = P(X_{1}\leq y, \ldots, X_{n} \leq y) = [F(y)]^{n}
+\end{align}
+then
+\begin{align}
+    f_{X_{(n)}}(y) = n[F(y)]^{n-1} f(y).
+\end{align}
+Similarly,
+\begin{align}
+    1-F_{X_{(1)}}(y) = P(X_{(1)} > y) = P(X_{1} > y, X_{2} > y, \ldots, X_{n} > y) = [1-F(y)]^{n}
+\end{align}
+gives us
+\begin{align}
+    f_{X_{(1)}}(y) = n[1-F(y)]^{n-1}f(y).
+\end{align}
+For the other marginal densities, we work as follows---
+\begin{align}
+    F_{X_{(k)}}(y) = P(X_{(k)}\leq y) &= P(\text{at least $k$ of }X_{1},\ldots,X_{n} \leq y) \notag \\
+    &= \sum_{j=k}^{n} P(\text{exactly $j$ of }X_{1},\ldots,X_{n} \leq y) \notag \\
+    &= \sum_{j=k}^{n} \binom{n}{j} F(y)^{j} (1-F(y))^{n-j}.
+\end{align}
+Differentiating this to find the probability density function is a tedious task. We work around this. Note that for $X_{(k)}$ to attain the value $y_k$, one of the $X_{1},\ldots,X_{k}$ should equal $y_{k}$, $k-1$ should be less than $y_{k}$, and $n-k$ should be greater than $y_{k}$. For a fixed partition to satisfy these conditions, we have
+\begin{align}
+    P(X_{i_{1}},X_{i_{2}},\ldots,X_{i_{k-1}}<y_{k}, X_{l_{1}}=y_{k},X_{j_{1}},X_{j_{2}},\ldots,X_{j_{n-k}} > y) = F(y)^{k-1}f(y)(1-F(y))^{n-k}.
+\end{align}
+Thus, we can choose any partition in the above mentioned way to get
+\begin{align}
+    f_{X_{(k)}}(y) = \binom{n}{k-1,n-k,1} F(y)^{k-1}f(y)(1-F(y))^{n-k}.
+\end{align}
+For $i < j$ the joint density function of $(X_{(i)},X_{(j)})$, $f_{X_{(i)}X_{(j)}}(y_{i},y_{j})$ exists for $y_{i}<y_{j}$. From the same intuitive reasoning as before, we have
+\begin{align}
+    f_{X_{(i)}X_{(j)}}(y_{i},y_{j}) = \binom{n}{i-1,1,j-i-1,1,n-j} F(y_{i})^{i-1} f(y_{i})(F(y_{j})-F(y_{i}))^{j-i-1}f(y_{j})(1-F(y_{j}))^{n-j}.
+\end{align}
+\begin{example}
+    We are the find the cumulative distribution function of $R = X_{(n)}-X_{(1)}$, the range of the $X_{i}$'s. We simply have
+    \begin{align}
+        P(R \leq a) &= P(X_{(n)}-X_{(1)} \leq a) = \iint_{x_{n}-x_{1} \leq a} f_{X_{(1)}X_{(n)}}(x_{1},x_{n}) dx_{1} dx_{n} \\
+        &= \int_{-\infty}^{\infty} \int_{x_{1}}^{x_{1}+a} \frac{n!}{(n-2)!}[F(x_{n})-F(x_{1})]^{n-2}f(x_{1})f(x_{n}) dx_{n} dx_{1} \notag
+    \end{align}
+    Making the substitution $y = F(x_{n}) - F(x_{1})$ with $dy = f(x_{n})dx_{n}$ will help compute the function. The computation is left as an exercise to the reader.
+\end{example}
 
 \begin{appendices}
 
