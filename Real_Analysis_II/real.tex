@@ -37,6 +37,7 @@
 \newcommand{\N}{\mathbb{N}} % Natural Numbers
 \newcommand{\R}{\mathbb{R}} % Real numbers
 \newcommand{\Z}{\mathbb{Z}} % Integers
+\newcommand{\Q}{\mathbb{Q}} % Rationals
 \newcommand{\cP}{\mathcal{P}}
 \newcommand{\cR}{\mathcal{R}}
 \newcommand{\cB}{\mathcal{B}}
@@ -1389,7 +1390,7 @@ Thus, we propose this as the extended definition.
 If the indefinite integral exists, then Cauchy's principle value exists and equals the indefinite integral. However, the converse is not true.
 
 \begin{example}
-    Let us look at the function $f:\R to \R$ defined as $f(x) = \frac{x}{1+x^{2}}$ for all real $x$. Cauchy's principle value is given as
+    Let us look at the function $f:\R \to \R$ defined as $f(x) = \frac{x}{1+x^{2}}$ for all real $x$. Cauchy's principle value is given as
     \begin{align}
         \int_{-R}^{R} f &= \frac{1}{2}\int_{-R}^{R} \frac{d(1+x^{2})}{1+x^{2}} = \frac{1}{2} (\log (1+R^{2}) - \log (1+R^{2})) = 0 \text{ for all } R > 0 \notag \\
         \implies \lim_{R \to \infty} \int_{-R}^{R} f &= 0.
@@ -1494,6 +1495,99 @@ We modify our definition of uniform convergence as an equivalent statement.
     \end{align}
     This statement is equivalent to the previous definition.
 \end{remark}
+\textit{March 3rd.}\\
+The following example depicts a useful trick, where we truncate that `bad part' of the function to give us a sequence of functions that we intuitively know converges to the desired function.
+
+\begin{example}
+    Let $S = [-1,1]$. Define $\{f_{n}\} \subseteq \cF(S)$ by
+    \begin{equation}
+        f_{n}(x) = \begin{cases}
+            \frac{1}{n} &\text{ if } \abs{x} \leq \frac{1}{n},\\
+            \abs{x} &\text{ if } \frac{1}{n} < \abs{x} \leq 1.
+        \end{cases}
+    \end{equation}
+    Note that $f_{n}$ converges to $f$ pointwise, where $f(x) = \abs{x}$. This is not too hard to show. We question the uniform convergence. Computing the norm gives us $\norm{f_{n}-f} = \sup_{x \in [-1,1]} \abs{f_{n}(x)-f(x)} = \frac{1}{n}$, where the supremum is achieved at $x = 0$. Clearly, this can be minimized. Thus, $f_{n}$ also uniformly converges to $f$.
+\end{example}
+
+\begin{theorem}[The \eax{Cauchy criterion for a sequence of functions}]
+    Let $\{f_{n}\} \subseteq \cF(S)$. Then $\{f_{n}\}$ converges uniformly if and only if for every $\varepsilon > 0$, there exists a natural $N \in \N$ such that
+    \begin{align*}
+        \norm{f_{n}-f_{m}} < \varepsilon \text{ for all } n,m \geq N.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    Let $f_{n}$ uniformly converge to $f$. Then for every $\varepsilon > 0$, there exists $N \in \N$ such that $\norm{f_{n}-f} < \frac{\varepsilon}{2}$ for all $n \geq N$. Thus, for all $n,m \geq N$,
+    \begin{align}
+        \norm{f_{n}-f_{m}} = \norm{(f_{n}-f)-(f_{m}-f)} \leq \norm{f_{n}-f} + \norm{f_{m}-f} < \varepsilon.
+    \end{align}
+    For the converse, we have, for every $\varepsilon > 0$ and some $N \in \N$,
+    \begin{align}
+        \norm{f_{n}-f_{m}} &< \frac{\varepsilon}{2} \text{ for all } n,m \in \N \notag \\
+        \implies \sup_{x \in S} \abs{f_{n}(x)-f_{m}(x)} &< \frac{\varepsilon}{2}
+    \end{align}
+    The last inequality is true for any evaluation at $x \in S$, so the sequence $\{f_{n}(x)\}$ is Cauchy for all $x \in S$. This implies that there exists a $f \in \cF(S)$ such that $\lim_{n \to \infty} f_{n}(x) = f(x)$ for all $x \in S$. This implies the pointwise convergence of $f_{n}$ to $f$. To show the uniform convergence, we `blow up' the $m$. We have
+    \begin{align}
+        f_{n}(x) - \frac{\varepsilon}{2} &\leq f_{m}(x) \leq f_{n}(x) + \frac{\varepsilon}{2} \text{ for all } x \in S,\; n,m \geq N \notag\\
+        \implies f_{n}(x) - \frac{\varepsilon}{2} &\leq f(x) \leq f_{n}(x) + \frac{\varepsilon}{2} \notag \\
+        \implies \abs{f_{n}(x)-f(x)} &< \frac{\varepsilon}{2} \text{ for all } x \in S,\; n \geq N \notag \\
+        \implies \norm{f_{n}-f} &< \frac{\varepsilon}{2} \text{ for all } n \geq N. 
+    \end{align}
+\end{proof}
+
+\begin{example}
+    Let $\{r_{n}\}_{n=1}^{\infty}$ be an enumeration of $\Q \cap [0,1]$. For all $n \geq 1$, define $f_{n}:[0,1] \to \R$ by
+    \begin{align}
+        f_{n}(x) = \begin{cases}
+            0 &\text{ if } x \in \{r_{1},r_{2},\ldots,r_{n}\},\\
+            1 &\text{ if } x \notin \{r_{1},r_{2},\ldots,r_{n}\}.
+        \end{cases}
+    \end{align}
+    It can be shown that $f_{n}$ converges to the Dirichlet function, pointwise. We question the uniform convergence. Note that for a fixed $n \in \N$, note that $f_{n}(r_{n+1}) = 1$ and $f_{n+1}(r_{n+1}) = 0$. Thus, $\norm{f_{n}-f_{n+1}} = 1$, which cannot be minimized. This violates the Cauchy criterion of uniform convergence.
+\end{example}
+
+\begin{theorem}[The \eax{M-test}]
+    Let $f_{n}$ be a sequence of functions converging to $f$, pointwise. For all $n \in \N$, set $M_{n} = \sup_{x \in S} \abs{f_{n}(x)-f(x)}$. Then $f_{n}$ converges to $f$ uniformly if and only if $M_{n}$ converges to 0.
+\end{theorem}
+\begin{proof}
+    This statement is trivial if you consider the fact that $M_{n} = \norm{f_{n}-f}$.
+\end{proof}
+
+\begin{example}
+    For all $n \in \N$, define $f_{n}(x) = \frac{nx}{1+n^{2}x^{2}}$ on the interval $S = [0,1]$. Again, it can be shown with ease that $f_{n}$ converges to $f \equiv 0$, pointwise. We use the M-test to check the uniform convergence. Thus,
+    \begin{align}
+        M_{n} = \sup_{x \in [0,1]} \abs{\frac{nx}{1+n^{2}x^{2}} - 0} = \sup_{x \in [0,1]}\abs{f_{n}(x)} = \frac{1}{2} \text{ for all } n \in \N.
+    \end{align}
+    Certainly, $\frac{1}{2}$ does not converge to 0. The function does not uniformly converge.
+\end{example}
+
+\section{Properties of Limit Convergence}
+We note that boundedness is not preserved under the notion of pointwise convergence; one may show by picking the example
+\begin{align}
+    f_{n}(x) = \begin{cases}
+        0 &\text{ if } 0 \leq x \leq \frac{1}{n},\\
+        \frac{1}{x} &\text{ if } \frac{1}{n} < x \leq 1.
+    \end{cases}
+\end{align}
+Riemann integrability is also not preserved under pointwise convergence due to Example 5.16. The sequence $\{x^{n}\} \subseteq \cF([0,1])$ shows that continuity and differentiability are also not preserved in pointiwse convergence. In fact, due to the above sequence, not even limits are preserved! We infer that pointwise convergence is not a `good' form of convergence to study. We shift our focus to uniform convergence.
+
+\begin{theorem}
+    Let $x_{0} \in S$, and let $\{f_{n}\} \cup \{f\} \subseteq \cF(S \backslash \{x_{0}\})$. Suppose that $f_{n}$ converges uniformly to $f$. If $\lim_{x \to x_{0}} f_{n}(x)$ exists for all $n \in \N$, then $\lim_{x \to x_{0}} f(x)$ exists. Moreover,
+    \begin{align*}
+        \lim_{n \to \infty} \lim_{x \to x_{0}} f_{n}(x) = \lim_{x \to x_{0}} \lim_{n \to \infty} f_{n}(x).
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    For every $\varepsilon > 0$, there exists $N \in \N$ such that $\norm{f_{n}-f_{m}} < \frac{\varepsilon}{2}$ for all $n,m \geq N$ on $S \backslash \{x_{0}\}$. For all $n \in \N$, let $a_{n} = \lim_{x \to x_{0}} f_{n}(x)$. Therefore, $\abs{a_{n}-a_{m}} = \lim_{x \to x_{0}} \abs{f_{n}(x)-f_{m}(x)}$; there exists $a \in \R$ such that
+    \begin{align*}
+        \lim_{n \to \infty} a_{n} = a \left( =\lim_{n \to \infty} \lim_{x \to x_{0}} f_{n}(x) \right) < \frac{\varepsilon}{2} \text{ for all } n,m \geq N.
+    \end{align*}
+    
+    Now, there exists $n_{0} \in \N$ such that $\norm{f_{n}-f} < \frac{\varepsilon}{3}$ for all $n \geq n_{0}$ on $S \backslash \{x_{0}\}$. Also, there exists $\tilde{n}_{0} \in \N$ such that $\abs{a_{n}-a} < \frac{\varepsilon}{3}$ for all $n \geq \tilde{n}_{0}$. Let $\hat{n} = \max \{n_{0},\tilde{n}_{0}\}$. We know that $\lim_{x \to x_{0}} f_{\hat{n}}(x) = a_{\hat{n}}$ exists. Therefore, there exists $\delta > 0$ such that $\abs{f_{\hat{n}}(x)-a_{\hat{n}}} < \frac{\varepsilon}{3}$ for all $0 < \abs{x-x_{0}} < \delta$. Thus, combining these three, we have
+    \begin{align*}
+        \abs{f(x)-a} \leq \abs{f(x)-f_{\hat{n}}(x)} + \abs{f_{\hat{n}}(x)-a_{\hat{n}}} + \abs{a_{\hat{n}}-a} < \varepsilon \text{ for all } 0 < \abs{x-x_{0}} < \delta.
+    \end{align*}
+    This implies that $\lim_{x \to x_{0}} f(x) = a$.
+\end{proof}
 
 \begin{appendices}
 
