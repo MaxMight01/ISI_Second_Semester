@@ -1358,6 +1358,143 @@ Thus, we propose this as the extended definition.
     \end{align}
 \end{definition}
 
+
+\textit{February 28th.}
+\begin{theorem}
+    $\Gamma(x)$ converges for all $x > 0$.
+\end{theorem}
+\begin{proof}
+    Rewrite the function as $\Gamma(x) = \int_{0}^{1}t^{x-1}e^{-t}dt + \int_{1}^{\infty} t^{x-1}e^{-t} dt$. The two integrals are termed as $\gamma_{1}(x)$ and $\gamma_{2}(x)$ respectively. We first prove the convergence of $\gamma_{1}(x)$.
+
+    For $0 \leq t \leq 1$, $e^{-t} \leq 1$ holds. Note that $t^{x-1}e^{-t}$ is dominated by $t^{x-1}$, and the integral $\int_{0}^{1} t^{x-1}dt$ converges to $\frac{1}{x}$ for $x > 0$. Thus, $\gamma_{1}(x)$ converges.
+
+    To show the convergence of $\gamma_{2}(x)$, we first note that $\lim_{t \to \infty} t^{x+1}e^{-t} = 0$. Thus, there must exist some $M > 0$ such that $t^{x+1}e^{-t} < 1$ holds for all $t \geq M$, which implies that $t^{x-1}e^{-t} < \frac{1}{t^{2}}$. As $\int_{1}^{\infty} \frac{1}{t^{2}}$ converges, $\gamma_{2}(x)$ must also converge by the comparison test.
+\end{proof}
+
+\begin{theorem}
+    $\Gamma(x+1) = x \Gamma(x)$ for all $x > 0$.
+\end{theorem}
+\begin{proof}
+    For all $r_{1},r_{2} > 0$, $\int_{r_{1}}^{r_{2}} t^{x-1} e^{-t} dt$ represents $\Gamma(x)$ as $r_{2}$ tends to infinity and $r_{1}$ tends to 0. Using the method of intergration by parts, we have
+    \begin{align}
+        \int_{r_{1}}^{r_{2}} t^{x} e^{-t} dt = \left[-t^{x}e^{-t}  \right]_{t=r_{1}}^{r_{2}} + x \int_{r_{1}}^{r_{2}} t^{x-1} e^{-t} dt = (r_{1}^{x}e^{-r_{1}}-r_{2}^{x}e^{-r_{2}}) + x\int_{r_{1}}^{r_{2}}t^{x-1}e^{-t}dt.
+    \end{align}
+    The left term on the right hand side tends to $0$ as $r_{1}$ tends to 0 and $r_{2}$ tends to infinity, and the integral tends to $x\Gamma(x)$. The left hand side tends to $\Gamma(x+1)$. Thus, $\Gamma(x+1) = x\Gamma(x)$.
+\end{proof}
+
+\section{Cauchy's Principle Value}
+\begin{definition}
+    Let $f:\R \to \R$ be a function. Then \eax{Cauchy's principle value} for $\int_{-\infty}^{\infty}f$ is defined as $\lim_{R \to \infty} \int_{-R}^{R} f$, if the limit exists.
+\end{definition}
+If the indefinite integral exists, then Cauchy's principle value exists and equals the indefinite integral. However, the converse is not true.
+
+\begin{example}
+    Let us look at the function $f:\R to \R$ defined as $f(x) = \frac{x}{1+x^{2}}$ for all real $x$. Cauchy's principle value is given as
+    \begin{align}
+        \int_{-R}^{R} f &= \frac{1}{2}\int_{-R}^{R} \frac{d(1+x^{2})}{1+x^{2}} = \frac{1}{2} (\log (1+R^{2}) - \log (1+R^{2})) = 0 \text{ for all } R > 0 \notag \\
+        \implies \lim_{R \to \infty} \int_{-R}^{R} f &= 0.
+    \end{align}
+    However, the indefinite integral does not converge, and does not exist.
+\end{example}
+
+
+\chapter{SEQUENCE OF FUNCTIONS}
+
+Recall that a sequence of reals $\{x_{n}\} \subseteq \R$ converges to a value $x \in \R$ if, for every $\varepsilon > 0$, there exists $N \in \N$ such that
+\begin{align}
+    \abs{x_{n}-x} < \varepsilon \text{ for all } n \geq N.
+\end{align}
+The Cauchy criterion is also equivalent. We now define some notation. $S$ will represent a subset of $\R$, $S \subseteq \R$, and $\cF(S)$ will represent the set of all functions acting on $S$, $\cF(s) = \{f:S \to \R\}$. Our goal here is to replace the real points $x_{n}$ by functions $f_{n} \in \cF(S)$. To begin, we must define a `distance' between functions in $\cF(S)$. This can be done in two ways.
+
+Pick a sequence $\{f_{n}\}_{n=1}^{\infty} \subseteq \cF(S)$. Then for all $x \in S$, note that $\{f_{n}(x)\} \subseteq \R$. Thus, we bring back the absolute function $\abs{.}$ and introduce it to the sequence $\{f_{n}(x)\}$ as our `distance'. This is the first way. The second way, which is harder, is done by introducing an original definition for $\abs{.}$ acting on functions and use the same definition.
+
+\section{Convergence in Sequence of Functions}
+\begin{definition}[The \eax{pointwise convergence of a sequence of functions}]
+    Let $\{f_{n}\} \subseteq \cF(S)$ and $f \in \cF(S)$. We say that $f_{n}$ converges to $f$ pointwise if for each $x \in S$, $f_{n}(x)$ converges to $f(x)$ ($\star$). Thus, we will use $\abs{f_{n}-f} < \varepsilon$ to denote ($\star$).
+\end{definition}
+Note that ($\star$) is equivalent to saying that for every $\varepsilon > 0$, there exists a natural $N$ such that $\abs{f_{n}(x) - f(x)} < \varepsilon \text{ for all } n \geq N$. But here, $N$ is both a function of $\varepsilon$ and $x$ which poses a problem.
+
+\begin{example}
+    Let $S=[0,1]$ and define $f_{n}:S \to \R$ to be $f_{n}(x) = x^{n}$ for all natural $n$ and all $x \in S$. Then for all $x \in [0,1)$, $f_{n}(x) = x^{n}$ converges to 0 as $n$ tends to infinity, and for $x = 1$, $f_{n}(x) = 1$ converges to 1 as $n$ tends to infinity. If we set $f:S \to \R$ defined as
+    \begin{align}
+        f(x) = \begin{cases}
+            0 &\text{ if } 0 \leq x < 1,\\
+            1 &\text{ if } x = 1.
+        \end{cases}
+    \end{align}
+    Then $f_{n}$ will converge to $f$ pointwise. Note that $f_{n}$ is both a continuous and infinite differentiable function for all natural $n$, but $f$ is not even a continuous function. We see that there is a need for a better definition of convergence of sequence of functions.
+\end{example}
+
+\begin{example}
+    For $S = [0,\infty)$, define $f_{n}:S \to \R$ as $f_{n}(x) = \frac{1}{x+n}$. As $\frac{1}{x+n} \leq \frac{1}{n}$, we find that $f_{n}(x)$ converges to $0$ as $n$ tends to infinity for all $x \in [0,\infty)$. Thus, $f_{n}$ converges to the zero function $f$, pointwise. However, for all $x \in [0,\infty)$,
+    \begin{align}
+        \abs{f_{n}(x) - 0} &= \frac{1}{x+n} < \frac{1}{n} \notag \\
+        \implies \abs{f_{n}(x) - f(x)} &< \varepsilon \text{ for all } n > \frac{1}{\varepsilon}
+    \end{align}
+    implies that the choice of $N$ is independent of $x$. This gives us an idea for the new definition of convergence.
+\end{example}
+
+\begin{definition}[The \eax{uniform convergence of a sequence of functions}]
+    Let $\{f_{n}\} \subseteq \cF(S)$ and $f \in \cF(S)$. We say $\{f_{n}\}$ converges to $f$ uniformly if for every $\varepsilon > 0$, there exists a natural $N$ such that
+    \begin{align}
+        \abs{f_{n}(x)-f(x)} < \varepsilon \text{ for all } n \geq N \text{ and } x \in S.
+    \end{align}
+\end{definition}
+\begin{remark}
+    Note that the condition here is equivalent to saying that $f(x) - \varepsilon \leq f_{n}(x) \leq f(x) + \varepsilon$ for all $n \geq N$ and $x \in S$.
+\end{remark}
+
+\begin{example}
+    It can be shown that $\{x^{n}\} \subseteq \cF([0,1])$ is not uniformly convergent, but the sequence $\{\frac{1}{x+n}\} \subseteq \cF([0,\infty))$ uniformly converges.
+\end{example}
+
+\begin{remark}
+    The uniform convergence of $f_{n}$ to $f$ implies the pointwise convergence of $f_{n}$ to $f$.
+\end{remark}
+
+Despite these definitions, it is unclear what our notion of distance even is.
+
+\begin{definition}
+    $\cB(S)$ denotes the set of all bounded functions from $S$ to $\R$, that is, $\cB(S) = \{f:S \to \R;f \text{ is bounded}\}$.
+\end{definition}
+We may note that $\cB(S)$ is a vector space, and even an algebra. We will make use of this fact to define the distance.
+
+\begin{definition}
+    For all $f \in \cB(S)$, we define the \eax{norm of a function} $f$ by $\norm{f} = \sup_{x \in S} \abs{f(x)}$.
+\end{definition}
+
+\begin{remark}
+    We note that $\norm{.}$ is a function $\norm{.} : \cB(S) \to \R_{\geq 0}$. It also satisfies the properties of the distance;
+    \begin{itemize}
+        \item $\norm{f} = 0$ if and only if $f \equiv 0$,
+        \item $\norm{f+g} \leq \norm{f} + \norm{g}$,
+        \item $\norm{\alpha f} = \abs{\alpha} \norm{f}$,
+        \item $\norm{fg} \leq \norm{f}\norm{g}$.
+    \end{itemize}
+    The non-negativity and the first three properties are reminiscent of the absolute value function defined on the reals. The last property, however, involves an inequality and the norm function is termed \eax{submultiplicative} due to this. 
+\end{remark}
+
+\begin{definition}
+    For all $f,g \in \cB(S)$, we define the \eax{distance between two functions} $f$ and $g$ as $d(f,g) = \norm{f-g}$.
+\end{definition}
+\begin{remark}
+    Again, we note that $d$ is a function $d:\cB(S) \times \cB(S) \to R_{\geq 0}$. Other properties include
+    \begin{itemize}
+        \item $d(f,g) = \sup_{x \in S} \abs{f(x)-g(x)}$,
+        \item $d(f,g) \leq d(f,h) + d(h,g)$ for all $h \in \cB(S)$,
+        \item $d(f,g) = 0$ if and only if $f = g$.
+    \end{itemize}
+\end{remark}
+We modify our definition of uniform convergence as an equivalent statement.
+
+\begin{remark}
+    Let $\{f_{n}\} \subseteq \cF(S)$ and $f \in \cF(S)$. $f_{n}$ converges to $f$ uniformly on $S$ if for every $\varepsilon > 0$, there exists a natural $N$ such that
+    \begin{align}
+        \norm{f_{n}-f} < \varepsilon \text{ for all } n \geq N.
+    \end{align}
+    This statement is equivalent to the previous definition.
+\end{remark}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
