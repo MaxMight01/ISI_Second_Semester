@@ -1308,6 +1308,48 @@ For $i < j$ the joint density function of $(X_{(i)},X_{(j)})$, $f_{X_{(i)}X_{(j)
     Making the substitution $y = F(x_{n}) - F(x_{1})$ with $dy = f(x_{n})dx_{n}$ will help compute the function. The computation is left as an exercise to the reader.
 \end{example}
 
+\textit{March 4th.}
+
+Let $X_{1},X_{2},\ldots,X_{n}$ be independent and identically distributed as Exp$(\alpha)$. These will denote the service times of $n$ counters in a post office, commencing at time 0. Thus, $X_{(i)}$ will denote the time of the $i^{\text{th}}$ discharge. We have
+\begin{align}
+    P(X_{(1)} > t) = P(X_{1}>t,\ldots,X_{n}>t) = \prod_{i=1}^{n} P(X_{i} > t) = e^{-n\alpha t} \implies X_{(1)} \sim \text{Exp}(n \alpha).
+\end{align}
+Also,
+\begin{align*}
+    P(X_{(n)} \leq t) = P(X_{1} \leq t, \ldots, X_{(n)} \leq t) = \prod_{i=1}^{n} P(X_{i} \leq t) = (1-e^{-\alpha t})^{n}.
+\end{align*}
+Intuitively, from the memoryless property of the exponential distribution, we can infer a proposition.
+\begin{proposition}
+    The $n$ variables $X_{(1)},X_{(2)}-X_{(1)},\ldots,X_{(n)}-X_{(n-1)}$ are independent, and the density of $X_{(k+1)}-X_{(k)}$ is $(n-k)\alpha e^{-(n-k)\alpha t}$.
+\end{proposition}
+\begin{proof}
+    We show the case for $n=3$. The proof can then be generalized. We have
+    \begin{align}
+        f_{X_{(1)}X_{(2)}X_{(3)}}(z_{1},z_{2},z_{3}) = 6 f_{X_{1},X_{2},X_{3}}(z_{1},z_{2},z_{3}) = 6\alpha^{3} e^{-\alpha} e^{-\alpha(z_{1}+z_{2}+z_{3})}.
+    \end{align}
+    Also,
+    \begin{align}
+        P(X_{(1)} > t_{1}, X_{(2)}-X_{(1)} > t_{2}, X_{(3)} - X_{(2)} > t_{3}) &= 6 \int_{t_{1}}^{\infty} \alpha e^{-\alpha z_{1}} \int_{z_{1}+t_{2}}^{\infty} \alpha e^{-\alpha z_{2}} \int_{z_{2}+t_{3}}^{\infty} \alpha e^{-\alpha t_{3}} dz_{3} dz_{2} dz_{1} \notag \\
+        &= e^{-\alpha t_{3}} e^{-2\alpha t_{2}} e^{-3\alpha t_{1}}.
+    \end{align}
+    Therefore, $X_{(1)} \sim \text{Exp}(3\alpha)$, $X_{(2)}-X_{(1)} \sim \text{Exp}(2\alpha)$, and $X_{(3)}-X_{(2)} \sim \text{Exp}(\alpha)$.
+\end{proof}
+
+We ask a few questions; suppose $A$ and $B$ are currently being served at the office, and a third clerk $C$ enters. The probability that $C$ leaves last is one-half due to the memoryless property of the exponential distribution. To find the total time spent by $C$, we have $T = X_{(1)} + Z$, where $Z$ is the distriution of $C$'s time spent being served. The distribution of $T$ is given as
+\begin{align*}
+    f(t) = \int_{\R} f_{X_{(1)}}(x)f_{Z}(t-x) dx = \int_{0}^{t} 2\alpha e^{-2\alpha x} \alpha e^{-\alpha (t-x_{1})} dx = 2\alpha e^{-\alpha t} (1-e^{-\alpha t}).
+\end{align*}
+Let us also compute the distribution of the time of last departure, $\tilde{T}$. Note that $C$ enters only when one of $A$ or $B$ is served. The first discharge has distribution $Z \sim \text{Exp}(2\alpha)$. When $C$ enters, we have 2 independent $\text{Exp}(\alpha)$ random variables, where the last discharge is given as $X_{(2)}$. Note that $X_{1},X_{2}$ are independent of $Z$. From the previous quesiton, we know that $X_{(2)} = X_{(2)} - X_{(1)} + X_{(2)}$ has distribution $\text{Exp}(2\alpha) + \text{Exp}(\alpha)$, and density $2 \alpha e^{-\alpha t} (1-e^{-\alpha t})$. Therefore, the distribution of $\tilde{T}$ matches that of $Z + X_{(2)}$. Integrating gives us
+\begin{align}
+    f_{\tilde{T}}(\tilde{t}) = 4\alpha (e^{-\alpha \tilde{t}} - e^{-2 \alpha \tilde{t}} = \alpha \tilde{t} e^{-2\alpha \tilde{t}}).
+\end{align}
+
+Moving away from the exponential distribution, let us consider $X_{1},X_{2},\ldots,X_{n}$ to be independent and identically distributed to $\text{Unif}[0,1]$. Note that $X_{(1)},X_{(2)},\ldots,X_{(n)}$ partition the interval $[0,1]$ into subintervals of length $l_{1} = X_{(1)}, l_{2} = X_{(2)}-X_{(1)},\ldots,l_{n}=X_{(n)}-X_{(n-1)}$. The lengths $l_{1},l_{2},\ldots,l_{n}$ are not independent since they have to satisfy $\sum l_{i} = 1$. The distributions of $l_{i}$'s turn out to be identical.
+
+As another exercise, let $X_{1},X_{2}$ be independent and randomly chosen uniformly on the unit circle. Let $r(x,y)$ denote the clockwise circular distance from points $x$ to $y$ on the unit circle. Note that $r(X_{1},X_{2})$ has the same distribution as $r(X_{2},X_{1})$, computed as $\text{Unif}[0,1]$.
+
+
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
