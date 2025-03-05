@@ -1589,6 +1589,111 @@ Riemann integrability is also not preserved under pointwise convergence due to E
     This implies that $\lim_{x \to x_{0}} f(x) = a$.
 \end{proof}
 
+\textit{March 5th.}
+
+\begin{corollary}
+    Let $f_{n}$ converge uniformly to $f$ on $S$. Let $x_{0} \in S$ and suppose that $f_{n}$ is continuous at $x_{0}$ for all $n$. Then $f$ is continuous at $x_{0}$.
+\end{corollary}
+\begin{proof}
+    Recall that $f_{n}(x_{0}) = \lim_{x \to x_{0}} f_{n}(x)$ for all $n$. The above theorem may be applied.
+\end{proof}
+
+\begin{remark}
+    If $\{f_{n}\} \subseteq \cC[0,1]$ and $f_{n}$ converges to $f$, uniformly, then $f \in \cC[0,1]$.
+\end{remark}
+
+\begin{theorem}
+    Let $\{f_{n}\} \subseteq \cB(S)$ and suppose that $f_{n}$ converges uniformly to $f$. Then $f \in \cB(S)$.
+\end{theorem}
+\begin{proof}
+    For every $\varepsilon > 0$, there exists a natural $N$ such that $\norm{f_{n}-f} < \varepsilon$ for all $n \geq N$. Therefore, for all $x \in S$,
+    \begin{align}
+        \abs{f(x)} = \abs{f(x) - f_{N}(x) + f_{N}(x)} \leq \abs{f(x)-f_{N}(x)} + \abs{f_{N}(x)} &< \varepsilon + \norm{f_{N}} \\
+        \implies \norm{f} &\leq \varepsilon + \norm{f_{N}}.
+    \end{align}
+    $f$ is bounded.
+\end{proof}
+
+\begin{corollary}
+    If $\{f_{n}\} \subseteq \cB(S)$ and suppose that $f_{n}$ uniformly converges to $f$. Then $f_{n}$ is also uniformly bounded.
+\end{corollary}
+\begin{proof}
+    Note that $\norm{f_{n}} \leq \norm{f_{n}-f} + \norm{f}$. We are done by the above theorem.
+\end{proof}
+
+\begin{theorem}
+    Let $\{f_{n}\} \subseteq \cR[a,b]$, and suppose $f_{n}$ uniformly converges to $f$. Then $f \in \cR[a,b]$. Moreover,
+    \begin{align*}
+        \lim_{n \to \infty} \int_{a}^{b} f_{n} = \int_{a}^{b} \lim_{n \to \infty} f_{n}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    For every $\varepsilon > 0$, there exists a natural $N$ such that $\norm{f_{N}-f} < \frac{\varepsilon}{b-a}$. This gives us $f(x) - \frac{\varepsilon}{b-a} < f_{N}(x) < f(x) + \frac{\varepsilon}{b-a}$ for all $x \in [a,b]$. Now, $f_{N} \in \cR[a,b]$ implies that there exists a partition $P \in \cP[a,b]$ such that $U(f_{N},P)-L(f_{N},P) < \varepsilon$. But for all $x \in [a,b]$, we have
+    \begin{align}
+        f(x) < f_{N}(x) + \frac{\varepsilon}{b-a} &\implies U(f,P) < U(f_{N},P) + \varepsilon,\\
+        f(x) > f_{N}(x) - \frac{\varepsilon}{b-a} &\implies L(f,P) > L(f_{N},P) - \varepsilon.
+    \end{align}
+    Subtracting $L(f,P)$ from $U(f,P)$ and making use of the inequalities, we get
+    \begin{align}
+        U(f,P) - L(f,P) < U(f_{N},P) - L(f_{N},P) + 2\varepsilon < 3\varepsilon.
+    \end{align}
+    Thus, $f$ is Riemann integrable on $[a,b]$. We now show the commutativity of the limit and the integral. Note that since $f_{n}$ uniformly converges to $f$, for every $\varepsilon > 0$, there exists a natural $n_{0}$ such that $\norm{f_{n}-f} < \frac{\varepsilon}{b-a}$ for all $n \geq n_{0}$. For all $x \in [a,b]$, we have
+    \begin{align}
+        \abs{\int_{a}^{x}f-\int_{a}^{x}f_{n}} = \abs{\int_{a}^{x}(f-f_{n})} \leq \int_{a}^{x} \abs{f-f_{n}} < \frac{\varepsilon}{b-a}\abs{x-a} < \varepsilon.
+    \end{align}
+\end{proof}
+
+However, despite so many properties being conserved, the following example talks about the derivative.
+
+\begin{example}
+    Define $\{f_{n}\} \subseteq \cF(\R)$ by $f_{n}(x) = \frac{x}{1+nx^{2}}$ for all $x \in \R$. For $x \neq 0$, we have
+    \begin{align}
+        \abs{f_{n}(x)} = \abs{\frac{x}{1+nx^{2}}} \leq \frac{1}{2\sqrt{n}}.
+    \end{align}
+    Thus, $f_{n}$ converges uniformly to the null function. We note that both $f_{n}$ and the zero funciton are differentiable. But there is a flaw here. Differentiating $f_{n}(x)$ gives us $f_{n}'(x) = \frac{-nx^{2}+1}{(1+nx^{2})^{2}}$. For $x \neq 0$, this derivative tends to 0 as $n$ tends to infinity. However, when $x = 0$, the derivative is (tends to) 1! We see that $f_{n}'$ converges to $F$ pointwise where $F(x) = 0$ for $x \neq 0$ and $F(0) = 1$. The limit and derivative do \textit{not} commute in general.
+\end{example}
+
+This example suggests that unlike the previous theorems, the theorem regarding differentiability will turn out to be slightly uglier.
+
+\begin{theorem}
+    Let $\{f_{n}\}$ be a sequence of differentiable functions on $[a,b]$. Suppose
+    \begin{itemize}
+        \item there exists $x_{0} \in [a,b]$ such that $\{f_{n}(x_{0})\}$ converges, and
+        \item $\{f_{n}'\}$ converges uniformly on $[a,b]$.
+    \end{itemize}
+    Then $\{f_{n}\}$ converges uniformly on $[a,b]$ to a differentiable funciton $f$. Moreover,
+    \begin{align*}
+        f'(x) = \lim_{n \to \infty} f_{n}'(x) \text{ for all } x \in [a,b].
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    For every $\varepsilon > 0$, there exists a natural $N$ such that both $\norm{f_{n}'-f_{m}'} < \frac{\varepsilon}{2(b-a)}$ and $\abs{f_{n}(x_{0}) - f_{m}(x_{0})} < \frac{\varepsilon}{2}$ hold true for all $n,m \geq N$. We now apply the mean value theorem to $f_{n}-f_{m}$; fix $x \in [a,b]\backslash\{x_{0}\}$ to get
+    \begin{align}
+        (f_{n}-f_{m})(x) = (f_{n}-f_{m})(x_{0}) + (x-x_{0})(f_{n}-f_{m})'(\zeta)
+    \end{align}
+    from some $\zeta$ between $x$ and $x_{0}$. This tells us that
+    \begin{align}
+        \abs{(f_{n}-f_{m})(x)} &\leq \abs{(f_{n}-f_{m})(x_{0})} + \abs{x-x_{0}} \abs{f_{n}'(\zeta)-f_{m}'(\zeta)} < \frac{\varepsilon}{2} + \abs{x-x_{0}}\frac{\varepsilon}{2(b-a)} < \varepsilon.
+    \end{align}
+    This tells us that $\norm{f_{n}-f_{m}} < \varepsilon$ for all $n,m \geq N$. Thus, $f_{n}$ converges uniformly to some function $f$ on $[a,b]$. We now claim that $f$ is differentiable and $f'(x) = \lim_{n \to \infty}f_{n}'(x)$ for all $x \in [a,b]$. Fix $\tilde{x} \in [a,b]$, and set $F_{n}(x) = \frac{f_{n}(x)-f_{n}(\tilde{x})}{x-\tilde{x}}$ and $F(x) = \frac{f(x)-f(\tilde{x})}{x-\tilde{x}}$ for all $x \neq \tilde{x}$. Note that $F_{n}$ converges to $F$, pointwise, and $\lim_{x \to \tilde{x}} F_{n}(x) = f_{n}'(\tilde{x})$ for all $n$.
+
+    Again, by the mean value theorem, there exists $\zeta \in (x,\tilde{x})$ such that
+    \begin{align}
+        (f_{n}-f_{m})(x)-(f_{n}-f_{m})(\tilde{x}) &= (f_{n}'(\zeta)-f_{m}'(\zeta)) (\tilde{x}-x) \\
+        \implies F_{n}(x) - F_{m}(x) &= f_{n}'(\zeta) - f_{m}'(\zeta) \notag \\
+        \implies \abs{F_{n}(x)-F_{m}(x)} &< \frac{\varepsilon}{2(b-a)} \text{ for all } n,m \geq N \text{ and } x \neq \tilde{x} \notag \\
+        \implies \norm{F_{n}-F_{m}} &< \frac{\varepsilon}{2(b-a)}.
+    \end{align}
+    Thus, $\{F_{n}\}$ is uniformly convergent on $[a,b]\backslash\{\tilde{x}\}$. This tells us that
+    \begin{align}
+        \lim_{x \to \tilde{x}}\lim_{n \to \infty} F_{n}(x) = \lim_{n \to \infty}\lim_{x \to \tilde{x}} F_{n}(x) \implies \lim_{x \to \tilde{x}} F(x) = f'(\tilde{x}) = \lim_{n \to \infty} f_{n}'(\tilde{x}).
+    \end{align}
+\end{proof}
+
+\begin{example}
+    Let $f_{n}(x) = \frac{\sin nx}{n}$ for $x \in [0,1]$. Note that $f_{n}$ converges to the zero function $(f)$, uniformly. Thus, $f'$ is also the zero function. But $f_{n}'(x) = \cos nx$ and $\{f_{n}'(x)\}$ does not converge for all $x \neq 0$.
+\end{example}
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
