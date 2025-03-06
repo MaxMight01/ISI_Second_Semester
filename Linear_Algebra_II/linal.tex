@@ -50,6 +50,9 @@
 \newcommand{\ip}[1]{\langle #1 \rangle}
 \newcommand{\conj}[1]{\overline{#1}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\nullsp}{\text{nullsp}}
+\newcommand{\rowsp}{\text{rowsp}}
+\newcommand{\colsp}{\text{colsp}}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -1058,7 +1061,7 @@ Conversely, let $V$ be a vector space of dimension $n$ and $\mc{B}$ be a basis o
     The proof is left as an exercise to the reader.
 \end{proof}
 
-\subsection{Orthogonality and Orthonormality}
+\section{Orthogonality and Orthonormality}
 Note that if $v$ is orthogonal to $w$ and $z$, then it is orthogonal to both $w+z$ and $\alpha w$ for $v,w,z \in V$ and $\alpha \in \F$. Thus, if $x \in \text{span}\{w,z\}$, then $v$ is also orthogonal to $x$. The entire subspace spanned by $w$ and $z$ is orthogonal to $v$.
 
 \begin{proposition}
@@ -1090,6 +1093,133 @@ In the vector space $\R^{n}$, an orthonormal basis forms the columns of an inver
 \begin{proof}
     We simply have $\ip{v,v_{j}} = \ip{\sum_{i=1}^{n} \alpha_{i}v_{i},v_{j}} = \alpha_{j}\ip{v_{j},v_{j}} = \alpha_{j}$, for some $v = \alpha_{1}v_{1} + \alpha_{2}v_{2} + \ldots + \alpha_{n}v_{n}$ with $\alpha_{i} \in \F$.
 \end{proof}
+
+\textit{March 6th.}
+Here are some properties;
+\begin{itemize}
+    \item Two vectors $x$ and $y$ in a real inner product space are orthogonal if and only if $\norm{x+y}^{2} = \norm{x}^{2} + \norm{y}^{2}$.
+    \item Two vectors $x$ and $y$ in a complex inner product space are orthogonal if and only if $\norm{\alpha x + \beta y}^{2} = \norm{\alpha x}^{2} + \norm{\beta y}^{2}$ for all pairs $\alpha$ and $\beta$ in $\C$.
+    \item If $x$ and $y$ are vectors in a real inner product space, and if $\norm{x} = \norm{y}$, then $x-y$ and $x+y$ are orthogonal.
+\end{itemize}
+
+\subsection{The Orthogonal Complement}
+\begin{definition}
+    In any inner product space, the \eax{distance between two vectors} $x$ and $y$ is defined as
+    \begin{align*}
+        d(x,y) = \norm{x-y} = \sqrt{\ip{x-y,x-y}}.
+    \end{align*}
+\end{definition}
+\begin{definition}
+    In any inner product space, the \eax{angle between two vectors} $x$ and $y$ is defined to be $\theta \in [0,\pi]$ such that
+    \begin{align*}
+        \cos \theta = \frac{\ip{x,y}}{\norm{x}\norm{y}}.
+    \end{align*}
+\end{definition}
+
+\begin{definition}
+    Given a subspace $W \subseteq V$, the \eax{orthogonal complement} of $W$ is defined as
+    \begin{align*}
+        W^{\perp} = \{v \in V : \ip{v,w} = 0 \text{ for all } w \in W\}.
+    \end{align*}
+\end{definition}
+
+\begin{proposition}
+    Let $W$ be a subspace of $V$. Then every vector $v \in V$ can be written as $v = w + w^{\perp}$ where $w \in W$ and $w^{\perp} \in W^{\perp}$. Also, $w$ is characterize by the property that it is the nearmost point in $W$ to $V$.
+\end{proposition}
+\begin{proof}
+    Fix $\{w_{1},\ldots,w_{k}\}$ be an orthonormal basis of $W$. Let $w = \sum_{i=1}^{k} \ip{v,w_{i}} w_{i} \in W$. Let $w^{\perp} = v-w$. Then, for some $1 \leq j \leq k$,
+    \begin{align}
+        \ip{v-w,w_{j}} = \ip{v,w_{j}} - \ip{\sum_{i=1}^{k} \ip{v,w_{i}}w_{i},w_{j}} = \ip{v,w_{j}} - \ip{v,w_{j}}\ip{w_{j},w_{j}} = \ip{v,w_{j}} - \ip{v,w_{j}} = 0.
+    \end{align}
+    The second part of the proposition is left as an exercise to the reader.
+\end{proof}
+
+
+\begin{proposition}
+    Let $V$ be an inner product space, with $W$ as a subspace. The following hold true:
+    \begin{itemize}
+        \item $W^{\perp}$ is a subspace,
+        \item $W \cap W^{\perp} = \{0\}$,
+        \item $W + W^{\perp} = V$,
+        \item $(W^{\perp})^{\perp} = W$
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{proposition}
+    Let $U,W$ be subspaces of $V$. The following hold true:
+    \begin{itemize}
+        \item If $U \subseteq W$, then $W^{\perp} \subseteq U^{\perp}$,
+        \item $(U+W)^{\perp} = U^{\perp} \cap W^{\perp}$,
+        \item $(U \cap W)^{\perp} = U^{\perp} + W^{\perp}$. 
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{definition}
+    Let $W$ be a subspace of an inner product space $V$, and let $v \in V$ such that $v = w + w^{\perp}$ where $w \in W$ and $w^{\perp} \in W^{\perp}$. Then $w$ is called the \eax{orthogonal projection} of $v$ into $W$ along $W^{\perp}$.
+\end{definition}
+
+Take $V$ to be $\R^{n}$ or $\C^{n}$ with the standard inner product(s).
+
+\begin{theorem}
+    For any real matrix $A$, $\emph{\nullsp}{A} = (\emph{\rowsp}{A})^{\perp}$. For any complex matrix $A$, $\emph{\nullsp}{A} = (\emph{\colsp}{A^{\ast}})^{\perp}$.
+\end{theorem}
+\begin{proof}
+    Note that it is enough to prove the second part. Let $X \in (\colsp{A^{\ast}})^{\perp}$ for a complex matrix $A$. $X$ is in this space if and only if $\ip{X,A^{\ast}Y} = 0$ for all $Y \in \C^{n}$.
+    \begin{align}
+        \Leftrightarrow (A^{\ast}Y)^{\ast}X = 0 \Leftrightarrow Y^{\ast}AX = 0 \Leftrightarrow AX = 0 \Leftrightarrow X \in \nullsp{A}.
+    \end{align}
+\end{proof}
+
+\begin{definition}
+    Let the ground field $\F$ be $\C$ or $\R$, and let $W$ be a subspace of $\F^{n}$. The \eax{orthogonal projector} into $W$ is the matrix $P_{n \times n}$ such that for all $v \in \F^{n}$, $Pv$ is the orthogonal projection of $v$ into $W$. Conversely, a matrix $Q_{n \times n}$ is said to be an orthogonal projector if it is the orthogonal projector into some subspace $W$ of $\F^{n}$.
+\end{definition}
+
+\begin{proposition}
+    In the previous definition, $F^{n}$ can be wrriten as $\emph{\colsp}(Q) \oplus \emph{\colsp}(I-Q)$.
+\end{proposition}
+\begin{proof}
+    It is enough to show that $\colsp(I-Q) = \colsp Q^{\perp}$.
+\end{proof}
+
+\begin{theorem}
+    For an $n \times n$ matrix $Q$, the following are equivalent;
+    \begin{itemize}
+        \item $Q$ is an orthogonal projector,
+        \item $Q^{\ast}Q = Q$,
+        \item $Q^{\ast} Q$ and $Q^{2} = Q$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    If we first assume that $Q$ is an orthogonal projector, then $v - Qv$ is orthogonal to every vector in $\colsp{Q}$ and any vector $v \in \F^{n}$. So, for all $u,v \in \F^{n}$,
+    \begin{align}
+        \ip{Qu,(I-Q)v} = 0 \implies v^{\ast} (I-Q)^{\ast} Qu = 0 \implies (I-Q)^{\ast} Q = 0 \implies Q = Q^{\ast}Q.
+    \end{align}
+    The converse is also true. So, (i) and (ii) imply each other. Showing that (ii) and (iii) are equivalent is trivial.
+\end{proof}
+
+\subsection{Orthogonal and Unitary Matrices}
+We have already seen orthogonal matrices.
+
+\begin{definition}
+    A complex square matrix is called a \eax{unitary matrix} such that $AA^{\ast} = A^{\ast}A = I_{n}$.
+\end{definition}
+
+It can be shown that $2 \times 2$ orthogonal matrices are of the form
+\begin{align}
+    \begin{pmatrix}
+        \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta
+    \end{pmatrix} \text{ or }
+    \begin{pmatrix}
+        \cos \theta & \sin \theta \\ \sin \theta & -\cos \theta
+    \end{pmatrix} \text{ for } \theta \in [0,2\pi).
+\end{align}
+
 
 \begin{appendices}
 
