@@ -1348,6 +1348,42 @@ Moving away from the exponential distribution, let us consider $X_{1},X_{2},\ldo
 
 As another exercise, let $X_{1},X_{2}$ be independent and randomly chosen uniformly on the unit circle. Let $r(x,y)$ denote the clockwise circular distance from points $x$ to $y$ on the unit circle. Note that $r(X_{1},X_{2})$ has the same distribution as $r(X_{2},X_{1})$, computed as $\text{Unif}[0,1]$.
 
+\section{Joint Distribution of Functions of Random Variables}
+\textit{March 7th.}
+
+Suppose $(X_{1},X_{2})$ has joint probability density function $f_{X_{1}X_{2}}$, and suppose $Y_{1} = g_{1}(X_{1},X_{2})$ and $Y_{2} = g_{2}(X_{1},X_{2})$ for some functions $g_{1},g_{2}$. We assume that $g_{1}$ and $g_{2}$ satisfy the following conditions:
+\begin{itemize}
+    \item The equations $y_{1} = g_{1}(x_{1},x_{2})$ and $y_{2} = g_{2}(x_{1},x_{2})$ can be uniquely solves for $x_{1}$ and $x_{2}$ in terms of $y_{1}$ and $y_{2}$, say, $x_{1} = h_{1}(y_{1},y_{2})$ and $x_{2} = h_{2}(y_{1},y_{2})$.
+    \item $g_{1}$ and $g_{2}$ have continuous partial derivatives at all $(x_{1},x_{2})$ and the determinant of the \eax{Jacobian matrix} is
+    \begin{align}
+        J(x_{1},x_{2}) = \det \begin{pmatrix}
+            \frac{\partial g_{1}}{\partial x_{1}} & \frac{\partial g_{1}}{\partial x_{2}} \\ \frac{\partial g_{2}}{\partial x_{1}} & \frac{\partial g_{2}}{\partial x_{2}} 
+        \end{pmatrix}
+        = \frac{\partial g_{1}}{\partial x_{1}} \frac{\partial g_{2}}{\partial x_{2}} - \frac{\partial g_{1}}{\partial x_{2}}\frac{\partial g_{2}}{\partial x_{1}} \neq 0.
+    \end{align}
+\end{itemize}
+Then $(Y_{1},Y_{2})$ has the joint density
+\begin{align}
+    f_{Y_{1}Y_{2}}(y_{1},y_{2}) = f_{X_{1}X_{2}}(x_{1},x_{2}) \abs{J(x_{1},x_{2})}^{-1}
+\end{align}
+where $x_{1} = h_{1}(y_{1},y_{2})$ and $x_{2} = h_{2}(y_{1},y_{2})$. The proof of this comes from multivariate analysis.
+
+\begin{remark}
+    The above can be extended to more than 2 random variables. Suppose that we have the probability density function $f_{X_{1}X_{2}\ldots X_{n}}(x_{1},x_{2},\ldots,x_{n})$ and we have $Y_{1} = g_{1}(X_{1},X_{2},\ldots,X_{n}), Y_{2} = g_{2}(X_{1},X_{2},\ldots,X_{n}),\ldots,Y_{n}=g_{n}(X_{1},X_{2},\ldots,X_{n})$. We have to assume that all the $g_{i}$'s have continuous partial derivatives, and we have to assume that
+    \begin{align}
+        J(x_{1},x_{2},\ldots,x_{n}) = \det \begin{pmatrix}
+            \frac{\partial g_{1}}{\partial x_{1}} & \cdots & \frac{\partial g_{1}}{\partial x_{n}} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial g_{n}}{\partial x_{1}} & \cdots & \frac{\partial g_{n}}{\partial x_{n}} \neq 0 \text{ for all } (x_{1},x_{2},\ldots,x_{n}).
+        \end{pmatrix}
+    \end{align}
+    We also suppose that that $y_{1} = g_{1}(x_{1},\ldots,x_{n}),\ldots,y_{n} = g_{n}(x_{1},\ldots,x_{n})$ has a unique solution given by $x_{1} = h_{1}(y_{1},\ldots,y_{n}), \ldots, x_{n}=h_{n}(y_{1},\ldots,y_{n})$. The joint density function of $(Y_{1},\ldots,Y_{N})$ is then given by
+    \begin{align}
+        f_{Y_{1}Y_{2}\ldots Y_{n}}(y_{1},y_{2},\ldots,y_{n}) = f_{X_{1}X_{2}\ldots X_{n}}(x_{1},x_{2},\ldots,x_{n}) \abs{J(x_{1},\ldots,x_{n})}^{-1}
+    \end{align}
+    where $x_{i} = h_{i}(y_{1},\ldots,y_{n})$.
+\end{remark}
+
 
 
 \begin{appendices}
