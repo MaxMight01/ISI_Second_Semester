@@ -1694,6 +1694,86 @@ This example suggests that unlike the previous theorems, the theorem regarding d
     Let $f_{n}(x) = \frac{\sin nx}{n}$ for $x \in [0,1]$. Note that $f_{n}$ converges to the zero function $(f)$, uniformly. Thus, $f'$ is also the zero function. But $f_{n}'(x) = \cos nx$ and $\{f_{n}'(x)\}$ does not converge for all $x \neq 0$.
 \end{example}
 
+\section{Convergence in Series of Functions}
+\begin{definition}
+    Let $\{f_{n}\} \subseteq \cF(S)$. Then the \eax{formal sum}
+    \begin{align*}
+        f_{1} + f_{2} + \ldots = \sum_{n=1}^{\infty} f_{n}
+    \end{align*}
+    is called a series of functions on $S$. Also, for all $x \in S$, we define
+    \begin{align*}
+        \sum_{n=1}^{\infty} f_{n}(x) = f_{1}(x) + f_{2}(x) + \ldots
+    \end{align*}
+\end{definition}
+
+\begin{remark}
+    Given a series $\sum_{n=1}^{\infty} f_{n}$ on $S$, we define the $n^{\text{th}}$ partial sum as $S_{n} = \sum_{k=1}^{n} f_{k}$ for all natural $n$. Note that $\{S_{n}\} \subseteq \cF(S)$.
+\end{remark}
+
+\begin{definition}
+    Let $\{f_{n}\} \subseteq \cF(S)$ with $f \in cF(S)$. We say that $\sum_{n=1}^{\infty} f_{n} = f$ pointwise if $\sum_{n=1}^{\infty} f_{n}(x) = f(x)$ for all $x \in S$; if $S_{n} \to f$ uniformly then we say $\sum_{n=1}^{\infty} f_{n} = f$ uniformly.
+\end{definition}
+\begin{remark}
+    The uniform convergence of a series of functions implies its pointwise convergence.
+\end{remark}
+
+\begin{example}
+    Let $S = [0,1)$, and look at the series $\sum_{n=0}^{\infty} x^{n}$. We note that $S_{n}(x) = \sum_{k=0}^{n-1} x^{k} = \frac{1-x^{n}}{1-x} \to \frac{1}{1-x}$ for all $x \in S$. This implies that $\sum_{n=0}^{\infty} x^{n} = \frac{1}{1-x}$ pointwise on $[0,1)$. Since $S_{n} \in \cB(S)$, if $S_{n} \to \frac{1}{1-x}$ uniformly, this will imply that $\frac{1}{1-x} \in \cB(S)$, which is a contradiction. Thus, uniform convergenc cannot occur.
+\end{example}
+
+\begin{theorem}[Cauchy criterion]
+    Let $\{f_{n}\} \subseteq \cF(S)$. Then $\sum_{n=1}^{\infty} f_{n}$ converges uniformly on $S$ if and only if for every $\varepsilon > 0$, there exists a natural $N$ such that
+    \begin{align*}
+        \norm{\sum_{k=n+1}^{m}f_{k}} < \varepsilon \text{ for all } m>n \geq N.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{corollary}
+    If $\sum f_{n}$ converges uniformly, then $\norm{f_{n}} \to 0$.
+\end{corollary}
+
+
+\begin{example}
+    Let $0 < \varepsilon < 1$. Consider the series $\sum_{n=0}^{\infty} x^{n}$ on $S = [-\varepsilon,\varepsilon]$. We begin by appealing to the Cauchy criterion; for $n > m$ and for any $x \in S$,
+    \begin{align}
+        \abs{S_{n}(x)-S_{m}(x)} = \frac{\abs{x^{m}-x^{n}}}{\abs{1-x}} \leq \frac{2\abs{x^{m}}}{\abs{1-x}} \leq \frac{2\abs{x^{m}}}{1-\abs{x}} \leq \frac{2\varepsilon^{m}}{1-\varepsilon} \implies \norm{S_{n}-S_{m}} < \frac{2\varepsilon^{m}}{1-\varepsilon}.
+    \end{align}
+    For a given $\varepsilon > 0$, we can find an $m$ to minimize the norm. Thus, $\{S_{n}\}$ satisfies the Cauchy criterion; $\sum_{n=0}^{\infty} x^{n} = \frac{1}{1-x}$ for all $x \in [-\varepsilon,\varepsilon]$. We notice that this series is pointwise convergent on $(-1,1)$ and uniformly on any compact subset of $(-1,1)$.
+\end{example}
+
+\begin{theorem}[M-test]
+    Let $\{f_{n}\} \subseteq \cF(S)$ and suppose $\norm{f_{n}} \leq M_{n}$ for all natural $n$. If $\sum M_{n} < \infty$, then $\sum_{f_{n}}$ is uniformly convergent.
+\end{theorem}
+\begin{proof}
+    $\norm{\sum_{k=n+1}^{m} f_{k}} \leq \sum_{k=n+1}^{m} \norm{f_{k}} \leq \sum_{k=n+1}^{m} M_{k}$.
+\end{proof}
+
+\begin{theorem}
+    Let $\sum_{n=1}^{\infty} f_{n} = f$ uniformly on $S\backslash \{x_{0}\}$. If $\lim_{x \to x_{0}}f_{n}(x_{0})$ exists for all $n$, then $\lim_{x \to x_{0}} f(x)$ exists and $\lim_{x \to x_{0}} f(x) = \sum_{n=1}^{\infty} \lim_{x \to x_{0}} f_{n}(x)$; the limit and the sum commute.
+\end{theorem}
+\begin{proof}
+    Let $S_{n}(x) = \sum_{k=1}^{n} f_{k}(x)$ for all $x \in S\backslash\{x_{0}\}$. We assume that $\lim_{x \to x_{0}} S_{n}(x)$. Since $S_{n} \to \sum_{n=1}^{\infty} f_{n} = f$, it follows. The commutativity also is seen easily.
+\end{proof}
+
+\begin{corollary}
+    Let $\{f_{n}\},f$ be from $\cF(S)$. Let $\sum f_{n} = f$ uniformly on $S$.
+    \begin{itemize}
+        \item If $\{f_{n}\} \subseteq \cB(S)$, then $f \in \cB(S)$.
+        \item If $\{f_{n}\} \subseteq \cC(S)$, then $f \in \cC(S)$.
+        \item If $\{f_{n}\} \subseteq \cR[a,b]$, then $f \in \cR[a,b]$ and the integral and sum commute.
+    \end{itemize}
+\end{corollary}
+
+\begin{theorem}[\eax{Dini's result}]
+    Let $S \subseteq \R$ be compact (closed and bounded) and let $\{f_{n}\} \subseteq \cC(S)$. Also let $f_{n} \to f$ pointwise and $f \in \cC(S)$. If $\{f_{n}\}$ is monotonic in $n$, then $f_{n} \to f$ uniformly.
+\end{theorem}
+
+
+
+
 \begin{appendices}
 
 \titleformat{\chapter}[display]
