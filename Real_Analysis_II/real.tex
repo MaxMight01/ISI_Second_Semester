@@ -1770,7 +1770,88 @@ This example suggests that unlike the previous theorems, the theorem regarding d
 \begin{theorem}[\eax{Dini's result}]
     Let $S \subseteq \R$ be compact (closed and bounded) and let $\{f_{n}\} \subseteq \cC(S)$. Also let $f_{n} \to f$ pointwise and $f \in \cC(S)$. If $\{f_{n}\}$ is monotonic in $n$, then $f_{n} \to f$ uniformly.
 \end{theorem}
+The proof of this theorem is out of the scope of this course.
 
+\textit{March 10th.}
+\begin{theorem}[Abel's test]
+    Let $\sum f_{n}$ be uniformly convergent on $S$ and suppose $\{g_{n}\}$ is a uniformly bounded montone sequence of functions on $S$. Then $\sum f_{n}g_{n}$ is uniformly convergent on $S$. 
+\end{theorem}
+\begin{proof}
+    Let $\sup \norm{g_{n}} = M < \infty$. Set $S_{n}$ to be the partial sum $\sum_{j=1}^{n} f_{n} \in \cF(S)$ for all natural $n$. We appeal to the Cauchy criterion;
+    \begin{align}
+        \sum_{j=n+1}^{m} f_{j}(x)g_{j}(x) = (S_{m}(x)-S_{n}(x))g_{n+1}(x) + \sum_{j=n+1}^{m} (S_{m}(x)-S_{j}(x))(g_{j+1}(x)-g_{j}(x)) \text{ for all } x \in S.
+    \end{align}
+    For $\varepsilon > 0$, there exists a natural $N$ such that $\norm{S_{m}-S_{n}} < \varepsilon$ for all $m > n \geq N$. Therefore, for all $m > n \geq N$,
+    \begin{align}
+        \abs{\sum_{j=n+1}^{m} f_{j}(x)g_{j}(x)} \leq \varepsilon \cdot M + \varepsilon \sum_{j=n+1}^{m} \abs{g_{j+1}(x)-g_{j}(x)} \text{ for all } x \in S.
+    \end{align}
+    The sum on the right equals $\abs{g_{n+1}(x)-g_{m}(x)}$ as $g_{n}$ either increases or decreases in $n$. This term is bounded by $2M$ giving us
+    \begin{align}
+        \abs{\sum_{j=n+1}^{m} f_{j}(x)g_{j}(x)} \leq \varepsilon M + 2\varepsilon M = 3 \varepsilon M.
+    \end{align}
+    Thus, the sum if uniformly convergent.
+\end{proof}
+
+\begin{example}
+    We consider the series $\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n} e^{-nx}$ on $\R_{\geq 0}$. The series of constant functions $\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n}$ is uniformly convergent. Also, $n > m \implies e^{-nx} \leq e^{-mx}$ for all $x \in [0,\infty)$. Thus, by Abel's test, $\sum \frac{(-1)^{n}}{n} e^{-nx}$ is uniformly convergent on this interval.
+\end{example}
+
+\begin{example}
+    Look at the series $\sum \frac{(-1)^{n}}{n} \abs{x}^{n}$ is uniformly convergent on the interval $[-1,1]$. We can utilise the previous example to show that this series is uniformly convergent.
+\end{example}
+
+\begin{theorem}[Dirichlet test]
+    Let $\{f_{n}\}, \{g_{n}\} \subseteq \cF(S)$ Suppose the following---
+    \begin{itemize}
+        \item The sequence of partial sums $\{S_{n}\}$ $(\sum_{j=1}^{n} f_{j})$ is uniformly bounded, and
+        \item $g_{n} \geq 0$ for all $n$ and $g_{n}$ uniformly converges to 0.
+    \end{itemize}
+    Then $\sum_{n=1}^{\infty} f_{n}g_{n}$ is uniformly convergent on $S$.
+\end{theorem}
+\begin{proof}
+    There exists $M > 0$ such that $\norm{S_{n}} \leq M$ for all $n$. Thus, $\norm{\sum_{j=n+1}^{m} f_{j}} = \norm{S_{m}-S_{n}} \leq 2M$. This implies that
+    \begin{align}
+        -2M \leq \sum_{j=n+1}^{m} f_{j}(x) \leq 2M \text{ for all } x \in S.
+    \end{align}
+    Now, for all $x \in S$, $g_{n+1}(x) \geq g_{n+2}(x) \geq \ldots \geq g_{m}(x) \geq 0$. By Abel's lemma,
+    \begin{align}
+        -2M g_{n+1}(x) &\leq \sum_{j=n+1}^{m} f_{j}(x)g_{j}(x) \leq 2Mg_{n+1}(x) \text{ for all } x \in S \notag \\
+        \implies \norm{\sum_{j=n+1}^{m} f_{j}g_{j}} &\leq 2M \norm{g_{n+1}}.
+    \end{align}
+    As $\norm{g_{n}} \to 0$, it follows that the sum is uniformly bounded on $S$.
+\end{proof}
+
+\begin{example}
+    Consider the series of functions $\sum_{n=1}^{\infty} \frac{1}{n} \cos nx$ defined on all $x \neq 2m\pi$. Label this set as $S = \R \backslash \{2m\pi : m \in \Z\}$. Set $f_{n}(x) = \cos nx$ for all $n$. Set $S_{n}(x) = \sum_{j=1}^{n} f_{j}(x)$ for all $x \in S$ and $n \in N$. For a fixed $x \in S$,
+    \begin{align}
+        \abs{S_{n}(x)} = \abs{\frac{\sin (\frac{n+1}{2}x) - \sin \frac{x}{2}}{2 \sin \frac{x}{2}}} \leq \frac{1}{\abs{ \sin \frac{x}{2}}}.
+    \end{align}
+    Also, $\frac{1}{n}$ is decreasing and converges to 0. By the Dirichlet test for real numbers, $\sum_{n=1}^{\infty} \frac{1}{n} \cos nx$ converges pointwise on $S$. For $0 < \varepsilon < \pi$, we have $\norm{S_{n}} \leq \frac{1}{\sin \frac{\varepsilon}{2}}$ on $[\varepsilon, 2\pi - \varepsilon]$, and extend it to $S$ periodically. Hence, $\sum_{n=1}^{\infty} \frac{1}{n} \cos nx$ converges uniformly on $[\varepsilon, 2\pi-\varepsilon]$, extended periodically.
+\end{example}
+
+\begin{example}
+    Let $0 < \varepsilon < 1$. We know that $\sum_{n=0}^{\infty} t^{n} = \frac{1}{1-t}$ converges uniformly on $[-\varepsilon,\varepsilon]$. This tells us that for all $x \in [-\varepsilon,\varepsilon]$,
+    \begin{align}
+        \int_{0}^{x} \frac{1}{1-t} dt &= \int_{0}^{x} \sum_{n=0}^{\infty} t^{n} dt = \sum_{n=0}^{\infty} \int_{0}^{x} t^{n} dt = \sum_{n=0}^{\infty} \frac{x^{n+1}}{n+1} \notag \\
+        \implies \log(1-x) &= -\sum_{n=1}^{\infty} \frac{x^{n}}{n} \text{ for all } x \in (-1,1).
+    \end{align}
+    The sum is uniformly convergent on compact subsets of $(-1,1)$.
+\end{example}
+
+\begin{example}
+    Again, we know that $\frac{1}{1+x^{2}} = \sum_{n=0}^{\infty} (-1)^{n} x^{2n}$ for all $x \in (-1,1)$. We apply the same trick as in the previous example;
+    \begin{align}
+        \arctan x = \int_{0}^{x} \frac{1}{1+t^{2}}dt = \sum_{n=0}^{\infty} \frac{(-1)^{n}}{2n+1} x^{2n+1} \text{ for all } x \in (-1,1).
+    \end{align}
+    The sum is uniformly convergent on compact subsets of $(-1,1)$. If we set $x = \frac{1}{2},\frac{1}{3}$, we get
+    \begin{align}
+        \sum \frac{(-1)^{n}}{2n+1} \left( \frac{1}{2^{2n+1}} + \frac{1}{3^{2n+1}} \right) = \arctan \frac{1}{2} + \arctan \frac{1}{3} = \arctan \frac{\frac{1}{2}+\frac{1}{3}}{1-\frac{1}{2}\cdot \frac{1}{3}} = \frac{\pi}{4}.
+    \end{align}
+\end{example}
+
+\begin{example}
+    Consider $\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n} \cos \frac{x}{n}$. Pick $x_{0} = 0$; this gives $\sum \frac{(-1)^{n}}{n} < \infty$. Also, $f_{n}(x) = \frac{(-1)^{n}}{n} \cos \frac{x}{n} \implies f_{n}'(x) = \frac{(-1)^{n+1}}{n^{2}} \sin \frac{x}{n}$. Then $\sum f_{n}' = \sum \frac{(-1)^{n+1}}{n^{2}} \sin \frac{x}{n}$ is uniformly convergent on $\R$. Therefore, the original sum is uniformly convergent on $\R$ \textit{and} is a differentiable function on $\R$. Also, the sum and differentiating operator commute.
+\end{example}
 
 
 
