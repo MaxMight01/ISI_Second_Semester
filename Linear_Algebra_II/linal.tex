@@ -1210,7 +1210,7 @@ We have already seen orthogonal matrices.
     A complex square matrix is called a \eax{unitary matrix} such that $AA^{\ast} = A^{\ast}A = I_{n}$.
 \end{definition}
 
-It can be shown that $2 \times 2$ orthogonal matrices are of the form
+It can be shown that $2 \times 2$ orthogonal matrices (and unitary matrices) are of the form
 \begin{align}
     \begin{pmatrix}
         \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta
@@ -1219,6 +1219,118 @@ It can be shown that $2 \times 2$ orthogonal matrices are of the form
         \cos \theta & \sin \theta \\ \sin \theta & -\cos \theta
     \end{pmatrix} \text{ for } \theta \in [0,2\pi).
 \end{align}
+The first kind represents rotation by the angle $\theta$, and the second kind represents reflection along the line making an angle of $\frac{\theta}{2}$.
+
+\textit{March 11th.}\\
+Note that the columns, as well as the rows, of a unitary matrix form an orthonormal basis of $\C^{n}$; the columns, as well as the rows, of an orthogonal matrix from an orthonormal basis of $\R^{n}$.
+
+\begin{proposition}
+    If $A,B$ are unitary (or orthogonal), then so are $AB,A^{t},\bar{A},A^{-1}$.
+\end{proposition}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{proposition}
+    The determinant of a unitary (or orthogonal) matrix has modulus $1$.
+\end{proposition}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{theorem}
+    Let $A$ be a $n \times n$ matrix. The following are then equivalent:
+    \begin{itemize}
+        \item $A$ is unitary,
+        \item $\ip{AX,AY} = \ip{X,Y}$ for all $X,Y \in \C^{n}$,
+        \item $\norm{AX} = \norm{X}$ for all $X \in \C^{n}$,
+        \item $\norm{AX} = 1$ wherever $\norm{X} = 1$,
+        \item $\norm{AX-AY} = \norm{X-Y}$ for all $X,Y \in \C^{n}$,
+        \item $(Ax_{1},\ldots,Ax_{n})$ is an orthonormal basis of $\C^{n}$ whenever $(x_{1},\ldots,x_{n})$ is an orthonormal basis of $\C^{n}$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    (i) implies (ii) is easy since $\ip{AX,AY} = (AY)^{\ast}AX = Y^{\ast}A^{\ast}AX = Y^{\ast}X = \ip{X,Y}$. For (ii) implies (iii), we have
+    \begin{align}
+        \ip{AX,AX} = \ip{X,X} \implies \norm{AX}^{2} = \norm{X}^{2} \implies \norm{AX} = \norm{X}.
+    \end{align}
+    We show (iii) implies (i); we see that $1 = \norm{e_{i}^{2}} = \norm{Ae_{i}}^{2} = \ip{Ae_{i},Ae_{i}} = e_{i}^{\ast}A^{\ast}Ae_{i} = e_{i}^{\ast}Be_{i} = b_{ii}.$ where we have used $A^{\ast}A = B = (b_{ij})$. So we infer that $B = A^{\ast}A$ has 1's on the diagonal. Let $x = e_{i}+e_{j}$ for $i \neq j$. Then,
+    \begin{align}
+        2 = \norm{x}^{2} = \norm{Ax}^{2} = (e_{i}+e_{j})^{t}B(e_{i}+e_{j}) = b_{ii} + b_{ij} + b_{ji} + b_{jj} \implies b_{ij}+b_{ji} = 0 \text{ for } i \neq j.
+    \end{align}
+    If $A$ is real, $B$ is symmetric as $B = A^{t}A$ so it follows that $b_{ij} = 0$ for all $i \neq j$. This shows that $B$ is identity and $A$ is orthogonal. If $A$ is complex, take $x = e_{k}i + e_{j}$ for $k \neq j$. Then,
+    \begin{align}
+        \norm{Ax}^{2} = x^{\ast}Bx = b_{kk}-b_{kj}i+b_{jk}i+b_{jj}.
+    \end{align}
+    A similar argument shows that $b_{kj} = b_{jk}$, and the previous equation shows that $b_{kj} = -b_{jk}$. Thus, for $k \neq j$, $b_{kj} = 0$.
+
+    (iii) implies (iv) is trivial. For (iv) implies (iii), simply consider $\frac{X}{\norm{X}}$ for some non-zero $X \in \C^{n}$. For (iii) implies (v), we consider $X-Y \in \C^{n}$. For (v) implies (iii), we consider $Y = 0$.
+
+    (ii) implies (vi) can be done by considering $\ip{Ax_{i},Ax_{j}} = 0$ for $i \neq j$ for a orthonormal basis $(x_{1},\ldots,x_{n})$. For (vi) implies (iv), let $x_{1}$ be a vector such that $\norm{x_{1}} = 1$. Extend $x_{1}$ to an orthonormal basis, say $(x_{1},x_{2},\ldots,x_{n})$. (vi) says that $(Ax_{1},Ax_{2},\ldots,Ax_{n})$ is also an orthonormal basis, so $\norm{Ax_{1}} = 1$ for any $x_{1}$.
+\end{proof}
+
+It is of note to keep in mind that the set of complex unitary matrices and the set of complex orthogonal matrices are different sets. However, the set of real unitary matrices and the set of real orthogonal matrices are the same set.
+
+\begin{proposition}
+    Let $U$ be an $n \times n$ unitary matrix. Then $\abs{\lambda} = 1$ for all eigenvalues $\lambda$ of $U$.
+\end{proposition}
+\begin{proof}
+    If $v$ is an associated eigenvector, we simply have
+    \begin{align}
+        \abs{\lambda} = \abs{\lambda} \norm{\frac{v}{\norm{v}}} = \norm{\frac{\lambda v}{\norm{v}}} = \frac{1}{\norm{v}} \norm{Uv} = \frac{1}{\norm{v}}\norm{v} = 1.
+    \end{align}
+\end{proof}
+
+\begin{theorem}[\eax{Schur's decomposition}]
+    Let $\lambda_{1},\ldots,\lambda_{n}$ be the eigenvalues of $A \in M_{n}(\C)$. Then there exists a unitary matrix $U \in M_{n}(\C)$ such that $U^{\ast}AU$ is an upper triangular matrix, with the eigenvalues on the diagonal.
+\end{theorem}
+\begin{proof}
+    Let us assume that the result holds for any $k \times k$ matrix with $k < n$. Let $x_{1}$ be a unit eigenvector of $A$ corresponding to $A_{1}$. Extend $x_{1}$ to an orthonormal basis of $\C^{n}$, say, $S = (x_{1},x_{2},\ldots,x_{n})$. Treating $x_{1},\ldots,x_{n}$ as columns of a matrix $S$, $S$ is unitary. We then have
+    \begin{align}
+        AS = (Ax_{1},Ax_{2},\ldots,Ax_{n}) = (\lambda_{1}x_{1},Ax_{2},\ldots,Ax_{n}) = S(u, S^{-1}Ax_{2},\ldots,S^{-1}Ax_{n})
+    \end{align}
+    where $u = \begin{pmatrix}
+        \lambda_{1} & 0 & \cdots & 0
+    \end{pmatrix}^{t}$. This shows that $Su = \lambda_{1}x_{1} + 0x_{2} + \ldots + 0x_{n}$. This implies that
+    \begin{align}
+        S^{\ast}AS = (u,S^{-1}Ax_{2},S^{-1}Ax_{3},\ldots,S^{-1}Ax_{n}) = \begin{pmatrix}
+            \lambda_{1} & v \\ O & B_{(n-1) \times (n-1)}
+        \end{pmatrix}
+    \end{align}
+    where $v$ is a $n-1$ row vector. Apply induction hypothesis on the $(n-1) \times (n-1)$ matrix $B$. Let $T$ be a unitary matrix such that $T^{\ast}BT$ is an upper triangular matrix with $\mu_{1},\ldots,\mu_{n-1}$ on the diagonal. If we let $U = S_{n \times n} \begin{pmatrix}
+        1 & O \\ O & T
+    \end{pmatrix}$ then $U$ is a unitary matrix as it is a product of two unitary matrices. We then have
+    \begin{align}
+        U^{\ast}AU = \begin{pmatrix}
+            1 & O \\ O & T^{\ast}
+        \end{pmatrix} S^{\ast} AS \begin{pmatrix}
+            1 & O \\ O & T
+        \end{pmatrix} = \begin{pmatrix}
+            1 & O \\ O & T^{\ast}
+        \end{pmatrix} \begin{pmatrix}
+            \lambda_{1} & v \\ O & B
+        \end{pmatrix} \begin{pmatrix}
+            1 & O \\ O & T
+        \end{pmatrix} = \begin{pmatrix}
+            \lambda_{1} & \cdots \\ O & T^{\ast}BT
+        \end{pmatrix}
+    \end{align}
+\end{proof}
+
+\begin{definition}
+    An $n \times n$ matrix $A \in M_{n}(\C)$ is termed a \eax{normal matrix} if $AA^{\ast} = A^{\ast}A$.
+\end{definition}
+
+\begin{theorem}[\eax{Spectral decomposition}]
+    Let $A \in M_{n}(\C)$ with eigenvalues $\lambda_{1},\ldots,\lambda_{n}$. Then $A$ is normal if and only if $A$ is unitarily diagonalizable, that is, there exists a unitary matrix $U$ such that $U^{\ast}AU = \emph{\text{diag}}(\lambda_{1},\ldots,\lambda_{n})$. In particular, $A$ is Hermitian if and only if the $\lambda_{i}$'s are real.
+\end{theorem}
+\begin{proof}
+    Let $A$ be normal. We then have
+    \begin{align}
+        (U^{\ast}AU)^{\ast} U^{\ast}AU = U^{\ast}AUU^{\ast}AU = U^{\ast}A^{\ast}AU \text{ and } (U^{\ast}AU)(U^{\ast}AU)^{\ast} = U^{\ast}AA^{\ast}U.
+    \end{align}
+    If $A$ is normal then $U^{\ast}AU$ is also normal, where $U$ is unitary. But for an upper triangular matrix to be normal, it must be a diagonal matrix. The converse is easy since $A = UDU^{\ast}$ for some diagonal matrix $D$ and $U$ unitary.
+\end{proof}
 
 
 \begin{appendices}
