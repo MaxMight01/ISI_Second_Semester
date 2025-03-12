@@ -1853,6 +1853,116 @@ The proof of this theorem is out of the scope of this course.
     Consider $\sum_{n=1}^{\infty} \frac{(-1)^{n}}{n} \cos \frac{x}{n}$. Pick $x_{0} = 0$; this gives $\sum \frac{(-1)^{n}}{n} < \infty$. Also, $f_{n}(x) = \frac{(-1)^{n}}{n} \cos \frac{x}{n} \implies f_{n}'(x) = \frac{(-1)^{n+1}}{n^{2}} \sin \frac{x}{n}$. Then $\sum f_{n}' = \sum \frac{(-1)^{n+1}}{n^{2}} \sin \frac{x}{n}$ is uniformly convergent on $\R$. Therefore, the original sum is uniformly convergent on $\R$ \textit{and} is a differentiable function on $\R$. Also, the sum and differentiating operator commute.
 \end{example}
 
+\section{Power Series}
+Let $c \in \R$ and let $\{a_{n}\}_{n \geq 0} \subseteq \R$. Then
+\begin{align}
+    \sum_{n=0}^{\infty} a_{n}(x-c)^{n}
+\end{align}
+is called a \eax{power series} around the centre $c$ with coefficients $\{a_{n}\}_{n \geq 0}$.
+\begin{remark}
+    The following are worth noting;
+    \begin{itemize}
+        \item The sum is in fact a series of functions, with $f_{n}(x) = a_{n}(x-c)^{n}$.
+        \item The sum refers to a formal sum.
+        \item Polynomials from $\R[x]$ admit a power series.
+        \item Let $S = \{x \in \R : \sum a_{n}(x-c)^{n} \text{ converges}\}$. Since $c \in S$, $S$ is non-empty. Therefore, there exists $f \in \cF(S)$ such that $f(x) = \sum a_{n}(x-c)^{n}$ on $S$.
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}
+    If a power series converges at $x_{0} \in \R\setminus\{c\}$, then the power series converges absolutely for all $x \in \R$ such that $\abs{x-c} < \abs{x_{0}-c}$. If a power series diverges at $x_{1} \in \R$, then the power series diverges for all $x \in \R$ such that $\abs{x-c} > \abs{x_{1}-c}$.
+\end{theorem}
+\begin{proof}
+    Let $\sum_{n=0}^{\infty} a_{n}(x_{0}-c)^{n}$ converge. Then, there exists a natural $N$ such that $a_{n}(x_{0}-c)^{n} < \frac{1}{2}$ for all $n \geq N$. Let us assume that $\abs{x-c} < \abs{x_{0}-c}$. Therefore, we have
+    \begin{align}
+        \abs{a_{n}(x-c)^{n}} = \abs{a_{n}(x_{0}-c)^{n}} \abs{\frac{x-c}{x_{0}-c}}^{n} = \abs{a_{n}(x_{0}-c)^{n}} r^{n} \leq \frac{1}{2} r^{n} \text{ for all } n \geq N
+    \end{align}
+    where $r$ is defiend as $r = \abs{\frac{x-c}{x_{0}-c}}$. From the assumption, $0 < r < 1$. Thus, by the M-test, the power series $\sum_{n=0}^{\infty} \abs{a_{n}(x-c)^{n}} < \infty$. The divergence is shown in a similar manner.
+\end{proof}
+
+\begin{theorem}[\eax{Cauchy-Hadamard theorem}]
+    Consider the power series $\sum_{n=0}^{\infty} a_{n}(x-c)^{n}$ and set $\frac{1}{R} = \limsup \abs{a_{n}}^{\frac{1}{n}}$. Then the power series is absolutely convergent for all $x$ such that $\abs{x-c} < R$ and is divergent for all $\abs{x-c} > R$. Also, the power series is uniformly convergent on any closed subset of $(c-R,c+R)$.
+\end{theorem}
+As a small remark, when the limit superior evaluates to $\infty$, we take $R$ to be 0. If the limit superior evaluates to $0$, we take $R$ to be $\infty$.
+\begin{proof}
+    Set $\alpha_{n} = \abs{a_{n}(x-c)^{n}}$. This shows that $\abs{\alpha_{n}}^{\frac{1}{n}} = \abs{a_{n}}^{\frac{1}{n}} \abs{x-c}$. We are done by the root test. Now pick $\varepsilon > 0$ such that $c < c + R - \varepsilon < c + R$, and let $\abs{x-c} \leq R-\varepsilon$. Then we know $\sum_{n=0}^{\infty} \abs{a_{n}(R-\varepsilon)}^{n} < \infty$. Thus there exists a natural $N$ such that $\abs{a_{n}(x-c)^{n}} < \frac{1}{2}$ for all $n \geq N$. But for all $\abs{x-c} \leq R-\varepsilon$, $\abs{a_{n}(x-c)^{n}} \leq \abs{a_{n}(R-\varepsilon)^{n}}$. By the M-test, the power series converges uniformly on $\abs{x-c} \leq R-\varepsilon$.
+\end{proof}
+
+\begin{definition}
+    In the above result, $R$ is defined as the \eax{radius of convergence}. The set $(c-R,c+R)$ is termed the \eax{region of convergence}.
+\end{definition}
+Let $\alpha_{n} \geq 0$. If $\lim_{n \to \infty} \frac{\alpha_{n+1}}{\alpha_{n}}$ exists, then $\limsup \alpha_{n}^{\frac{1}{n}} = \lim_{n \to \infty} \frac{\alpha_{n+1}}{\alpha_{n}}$. This proves to be a helpful result.
+
+\begin{corollary}
+    If $\lim_{n \to \infty} \frac{\abs{a_{n+1}}}{\abs{a_{n}}}$ exists, then $\frac{1}{R} = \lim_{n \to \infty} \abs{\frac{a_{n+1}}{a_{n}}}$.
+\end{corollary}
+
+\begin{example}
+    Let $p \in \R[x]$, and fix $c \in \R$. Then the radius of convergence is infinity.
+\end{example}
+\begin{example}
+    Consider the power series $\sum_{n=0}^{\infty} \frac{x^{n}}{n!}$. If we set $a_{n} = \frac{1}{n!} \implies \frac{a_{n+1}}{a_{n}} = \frac{1}{n+1}$. This tends to 0, so the radius of convergence $R$ is infinity. This power series absolutely converges everywhere and uniformly converges on compact subsets of $\R$. We define this as
+    \begin{align}
+        e^{x} = \sum_{n=0}^{\infty} \frac{x^{n}}{n!}.
+    \end{align}
+\end{example}
+\begin{example}
+    Consider the power series $\frac{1}{3} - x + \frac{x^{2}}{3^{2}} + \frac{x^{4}}{3^{4}} - x^{5} + \ldots$ In this case, the coefficients are
+    \begin{align}
+        a_{n} = \begin{cases}
+            \frac{1}{3} &\text{ if } n = 0,\\
+            -1 &\text{ if $n$ is odd},\\
+            \frac{1}{3^{n}} &\text{ if $n$ is even and } n > 0.
+        \end{cases}
+    \end{align}
+    $\lim_{n \to \infty} \abs{\frac{a_{n+1}}{a_{n}}}$ does not exist here, so we turn to the limit superior. In this case, $\limsup \abs{a_{n}}^{\frac{1}{n}} = 1$. Thus, the radius of convergence of the power series is 1, with $(-1,1)$ as the region of convergence.
+\end{example}
+\begin{example}
+    We look at $\sum_{n=0}^{\infty} \frac{(-1)^{n+1}}{n}x^{n}$. The limit $\lim_{n \to \infty} \abs{\frac{a_{n+1}}{a_{n}}}$ evaluates to 1, the $(-1,1)$ is the interval of convergence. We note that the power series converges for $x = 1$ but diverges for $x = -1$.
+\end{example}
+Henceforth, without loss of generality, we shall take the centre $c$ to be 0. The interval of convergence then becomes $(-R,R)$.
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ on $(-R,R)$. Then, for all $x \in (-R,R)$,
+    \begin{align*}
+        \int_{0}^{x}f = \sum_{n=0}^{\infty} \frac{a_{n}}{n+1}x^{n+1}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{definition}
+    Given a power series $\sum_{n=0}^{\infty} a_{n}x^{n}$, call $\sum_{n=1}^{\infty} na_{n}x^{n-1}$ its \eax{derived power series}.
+\end{definition}
+It can be shown that the radius of convergence of the power series, $R$, exactly equals the radius of convergence of the dervied power series, $R_{d}$.
+
+\begin{theorem}
+    Let $f(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ on $(-R,R)$. Then $f$ is differentiable on $(-R,R)$, and $f'(x) = \sum_{n=1}^{\infty} na_{n}x^{n-1}$ for all $x \in (-R,R)$.
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
+\begin{corollary}
+    Let $f(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ on $(-R,R)$. Then $f$ is infinitely differentiable on $(-R,R)$. Moreover, $a_{n} = \frac{f^{(n)}(0)}{n!}$ for all $n \geq 0$.
+\end{corollary}
+
+\begin{corollary}
+    $\sum_{n=0}^{\infty} a_{n}x^{n} = 0$ on $(-R,R)$ if and only if $a_{n} = 0$ for all $n$.
+\end{corollary}
+
+\begin{definition}
+    A function $f:(-\varepsilon,\varepsilon) \to \R$ is said to be a \eax{real-analytic function} if $f(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ for all $x \in (-\varepsilon,\varepsilon)$.
+\end{definition}
+By this definition, a power series is real-analytic. However, the converse may not be true. Simply consider the function
+\begin{align}
+    f(x) = \begin{cases}
+        e^{-\frac{1}{x^{2}}} &\text{ if } x \neq 0,\\
+        0 &\text{ if } x = 0.
+    \end{cases}
+\end{align}
+Here, $f^{(n)}(0) = 0$ for all $n$ implies that $f$ is not analytic.
 
 
 \begin{appendices}
