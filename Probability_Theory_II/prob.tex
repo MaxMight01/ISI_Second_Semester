@@ -1384,6 +1384,112 @@ where $x_{1} = h_{1}(y_{1},y_{2})$ and $x_{2} = h_{2}(y_{1},y_{2})$. The proof o
     where $x_{i} = h_{i}(y_{1},\ldots,y_{n})$.
 \end{remark}
 
+\subsection{Conditional Expectation and Variance}
+Let $(X,Y)$ have a joint probability density function $f(x,y)$, and suppose $g:\R^{2} \to \R$ is a function.
+\begin{proposition}
+    The expectation of $g(X,Y)$ is given as
+    \begin{align*}
+        E[g(X,Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x,y) f(x,y) dy dx.
+    \end{align*}
+\end{proposition}
+\begin{remark}
+    By this proposition, if we pick $g(x,y) = x$ for all $(x,y) \in \R^{2}$, we get
+    \begin{align*}
+        EX = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x,y) dy dx = \int_{-\infty}^{\infty} x f_{X}(x)dx.
+    \end{align*}
+\end{remark}
+\begin{proof}
+    Assume that $g(x,y) \geq 0$ for all $(x,y) \in \R^{2}$. We have
+    \begin{align}
+        E[g(X,Y)] &= \int_{0}^{\infty} P(g(X,Y) > t) dt \notag \\
+        &= \int_{0}^{\infty} \left( \iint_{\{(x,y) : g(x,y) > t\}} f(x,y) dy dx \right)dt \notag \\
+        &= \iint \int_{0}^{g(x,y)} f(x,y) dt dy dx \notag \\
+        &= \iint g(x,y)f(x,y) dy dx.
+    \end{align}
+    For a general $g$, we simply work with $g = g^{+} - g^{-}$ where $g^{+}(x,y) = \max \{g(x,y),0\}$ and $g^{-}(x,y) = \max \{-g(x,y),0\}$.
+\end{proof}
+If $(X,Y)$ have a joint probability density function $f(x,y)$, then it can be shown that $E[X+Y] = EX + EY$.
+
+\begin{example}
+    Suppose $X,Y \sim \text{Unif}[0,L]$. We compute $E\abs{X-Y}$. Noting that the joint probability density function is $f(x,y) = \frac{1}{L^{2}}$ for all $(x,y) \in [0,L] \times [0,L]$, we have
+    \begin{align}
+        E\abs{X-Y} &= \int_{0}^{L} \int_{0}^{L} \frac{\abs{x-y}}{L^2} dy dx \notag
+        = \frac{1}{L^{2}} \int_{0}^{L} \left( \int_{0}^{x}(x-y)dy + \int_{x}^{L} (y-x)dy \right) \\
+        &= \frac{1}{L^{2}} \int_{0}^{L} \left( \frac{x^{2}}{2} + \frac{(L-x)^{2}}{2} \right)dx = \frac{L}{3}.
+    \end{align}
+\end{example}
+
+Recall that the conditional density of $X$ given $Y = y$ is given as
+\begin{align*}
+    f_{X|Y}(x|y) = \frac{f_{XY}(x,y)}{f_{Y}(y)}
+\end{align*}
+provided that $f_{Y}(y) > 0$.
+
+\begin{definition}
+    The conditional expectation is given as
+    \begin{align*}
+        E[X|Y=y] = \int_{-\infty}^{\infty} x f_{X|Y}(x|y) dx
+    \end{align*}
+    provided that $f_{Y}(y) > 0$.
+\end{definition}
+
+\begin{example}
+    We compute $E[X|Y=y]$ for $f(x,y) = \frac{e^{-\frac{x}{y}}e^{-y}}{y}$ for $x,y>0$. It can be shown that the marginal density $f_{Y}(y)$ is $f_{Y}(y) = e^{-y}$. Thus, the conditional density is
+    \begin{align}
+        f_{X|Y}(x|y) = \frac{f(x,y)}{f_{Y}(y)} = \frac{e^{-\frac{x}{y}}e^{-y}}{y e^{-y}} = \frac{1}{y} e^{-\frac{x}{y}}.
+    \end{align}
+    The conditional expectation is then given as
+    \begin{align*}
+        E[X|Y=y] = \int_{0}^{\infty} \frac{xe^{-\frac{x}{y}}}{y} dx = y.
+    \end{align*}
+\end{example}
+
+It can be shown that
+\begin{align}
+    E[g(X)|Y=y] = \int g(x) f_{X|Y}(x|y) dx.
+\end{align}
+
+\begin{proposition}
+    We have
+    \begin{align*}
+        EX = E[E[X|Y]].
+    \end{align*}
+\end{proposition}
+\begin{proof}
+    Since $E[X|Y=y] = \int x f_{X|Y}(x|y) dx$ is a function of $y$, we have
+    \begin{align*}
+        E[E[X|Y]] &= \int_{-\infty}^{\infty} f_{Y}(y) \left(  \int_{-\infty}^{\infty} x f_{X|Y}(x|y) dx\right) dy \notag 
+        = \int_{-\infty}^{\infty} f_{Y}(y) \int_{-\infty}^{\infty} x \frac{f(x,y)}{f_{Y}(y)} dx dy \\
+        &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x,y) dy dx = \int_{-\infty}^{\infty} x f_{X}(x) dx = EX.
+    \end{align*}
+\end{proof}
+
+The conditional variance is also given as
+\begin{align}
+    \Var(X|Y=y) = E[X^{2}|Y=y] - (E[X|y=y])^{2} = \int x^{2} f_{X|Y}(x|y) dx - \left( \int x f_{X|Y}(x|y) dx \right)^{2}.
+\end{align}
+
+Also recall the conditional variance formula---
+\begin{align}
+    \Var(X) &= E[(X-EX)^{2}] = E[(X-E[X|Y]+E[X|Y]-EX)^{2}] \notag \\
+    &= E[(X-E[X|Y])^{2} + (E[X|Y]-EX)^{2} + 2(X-E[X|Y])(E[X|Y]-EX)] \notag \\
+    &= E[\text{Var}(X|Y)] + \text{Var}(E[X|Y]) + 0.
+\end{align}
+
+\begin{example}
+    We look at the bivariate normal distribution. The probability density function is given by
+    \begin{align}
+        f(x,y) = \frac{1}{2\pi \sigma_{x}\sigma_{y} \sqrt{1-\rho^{2}}} \exp \left( -\frac{1}{2(1-\rho^{2})} \left( \left( \frac{x-\mu_{x}}{\sigma_{x}} \right)^{2} + \left( \frac{y-\mu_{y}}{\sigma_{y}} \right)^{2} -2\rho \frac{(x-\mu_{x})(y-\mu_{y})}{\sigma_{x} \sigma_{y}} \right) \right).
+    \end{align}
+    It can be shown that the correlation between $X$ and $Y$ is indeed $\rho$, that is, $\frac{E(XY)-\mu_{x}\mu_{y}}{\sigma_{x}\sigma_{y}} = \rho$. $E(XY)$ is computed by considering $E(XY) = E[E[XY|Y]]$.
+\end{example}
+
+\begin{example}
+    Suppose $(S,R)$ has the following distributions; $R|S=s \sim N(s,1)$ and $S \sim N(\mu,\sigma^{2})$. We wish to compute $E[S|R=r]$ and $\Var(S|R=r)$. The former can be found out by first computing
+    \begin{align}
+        f_{S|R}(s|r) &= \frac{f_{S,R}(s,r)}{f_{R}(s)} = \frac{f_{R|S}(r|s) f_{S}(s)}{f_{R}(r)}.
+    \end{align}
+\end{example}
 
 
 \begin{appendices}
