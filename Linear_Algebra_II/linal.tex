@@ -1321,6 +1321,8 @@ It is of note to keep in mind that the set of complex unitary matrices and the s
     An $n \times n$ matrix $A \in M_{n}(\C)$ is termed a \eax{normal matrix} if $AA^{\ast} = A^{\ast}A$.
 \end{definition}
 
+\textit{March 13th.}
+
 \begin{theorem}[\eax{Spectral decomposition}]
     Let $A \in M_{n}(\C)$ with eigenvalues $\lambda_{1},\ldots,\lambda_{n}$. Then $A$ is normal if and only if $A$ is unitarily diagonalizable, that is, there exists a unitary matrix $U$ such that $U^{\ast}AU = \emph{\text{diag}}(\lambda_{1},\ldots,\lambda_{n})$. In particular, $A$ is Hermitian if and only if the $\lambda_{i}$'s are real.
 \end{theorem}
@@ -1330,6 +1332,68 @@ It is of note to keep in mind that the set of complex unitary matrices and the s
         (U^{\ast}AU)^{\ast} U^{\ast}AU = U^{\ast}AUU^{\ast}AU = U^{\ast}A^{\ast}AU \text{ and } (U^{\ast}AU)(U^{\ast}AU)^{\ast} = U^{\ast}AA^{\ast}U.
     \end{align}
     If $A$ is normal then $U^{\ast}AU$ is also normal, where $U$ is unitary. But for an upper triangular matrix to be normal, it must be a diagonal matrix. The converse is easy since $A = UDU^{\ast}$ for some diagonal matrix $D$ and $U$ unitary.
+
+    If $A$ is normal, then by spectral decomposition, there exists a unitary matrix $U$ such that $U^{\ast}AU$ is diagonal, say $D$. As $U$ is invertible, $A = UDU^{\ast} = UD^{\ast}U^{\ast} = A^{\ast}$ implies that $D = D^{\ast}$, or $\lambda_{i} = \overline{\lambda}_{i}$. This is only possible if these $\lambda_{i}$'s are real. Conversely, let $A$ have all real eigenvalues and let $A$ be a normal matrix. There then exists a unitary matrix $U$ such that $U^{\ast}AU = D$, a diagonal matrix. $A = UDU^{\ast} = UD^{\ast}U^{\ast} = A^{\ast}$ holds since $D$ is a real matrix.
+\end{proof}
+
+\begin{definition}
+    Let $A \in M_{n}(\C)$. $A$ is said to be a \eax{positive definite matrix} if $X^{\ast}AX > 0$ for all non-zero $X \in \C^{n}$. $A$ is said to be a \eax{positive semidefinite matrix} if $X^{\ast}AX \geq 0$ for all $X \in \C^{n}$.
+\end{definition}
+
+\begin{remark}
+    Let $A$ be normal. $A$ is positive semidefinite if and only if the $\lambda_{i}$'s are non-negative, where the $\lambda_{i}$'s are the eigenvalues.
+\end{remark}
+\begin{proof}
+    Let all the $\lambda_{i}$'s be non-negative. There exists a unitary $U$ such that $U^{\ast}AU = \text{diag}(\lambda_{1},\ldots,\lambda_{n}) = D$. The columns of $U$ form an orthonormal basis of $\C^{n}$ consisting of eigenvectors of $A$. Let $v_{1},\ldots,v_{n}$ be the eigenvectors. Choosing $X$ as $X = c_{1}v_{1} + \ldots + c_{n}v_{n}$, we have
+    \begin{align}
+        X^{\ast}AX = X^{\ast}(c_{1}\lambda_{1}v_{1} + \ldots + c_{n}\lambda_{n}v_{n}) = \abs{c_{1}}^{2}\lambda_{1}\ip{v_{1},v_{1}} + \ldots + \abs{c_{n}}^{2}\lambda_{n}\ip{v_{n},v_{n}} \geq 0
+    \end{align}
+    as the $\lambda_{i}$'s are non-negative. Conversely, let $A$ be normal and positive semidefinite. So, $X^{\ast}AX \geq 0$ for all $X \in \C^{n}$. Let $X$ be the column vector with $s^{\text{th}}$ component 1 and $t^{\text{th}}$ component $c \in \C$ and zeroes elsewhere. We then have
+    \begin{align}
+        0 \leq X^{\ast}AX = a_{ss}+ca_{st} + \overline{c}a_{ts}+\abs{c}^{2}a_{tt}.
+    \end{align}
+    If we take $c$ to be 0, we get that $a_{ss} \geq 0$ for all $s$. For $c = 1$, we have $a_{ss} + a_{st} + a_{ts} + a_{tt} \geq 0$. $c=i$ gives us $a_{ss} + ia_{st} - ia_{ts} + a_{tt} \geq 0$. Letting $a_{st} = x_{1}+iy_{1}$ and $a_{ts} = x_{2}+iy_{2}$, we get $x_{1} = x_{2}$ and $y_{1} = -y_{2}$. This implies that $a_{st} = \overline{a}_{ts}$. Thus, $A$ is Hermitian; the eigenvalues are then real. If we let $\lambda$ be an eigenvalue with $X$ being a corresponding eigenvector, we have
+    \begin{align}
+        0 \leq X^{\ast}AX = \lambda X^{\ast}X = \lambda \norm{X}^{2} \implies \lambda \geq 0.
+    \end{align}
+\end{proof}
+
+\begin{corollary}
+    The eigenvalues of a real symmetric matrix are real.
+\end{corollary}
+\begin{corollary}
+    The eigenvalues of a skew-Hermitian matrix $(A = -A^{\ast})$ matrix (of a real skew-symmetric matrix) are purely imaginary.
+\end{corollary}
+
+For $A \in M_{n}(\C)$, $\lambda$ is an eigenvalue of $A$ if and only if $i\lambda$ is an eigenvalue of $iA$. If $A$ is skew-Hermitian, then $iA$ is a Hermitian matrix. Thus, if $iA$ has all real eigenvalues, $A$ has all purely imaginary eigenvalues. In particular, $I+A$ and $I-A$ are non-singular.
+
+\begin{example}
+    Let $A \in M_{n}(\C)$. Show that $x^{\ast}Ax = 0$ for all $x \in \C^{n}$ if and only if $A = 0$, and $x^{T}Ax = 0$ for all $x \in \R^{n}$ if and only if $A^{T} = -A$.
+\end{example}
+
+\begin{example}
+    Let $A \in M_{n}(\C)$. Show that if $\lambda$ is an eigenvalue of $A$, then $\lambda^{k}$ is an eigenvalue of $A^{k}$. Also that $\alpha \in \C$ is an eigenvalue of $f(A)$ if and only if $\alpha = f(\lambda)$ for some eigenvalue $\lambda$ of $A$ and polynomial $f$.
+\end{example}
+
+\begin{example}
+    Let $A \in M_{n}(\C)$. $A$ is Hermitian if and only if $\ip{AX,Y} = \ip{X,AY}$ for all $X,Y \in \C^{n}$. $A$ is Hermitian if and only if $\ip{AX,X} = \ip{X,AX}$ for all $X \in \C^{n}$.
+\end{example}
+
+\begin{theorem}
+    The following are equivalent for $A \in M_{n}(\C)$.
+    \begin{itemize}
+        \item $A$ is Hermitian.
+        \item $X^{\ast}AX \in \R$ for all $X \in C^{n}$.
+        \item $A^{2} = A^{\ast}A$.
+        \item $\text{tr}(A^{2}) = \text{tr}(A^{\ast}A)$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    (i) implies (ii) is trivial. For (ii) implies (i), $X^{\ast}AX = (X^{\ast}AX)^{\ast}$ shows that $X^{\ast}(A-A^{\ast})X = 0$ for all $X \in \C^{n}$. This forces $A-A^{\ast} = 0$. (i) implies (iii) is also trivial; (iii) implies (i) can be shown via Schur's decomposition. There exists a unitary $U$ such that $U^{\ast}AU$ is upper triangular, say $T$, with diagonal entries $\lambda_{1},\ldots,\lambda_{n}$ which are the eigenvalues of $A$. We have
+    \begin{align}
+        UT^{2}U^{\ast} = A^{2} = A^{\ast}A = UT^{\ast}U^{\ast}UTU^{\ast} = UT^{\ast}TU^{\ast} \implies T^{2} = T^{\ast}T.
+    \end{align}
+    Comparing the diagonal entries, we get $\lambda_{j}^{2} = \abs{\lambda_{j}}^{2} + \sum_{i < j} \abs{t_{ij}}^{2}$ which shows that the $\lambda_{i}$'s are real, which again shows that $t_{ij} = 0$ for all $i < j$. Thus, $T$ is diagonal, and $A^{\ast} = A$.
 \end{proof}
 
 
