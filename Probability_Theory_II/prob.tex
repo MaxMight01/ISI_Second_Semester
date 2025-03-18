@@ -40,6 +40,7 @@
 \newcommand{\Var}{\text{Var}}
 \newcommand{\Cov}{\text{Cov}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor} % For flooor
+\newcommand{\toup}[1]{\xrightarrow{#1}}
 
 % Custom Notation List Environment
 \newlist{notationlist}{description}{1}
@@ -1490,6 +1491,101 @@ Also recall the conditional variance formula---
         f_{S|R}(s|r) &= \frac{f_{S,R}(s,r)}{f_{R}(s)} = \frac{f_{R|S}(r|s) f_{S}(s)}{f_{R}(r)}.
     \end{align}
 \end{example}
+
+\textit{March 18th.}\\
+For random variables $X$ and $Y$ which are jointly distributed, the following hold true:
+\begin{itemize}
+    \item $E[(X-a)^{2}] \geq E[(X-EX)^{2}]$,
+    \item $E[(Y-g(X))^{2}] \geq E[(Y-E[Y|X])^{2}]$.
+\end{itemize}
+The best predictor of $Y$ using $X$ is $E[Y|X]$.
+
+\begin{example}
+    Suppose $X$ is a continuous random variable that we wish to discretize. We first fix an increasing set of numbers $\ldots < a_{-2} < a_{-1} < a_{0} < a_{1} < a_{2} < \ldots$ such that $\lim_{i \to \infty} a_{i} = \infty$ and $\lim_{i \to -\infty} a_{i} = -\infty$. Let $Y$ be a random variable taking the value $y_{i}$ when $a_{i} < X \leq a_{i+1}$. We wish to choose $y_{i}$ that minimizes $E[(X-Y)^{2}]$. For these optimal $y_{i}$'s one can also show that $EY = EX$ and $\Var Y = \Var X - E[(X-Y)^{2}]$.
+
+    Start with
+    \begin{align}
+        E[(X-Y)^{2}] &= \sum_{i} E[(X-Y)^{2} | a_{i} < X \leq a_{i+1}] P(a_{i} < X \leq a_{i+1}) \\
+        &= \sum_{i} E[(X-y_{i})^{2} | a_{i} < X \leq a_{i+1}] P(a_{i} < X \leq a_{i+1}) \notag.
+    \end{align}
+    It is enough to minimize $E[(X-y_{i})^{2}|a_{i} < X \leq a_{i+1}]$. $y_{i}$ is then computed to be
+    \begin{align}
+        y_{i} = E[X|a_{i} < X \leq a_{i+1}] = \frac{E[X \cdot 1_{\{a_{i} < X \leq a_{i+1}\}}]}{P(a_{i} < X \leq a_{i+1})} = \frac{\int_{a_{i}}^{a_{i+1}} x f_{X}(x) dx}{\int_{a_{i}}^{a_{i+1}} f_{X}(x) dx}.
+    \end{align}
+    To show that the expectations of $Y$ and $X$ are equal, we have
+    \begin{align}
+        EY &= \sum_{i} y_{i} P(Y = y_{i}) = \sum_{i} E[X|a_{i} < X \leq a_{i+1}] P(a_{i} < X \leq a_{i+1}) = EX.
+    \end{align}
+    Define a random variable $I$ to be $I = i$ if $a_{i} < X \leq a_{i+1}$. Then
+    \begin{align}
+        \Var X = \Var(E[X|I]) + E[\Var (X|I)]
+    \end{align}
+    can be used. We can compute $E[X|I]$ as $y_{I} = Y$ and $\Var(X|I)$ as $E[(X-Y)^{2}|I]$. Thus, the variance equality follows.
+\end{example}
+
+\chapter{CONVERGENCE OF RANDOM VARIABLES}
+
+\section{Types of Convergence}
+We being with a probability space $(\Omega, P)$, and define a sequence of random variables $X_{n}:\Omega \to \R$ for $n \geq 1$ and also have another $X:\Omega \to \R$.
+
+\begin{definition}
+    We first discuss the notion of \eax{almost sure convergence}. A sequence of random variables $X_{n}$ converges almost surely to $X$, that is, $X_{n} \toup{\text{a.s.}} X$ if
+    \begin{align*}
+        P(\{\omega: X_{n}(\omega) \to X(\omega)\}) = 1.
+    \end{align*}
+\end{definition}
+
+\begin{example}
+    Suppose that $(\Omega,P) = ([0,1],\text{Unif})$. Suppose that $q_{n}$ is an enumeration of the rationals in $[0,1]$. We define $X(\omega) = 1$ and $X_{n}(\omega) = 1$ if $\omega \in [0,1]\backslash\{q_{n}\}$ and $0$ otherwise. We find that
+    \begin{align}
+        A = \{\omega: X_{n}(\omega) \to X(\omega)\} = [0,1]
+    \end{align}
+    since for any rational $\omega$, further enough terms lead to $X_{n}(\omega) = 1$ and for any irrational $\omega$, we always have $X_{n}(\omega) = 1$. Thus, $P(A) = 1$.
+\end{example}
+\begin{example}
+    As a continuation to the previous example, if we define the sequence of random variables as
+    \begin{align}
+        X_{n}(\omega) = \begin{cases}
+            0 \text{ if } \omega \in \{q_{1},\ldots,q_{n}\},\\
+            1 \text{ if otherwise},
+        \end{cases}
+    \end{align}
+    we find that $\{\omega : X_{n}(\omega) \to X(\omega)\} = [0,1]\setminus \mathbb{Q}$. The sequence converges to 0 for rational $\omega$. But, in our probability space, $P([0,1]\setminus \mathbb{Q}) = 1$.
+\end{example}
+
+\begin{example}
+    If we define the sequence of random variables as $X_{n} = n 1_{[0,\frac{1}{n}]}$, we find that $X_{n} \toup{\text{a.s.}} 0$. However, $EX_{n} = 1$ and $E[0] = 0$. The expectation is not preserved in almost sure convergence
+\end{example}
+
+\begin{definition}
+    We discuss the notion of \eax{convergence in probability}. We say that a sequence of random variables $X_{n}$ converges in probability to $X$, that is, $X_{n} \toup{p} X$ if for every $\varepsilon > 0$,
+    \begin{align*}
+        P(\abs{X_{n}-X} > \varepsilon) \to 0.
+    \end{align*}
+\end{definition}
+
+To show that a sequence of random variables $X_{n}$ converges in probability to $X$, it is enough to show that $P(\abs{X_{n}-X} > \frac{1}{k}) \to 0$ for all $k \geq 1$.
+
+\begin{theorem}
+    $X_{n} \toup{\text{a.s.}} X$ implies $X_{n} \toup{p} X$.
+\end{theorem}
+\begin{proof}
+    We have
+    \begin{align}
+        \{\omega:X_{n}(\omega) \to X(\omega)\} &= \{\omega: \text{ for all } k \geq 1, \exists N \text{ such that for all } n \geq N, \abs{X_{n}(\omega)-X(\omega)} \leq \frac{1}{k}\} \notag\\
+        &= \bigcap_{k \geq 1} \bigcup_{N} \bigcap_{n \geq N} \{\abs{X_{n}-X} \leq \frac{1}{k}\}.
+    \end{align}
+    The probability of this set is 1 due to almost sure convergence. Since the intersection of these events has a probability of 1, each inside event must also have a probability of 1; thus,
+    \begin{align}
+        P(\bigcup_{N} \bigcap_{n \geq N} \{\abs{X_{n}-X} \leq \frac{1}{k}\}) &= 1.
+    \end{align}
+    We note that $\bigcap_{n \geq N} \{\abs{X_{n}-X} \leq \frac{1}{k}\}$ are events increasing in $N$. Therefore,
+    \begin{align}
+        P(\bigcap_{n \geq N} \{\abs{X_{n}-X} \leq \frac{1}{k}\}) \to 1 \implies P(\abs{X_{n}-X} \leq \frac{1}{k}) \to 1.
+    \end{align}
+\end{proof}
+However, the converse is not true.
+
 
 
 \begin{appendices}
