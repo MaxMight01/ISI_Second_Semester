@@ -1379,6 +1379,8 @@ For $A \in M_{n}(\C)$, $\lambda$ is an eigenvalue of $A$ if and only if $i\lambd
     Let $A \in M_{n}(\C)$. $A$ is Hermitian if and only if $\ip{AX,Y} = \ip{X,AY}$ for all $X,Y \in \C^{n}$. $A$ is Hermitian if and only if $\ip{AX,X} = \ip{X,AX}$ for all $X \in \C^{n}$.
 \end{example}
 
+
+\textit{March 18th.}
 \begin{theorem}
     The following are equivalent for $A \in M_{n}(\C)$.
     \begin{itemize}
@@ -1393,7 +1395,34 @@ For $A \in M_{n}(\C)$, $\lambda$ is an eigenvalue of $A$ if and only if $i\lambd
     \begin{align}
         UT^{2}U^{\ast} = A^{2} = A^{\ast}A = UT^{\ast}U^{\ast}UTU^{\ast} = UT^{\ast}TU^{\ast} \implies T^{2} = T^{\ast}T.
     \end{align}
-    Comparing the diagonal entries, we get $\lambda_{j}^{2} = \abs{\lambda_{j}}^{2} + \sum_{i < j} \abs{t_{ij}}^{2}$ which shows that the $\lambda_{i}$'s are real, which again shows that $t_{ij} = 0$ for all $i < j$. Thus, $T$ is diagonal, and $A^{\ast} = A$.
+    Comparing the diagonal entries, we get $\lambda_{j}^{2} = \abs{\lambda_{j}}^{2} + \sum_{i < j} \abs{t_{ij}}^{2}$ which shows that the $\lambda_{i}$'s are real, which again shows that $t_{ij} = 0$ for all $i < j$. Thus, $T$ is diagonal, and $A^{\ast} = A$. Again, (i) implies (iv) is trivial, and (iv) implies (i) is left as an exercise.
+\end{proof}
+
+\begin{theorem}
+    Let $A \in M_{n}(\C)$ have all eigenvalues of modulus 1. Then $A$ is unitary if, for all $X \in C^{n}$, $\norm{AX} \leq \norm{X}$.
+\end{theorem}
+\begin{proof}
+    Let $A = U^{\ast}DU$ be a Schur decomposition, where $U$ is unitary and $D$ is upper triangular. Let $\lambda_{i}$'s on the diagonal be the eigenvalues and the upper triangular entries be $d_{ij}$. Here, $\abs{\lambda_{i}} = 1$ for all $1 \leq i \leq n$ and $d_{ij} \in \C$. We have
+    \begin{align}
+        \norm{Ax}^{2} = (Ax)^{\ast}Ax = x^{\ast}A^{\ast}Ax = x^{\ast}U^{\ast}D^{\ast}DUx = (Ux)^{\ast}(D^{\ast}D)Ux.
+    \end{align}
+    We let this $Ux = e_{2}$ so that $\norm{AU^{\ast}e_{2}} \leq \norm{U^{\ast}e_{2}} = \norm{e_{2}} = 1$ which must mean that $d_{12} = 0$ as $\abs{\lambda_{2}} = 1$. Similarly, we can show that all non-diagonal entries are zero and $D$ is diagonal and Hermitian. We then have
+    \begin{align}
+        AA^{\ast} = U^{\ast}DUU^{\ast}D^{\ast}U = I_{n}.
+    \end{align}
+    $A$ is Hermitian.
+\end{proof}
+
+\begin{theorem}
+    Let $A \in M_{n}(\C)$. $A$ is positive semidefinite if and only if there exists a unitary $U$ such that $A = U^{\ast} \emph{\text{diag}}(\lambda_{1},\ldots,\lambda_{n})U$ where the $\lambda_{i}$'s are non-negative.
+\end{theorem}
+\begin{proof}
+    The first part is left as an exercise. For the converse, if $u_{1},\ldots,u_{n}$ denote the columns of $U$, these column vectors form an orthogonal set of basis vectors in $\C^{n}$. It can be shown that these $u_{i}$'s are also the eigenvectors of $A$. Letting $X = \alpha_{1}u_{1} + \ldots + \alpha_{n}u_{n}$, we have
+    \begin{align}
+        AX &= \alpha_{1}Au_{1} + \ldots + \alpha_{n}Au_{n} = \alpha_{1}\lambda_{1}u_{1} + \ldots + \alpha_{n}\lambda_{n}u_{n} \notag \\
+        \implies X^{\ast}AX &= \lambda_{1}\abs{\alpha_{1}}^{2} \norm{u_{1}}^{2} + \ldots + \lambda_{n}\abs{\alpha_{n}}^{2}\norm{u_{n}}^{2} = \lambda_{1}\abs{\alpha_{1}}^{2} + \ldots + \lambda_{n}\abs{\alpha_{n}}^{2} \geq 0.
+    \end{align}
+    Similarly, we can show that $A$ is positive definite if and only if the $\lambda_{i}$'s are positive.
 \end{proof}
 
 
