@@ -1425,6 +1425,62 @@ For $A \in M_{n}(\C)$, $\lambda$ is an eigenvalue of $A$ if and only if $i\lambd
     Similarly, we can show that $A$ is positive definite if and only if the $\lambda_{i}$'s are positive.
 \end{proof}
 
+\subsection{Singular Value Decomposition}
+\begin{definition}
+    The \eax{singular values of a matrix} $A$ are the positive square roots of the non-zero eigenvalues of $A^{\ast}A$. We note that $A^{\ast}A$ is Hermitian, so it has real eigenvalues; $A^{\ast}A$ is also positive semidefinite, so the eigenvalues are also non-negative.
+\end{definition}
+
+\begin{theorem}
+    Let $A$ be a $m \times n$ matrix, with singular values $\sigma_{1},\sigma_{2},\ldots,\sigma_{n}$. Then there exist unitary $U \in M_{m}(\C)$ and $V \in M_{n}(\C)$ such that $A = U_{m \times m} \begin{pmatrix}
+        D_{r \times r} & O \\ O & O
+    \end{pmatrix} V_{n \times n}$ where $D = \emph{\text{diag}}(\sigma_{1},\sigma_{2},\ldots,\sigma_{r})$.
+\end{theorem}
+\begin{proof}
+    If $A$ is $1 \times 1$, say $A = c$, then $A^{\ast}A = \abs{c}^{2}$. The only singular value of $A$ is $\abs{c}$. Then $A = \abs{c}e^{i\theta}$ for some real $\theta$.
+
+    Let $A$ be a non-zero column matrix, $A = \begin{pmatrix}
+        a_{1} & a_{2} & \ldots & a_{n}
+    \end{pmatrix}^{t}$. Here, $A^{\ast}A = \abs{a_{1}}^{2} + \abs{a_{2}}^{2} + \ldots + \abs{a_{n}}^{2} = \norm{A}^{2}$. The only singular value is, thus, $\norm{A}$. Let $U$ be a unitary matrix with first column as the unit vector $\begin{pmatrix}
+        \frac{a_{1}}{\sigma_{1}} & \cdots & \frac{a_{n}}{\sigma_{1}}
+    \end{pmatrix}^{t}$ and let $V$ be unity. We then have $A = UD$, where $D = \begin{pmatrix}
+        \sigma_{1} & \cdots & 0
+    \end{pmatrix}^{t}$. Similarly, we can show this to be true for a row matrix $A$.
+
+    Assume that $n >1, m>1$, and $A \neq 0$. Let $v_{1}$ be an eigenvector of $A^{\ast}A$ associated to $\sigma_{1}^{2}$, that is, $(A^{\ast}A)v_{1} = \sigma_{1}^{2}v_{1}$ with $v_{1}^{\ast}v_{1} = 1$. Let $u_{1} = \sigma_{1}^{-1}Av_{1}$. Note that $\ip{u_{1},u_{1}} = 1$. Let $P$ and $Q$ be unitary matrices with $v_{1}$ and $u_{1}$ as the first columns. As $A^{\ast}u_{1} = \sigma_{1}v_{1}$ and $(Av_{1})^{\ast} = \sigma_{1}u_{1}^{\ast}$, we get $P_{m \times m}^{\ast} A_{m \times n}^{\ast} Q_{n \times n} = \begin{pmatrix}
+        \sigma_{1} & O \\ O & B_{(n-1) \times (n-1)}
+    \end{pmatrix}$. We induct on $B$ to complete the proof. We have $A = Q \begin{pmatrix}
+        \sigma_{1} & O \\ O & B^{\ast}
+    \end{pmatrix} P^{\ast} \implies A^{\ast}A = P \begin{pmatrix}
+        \sigma_{1}^{2} & O \\ O & BB^{\ast}
+    \end{pmatrix} P^{\ast}$. This shows that the remaining singular values of $A$ are the same as the singular values of $B$.
+\end{proof}
+
+
+\chapter{QUADRATIC FORMS}
+
+\begin{definition}
+    A \eax{quadratic form} in $n$ variables $x_{1},x_{2},\ldots,x_{n}$ is an expression of the form
+    \begin{align*}
+        q(x_{1},x_{2},\ldots,x_{n}) = \sum_{i=1}^{n} \alpha_{i}x_{i}^{2} + \sum_{1 \leq i < j \leq n} \beta_{ij}x_{i}x_{j}
+    \end{align*}
+    where $\alpha_{i},\beta_{ij} \in \R$. Everything discussed here may be interpreted in $\C$, but we stick to $\R$ for the duration of this chapter.
+\end{definition}
+For one variable $x_{1}$, the quadratic form is simply $q(x_{1}) = \alpha_{1}x_{1}^{2}$. For two variables, we have $q(x_{1},x_{2}) = \alpha_{1}x_{1}^{2} + \alpha_{2}x_{2}^{2} + \beta_{12}x_{1}x_{2}$. An $n$-quadratic form gives rise to a matrix $A = (\alpha_{ij})$ where the entries are given as
+\begin{align}
+    a_{ij} = \begin{cases}
+        \alpha_{i} &\text{ if } i = j,\\
+        \frac{1}{2} \beta_{ij} &\text{ if } i < j,\\
+        \frac{1}{2} \beta_{ji} &\text{ if } i > j.
+    \end{cases}
+\end{align}
+We note that $A$ is symmetric matrix. Conversely, if $A$ is a symmetric matrix, we can extract a quadratic form $q$ by defining
+\begin{align}
+    q(x_{1},x_{2},\ldots,x_{n}) = X^{t}AX \text{ where } X = \begin{pmatrix}
+        x_{1} & x_{2} & \vdots & x_{n}
+    \end{pmatrix}.
+\end{align}
+Here, the coefficients are then given as $\alpha_{i} = a_{ii}$ and $\beta_{ij} = 2a_{ij}$ for $i < j$.
+
 
 \begin{appendices}
 
