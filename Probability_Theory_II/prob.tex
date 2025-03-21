@@ -1584,8 +1584,99 @@ To show that a sequence of random variables $X_{n}$ converges in probability to 
         P(\bigcap_{n \geq N} \{\abs{X_{n}-X} \leq \frac{1}{k}\}) \to 1 \implies P(\abs{X_{n}-X} \leq \frac{1}{k}) \to 1.
     \end{align}
 \end{proof}
-However, the converse is not true.
+However, the converse is not true.\\
+\textit{March 21st.}
 
+\begin{theorem}
+    Let $X_{1},X_{2},\ldots$ be a sequence of random variables. If $EX_{n} \to c$ and $\emph{\text{Var}}(X_{n}) \to 0$, then $X_{n} \toup{p}  c$.
+\end{theorem}
+
+\begin{proof}
+    We have
+    \begin{align}
+        P(\abs{X_{n}-c} > \varepsilon) &= P(\abs{X_{n}-EX_{n}+EX_{n}-c} > \varepsilon) \leq P(\abs{X_{n}-EX_{n}} + \abs{EX_{n}-c} > \varepsilon).
+    \end{align}
+    Choose a natural $N$ such that $\abs{EX_{n}-c} < \frac{\varepsilon}{2}$, which gives us
+    \begin{align}
+        P(\abs{X_{n}-c} > \varepsilon) &\leq P(\abs{X_{n}-EX_{n}} > \frac{\varepsilon}{2}) \leq \frac{E[\abs{X_{n}-EX_{n}}^{2}]}{\varepsilon^{2}/4} = \Var X_{n} \frac{4}{\varepsilon^{2}} \to 0.
+    \end{align}
+\end{proof}
+A consequence of this is the weak law of large numbers.
+\begin{corollary}
+    Let $X_{1},X_{2},\ldots$ be independent and identically distributed random variables, with $EX_{1} = \mu$ and $\emph{\text{Var}}X_{1} = \sigma^{2} < \infty$. Let $\overline{X}_{n} = \frac{X_{1}+X_{2}+\ldots+X_{n}}{n}$. Then $\overline{X}_{n} \toup{p} \mu$.
+\end{corollary}
+\begin{proof}
+    We note that $E\overline{X}_{n} = \mu$ and $\Var \overline{X}_{n} = \frac{1}{n} \sigma^{2}$. The above theorem proves the law.
+\end{proof}
+
+\begin{example}
+    We put $n$ balls randomly into $n$ boxes. Here, let $X_{n}$ denote the number of empty boxes. We are interested in $Y_{n} = \frac{X_{n}}{n}$, the proportion of empty boxes. We claim that $Y_{n}$ converges to $e^{-1}$. To compute the mean, we write $EX_{n} = E(\sum_{i=1}^{n} 1_{A_{i}})$, where $A_{i}$ is the event that the $i^{\text{th}}$ box is empty. Thus, this is $EX_{n} = \sum_{i=1}^{n} \frac{(n-1)^{n}}{n^{n}} = n(1-\frac{1}{n})^{n} \implies EY_{n} = (1-\frac{1}{n})^{n} \to \frac{1}{e}$.
+
+    For the variance, $\Var X_{n} = \sum_{i,j=1}^{n} \text{Cov} (1_{A_{i}},1_{A_{j}})$. For $i = j$, this is
+    \begin{align}
+        \text{Cov}(1_{A_{i}},1_{A_{j}}) = E[1_{A_{i}}] - (E[1_{A_{i}}])^{2} = P(A_{i})(1-P(A_{i})) = \frac{(n-1)^{n}}{n^{n}}\left( 1- \frac{(n-1)^{n}}{n^{n}} \right).
+    \end{align}
+    For $i \neq j$, we have
+    \begin{align}
+        \text{Cov}(1_{A_{i}},1_{A_{j}}) = E[1_{A_{i}}1_{A_{j}}] - P(A_{i})P(A_{j}) = \left( \frac{n-2}{n} \right)^{n} - \left( \frac{n-1}{n} \right)^{2n}.
+    \end{align}
+    Thus, the final variance is calculated as
+    \begin{align}
+        \Var X_{n} &= n \left( \frac{n-1}{n} \right)^{n} \left( 1- \left( \frac{n-1}{n} \right)^{n} \right) + n(n-1) \left( \left( \frac{n-2}{n} \right)^{n} - \left( \frac{n-1}{2n} \right)^{n} \right) \\
+        \implies \Var Y_{n} &= \frac{1}{n^{2}} \Var X_{n} \to 0.
+    \end{align}
+    Thus, $Y_{n} \toup{p} e^{-1}$.
+\end{example}
+
+\begin{example}
+    We toss a $p$-coin, and look at $X_{n}$, the number of head runs in $n$ tosses. We claim that $Y_{n} = \frac{1}{n} X_{n} \toup{p} p(1-p)$. We rewrite $X_{n}$ as $X_{n} = \sum_{i=1}^{n} 1_{A_{i}}$ where $A_{i}$ is the event that a head run starts at position $i$. We have
+    \begin{align}
+        EX_{n} = \sum_{i=1}^{n} P(A_{i}) = P(A_{1}) + \sum_{i=2}^{n} P(A_{i}) = p + (n-1)(1-p)p \implies EY_{n} \to p(1-p).
+    \end{align}
+    For the variance,
+    \begin{align}
+        \Var X_{n} = \sum_{i,j=1}^{n} \text{Cov}(1_{A_{i}},1_{A_{j}}) = \sum_{i=1}^{n} \Var 1_{A_{i}} + 2 \sum_{i < j} \text{Cov}(1_{A_{i}},1_{A_{j}}).
+    \end{align}
+    The variance of a single indicator, $\Var 1_{A_{i}}$ is $p-p^{2}$ if $i = 1$, and $(1-p)p - ((1-p)p)^{2}$ if $i > 1$. For the covariance, if $\abs{i-j} \geq 2$, the events $A_{i}$ and $A_{j}$ are clearly independent, so $\Cov(1_{A_{i}},1_{A_{j}}) = 0$.
+    \begin{align}
+        \Var Y_{n} &= \frac{1}{n^{2}} \Var X_{n} = \frac{1}{n^{2}}(p-p^{2} + (n-1)((1-p)p - (1-p)^{2}p^{2})) + \frac{1}{n^{2}}(\cdots) \to 0.
+    \end{align}
+\end{example}
+
+\begin{example}
+    We revisit the coupon collector problem; there are $n$ types of coupons, and each purchase results in one of the $n$ types with equal probability. $T_{n}$ denotes the number of purchases to get $n$ types. The claim is that $\frac{1}{n \log n} T_{n} \toup{p} 1$.
+
+    Clearly, $T_{1} = 1$, $T_{2} -T_{1} \sim \text{Geom}(\frac{n-1}{n})$, $T_{3}-T_{2} \sim \text{Geom}(\frac{n-2}{n})$, etc. These are all independent quantities, and the expectation of a geometric distribution if $\frac{1}{p}$. Thus,
+    \begin{align}
+        T_{n} &= T_{1} + (T_{2}-T_{1}) + \ldots + (T_{n}-T_{n-1}) \\
+        \implies ET_{n} &= n \left( 1+\frac{1}{2} + \ldots + \frac{1}{n} \right) \notag \implies \frac{1}{n \log n} ET_{n} = \frac{1 + \frac{1}{2} + \ldots + \frac{1}{n}}{\log n} \to 1.
+    \end{align}
+    and the variance is
+    \begin{align}
+        \frac{1}{n^{2} (\log n)^{2}}\Var T_{n} = \frac{1}{(n\log n)^{2}} n \sum_{i=1}^{n} \frac{(i-1)}{(n-(i-1))^{2}} \leq \frac{1}{n^{2} (\log n)^{2}} n^{2} \sum_{i=1}^{n} \frac{1}{i^{2}} \to 0.
+    \end{align}
+\end{example}
+
+
+\begin{theorem}[The \eax{strong law of large numbers}]
+    Let $X_{1},X_{2},\ldots$ be independent and identicaly distributed random variables with $EX_{1} = \mu \in (-\infty,\infty)$. Let $\overline{X}_{n} = \frac{1}{n}(X_{1}+X_{2}+\ldots+X{n})$. Then $\overline{X}_{n} \toup{\emph{\text{a.s.}}} \mu$.
+\end{theorem}
+
+\begin{proof}
+    We prove this assuming that $K = EX_{1}^{4} < \infty$. Without the loss of generality, let $\mu = 0$. Denote $S_{n} = \sum_{i=1}^{n} X_{i}$. The terms inside $ES_{n}^{4}$ are any one of the form $X_{i}^{4},X_{i}^{3}X_{j},X_{i}^{2}X_{j}^{2},X_{i}^{2}X_{j}X_{k},X_{i}X_{j}X_{k}X_{l}$, where $i,j,k,l$ are distinct. We have assumed that $\mu = 0$, so
+    \begin{align}
+        E[X_{i}^{3}X_{j}] = E[X_{i}^{3}]EX_{j} = 0,\; E[X_{i}^{2}X_{j}X_{k}] = E[X_{i}^{2}]EX_{j}EX_{k} = 0,\; E[X_{i}X_{j}X_{k}X_{l}] = 0.
+    \end{align}
+    Thus, the only remaining terms are
+    \begin{align}
+        ES_{n}^{4} &= nEX_{1}^{4} + \binom{n}{2} \binom{4}{2} (EX_{1}^{2})^{2} \notag \\
+        \implies E\overline{X}_{n}^{4} &\leq \frac{1}{n^{3}}EX_{1}^{4} + \frac{3}{n^{2}}(EX_{1}^{2})^{2} \implies \sum_{n=1}^{\infty} E\overline{X}_{n}^{4} = \sum_{n=1}^{\infty} \frac{1}{n^{3}} EX_{1}^{4} + \frac{3}{n^{2}}(EX_{1}^{2})^{2} < \infty.
+    \end{align}
+    The expectation of the infinite sum is finite, which means
+    \begin{align}
+        E\left( \sum_{n=1}^{\infty} \overline{X}_{n}^{4} \right) < \infty \implies P\left( \sum_{n=1}^{\infty} \overline{X}_{n}^{4} < \infty \right) = 1 \implies P(\overline{X}_{n} \to 0) = 1.
+    \end{align}
+\end{proof}
 
 
 \begin{appendices}
