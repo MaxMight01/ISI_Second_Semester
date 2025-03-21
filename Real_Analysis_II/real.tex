@@ -45,6 +45,8 @@
 \newcommand{\cI}{\mathcal{I}}
 \newcommand{\cD}{\mathcal{D}}
 \newcommand{\cF}{\mathcal{F}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\cO}{\mathcal{O}}
 \newcommand{\osc}{\text{osc}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
@@ -1963,6 +1965,100 @@ By this definition, a power series is real-analytic. However, the converse may n
     \end{cases}
 \end{align}
 Here, $f^{(n)}(0) = 0$ for all $n$ implies that $f$ is not analytic.
+
+\subsection{Analytic Functions}
+\textit{March 21st.}
+
+A better definition is this; a function $f:(a,b) \to \R$ (or $\Theta$, an open set as the domain) is analytic at point $c \in (a,b)$ if $f(x) = \sum_{n=0}^{\infty} a_{n}(x-c)^{n}$ for all $x \in (c-\delta,c+\delta)$ for some $\delta > 0$. A function $f:\Theta \to \R$ is said to be analytic if it is analytic at $c$ for all $c \in \Theta$. $f$ being analytic implies that $f$ is smooth.
+
+\begin{example}
+    The function $f(x) = \frac{1}{1-x}$ is analytic at $\R \setminus \{1\}$. Let $c \neq 1$. Then
+    \begin{align}
+        f(x) = \frac{1}{1-x} = \frac{1}{1-\frac{x-c}{1-c}} \cdot \frac{1}{1-c} = \sum_{n=0}^{\infty} \frac{1}{(1-c)^{n+1}}(x-c)^{n} \text{ if } \abs{x-c} < \abs{1-c},
+    \end{align}
+    that is, $f$ admits a power series on $(c-\abs{1-c},c+\abs{1-c})$.
+\end{example}
+
+\begin{definition}
+    Given $f:\Theta \to \R$, we define $\cZ(f) = \{x \in \Theta : f(x) = 0\}$.
+\end{definition}
+If $p \in \R[x]$, we know that $\# \cZ(p) < \infty$. We question whether $\cZ(\text{power series})$ is finite, countably infinite, or uncountably.
+\begin{remark}
+    If $f:(a,b) \to \R$ is analytic, then it is continuous on $(a,b)$. This continuity forces $f^{-1}(\{0\}) = \cZ(f)$ to be closed.
+\end{remark}
+
+\begin{theorem}
+    Let $f:(a,b) \to \R$ be analytic and non-zero. Then $\cZ(f)$ is a set of isolated points of $(a,b)$, which is equivalent to saying $\cZ(f)$ cannot have limit points in $(a,b)$.
+\end{theorem}
+\begin{proof}
+    Let $\cO = \{x \in (a,b) : f^{(n)}(x) = 0 \text{ for all } n = 0,1,\ldots\}$. We claim that $\cO$ is both open and closed in $(a,b)$. Pick $c \in \cO$; then $f^{(n)}(c) = 0$ for all $n$ and $f \equiv 0$ in a neighbourhood of $c$. This implies that $c$ is an interior point of $\cO$ and that $\cO$ is open. We now show that the complement, $(a,b)\setminus\cO$ is also open. Let $c \in (a,b)\setminus\cO$. There then exists a natural $n$ such that $f^{(n)}(c) \neq 0$. But $f^{(n)}:(a,b) \to \R$ is an analytic function; it is a continuous function so $f^{n}(c)$ is non-zero in a neighbourhood of $c$. This shows that $(a,b)\setminus \cO$ is open. But $f$ is non-zero, so we must have $\cO = \emptyset$.
+    
+    If $c \in \cZ(f)$, then $f(x) = (x-c)^{n} \times (a_{n}+a_{n+1}(x-c) + \ldots)$ in a neigbourhood of $c$, with $a_{n} \neq 0$. This shows that $f(x) = (x-c)^{n}g(x)$ where $g$ is analytic and $g(c) \neq 0$. $g$ does not have a zero in a neighbourhood of $c$. This implies that $f$ does not vanish in this neighbourhood except at $x = c$. This shows that $c$ is an isolated point of $\cZ(f)$.
+\end{proof}
+
+\begin{theorem}[\eax{Abel's theorem}]
+    Let the series $\sum_{n=0}^{\infty} a_{n}$ is convergent. Then the series $\sum_{n=0}^{\infty} a_{n}x^{n}$ is uniformly convergent on $[0,1]$.
+\end{theorem}
+\begin{proof}
+    Let $f_{n}(x) = a_{n}$ for all $n \in N$ and $x \in [0,1]$. Certainly, $\sum f_{n}(x)$ is uniformly convergent on $[0,1]$. Now let $g_{n}(x) = x^{n}$ for all $x \in [0,1]$. This sequence of functions $\{g_{n}\}$ is decreasing. Therefore, by Abel's test, $\sum f_{n}(x) g_{n}(x)$ is uniformly convergent on $[0,1]$.
+\end{proof}
+
+\begin{corollary}
+    If $\sum_{n=0}^{\infty} a_{n}$ converges, then $\lim_{x \to 1^{-}}(\sum a_{n}x^{n}) = \sum_{n=0}^{\infty} a_{n}$.
+\end{corollary}
+\begin{proof}
+    Note that $\sum_{n=0}^{\infty} a_{n}x^{n} = \lim_{n \to \infty} S_{n}(x)$. This is uniform on $[0,1]$. Then,
+    \begin{align}
+        \lim_{x \to 1^{-}} (\sum a_{n}x^{n}) = \lim_{x \to 1^{-}} \lim_{n \to \infty} S_{n}(x) = \lim_{n \to \infty} \lim_{x \to 1^{-}} S_{n}(x) = \sum a_{n}.
+    \end{align}
+\end{proof}
+
+\begin{example}
+    Recall that $\frac{1}{1+x} = \sum_{n=0}^{\infty} (-1)^{n} x^{n}$ for $\abs{x} < 1$. From here, $\log (1+x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}x^{n+1}}{n+1}$ for all $x \in (-1,1)$. By Abel's theorem, $\log 2 = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \ldots$
+\end{example}
+
+\chapter{DOUBLE SEQUENCES}
+A double sequence is simply $f:\N \times \N \to \R$ with $f(m,n) = a_{m,n}$. The sequence $\{a_{m,n}\}$ to termed a double sequence. We ask if the $m$- and $n$- limits commute; whether $\lim_{m \to \infty} \lim_{n \to \infty} a_{m,n} = \lim_{n \to \infty} \lim_{m \to \infty} a_{m,n}$.
+
+\begin{example}
+    Choose the double sequence defined as $a_{m,n} = \frac{n}{m+n}$. Here, $\lim_{n \to \infty} a_{m,n} = 1$ and $\lim_{m \to \infty} a_{m,n} = 0$. The commuting of the limits is not true even at the basic level.
+\end{example}
+
+\section{Notion of Convergence}
+
+\begin{definition}
+    We say that a double sequence $\{a_{m,n}\}$ converges to a real $a \in \R$ if for every $\varepsilon > 0$, there exists a natural $N$ such that
+    \begin{align*}
+        \abs{a_{m,n} - a} < \varepsilon \text{ for all } m,n \geq N.
+    \end{align*}
+\end{definition}
+
+\begin{example}
+    We have $a_{m,n} = (-1)^{m+n} \left( \frac{1}{m}+\frac{1}{n} \right)$. Then $a_{m,n} \to 0$ as $m,n \to \infty$. But for all $m$, $\{a_{m,n}\}$ does not converge and for all $n$, $\{a_{m,n}\}$ doest not converge.
+\end{example}
+
+\begin{theorem}
+    Let the double sequence $a_{m,n} \to a$ as $m,n \to \infty$. If $\lim_{n \to \infty} a_{m,n}$ exists for all $m$, then $\lim_{n \to \infty} \lim_{m \to \infty} a_{m,n} = 0$.
+\end{theorem}
+\begin{proof}
+    Define $\alpha_{m} = \lim_{n \to \infty} a_{m,n}$. We want to show that $\alpha_{m} \to a$. For every $\varepsilon > 0$, there exists a natural $N$ such that $\abs{a_{m,n} - a} < \frac{\varepsilon}{2}$ for all $m,n \geq N$. Also, for all $m$, there exists a natural $N(m)$ such that $\abs{a_{m,n} - \alpha_{m}} < \frac{\varepsilon}{2}$ for all $n \geq N(m)$. For all $m \geq N$, choose $n \geq N(m)$ so that
+    \begin{align}
+        \abs{\alpha_{m}-a} \leq \abs{\alpha_{m}-a_{m,n}} + \abs{a_{m,n} - a} < \varepsilon.
+    \end{align}
+\end{proof}
+
+\begin{theorem}[\eax{Cauchy Stolz criterion}]
+    The double sequence $\{a_{m,n}\}$ converges if and only if for every $\varepsilon > 0$, there exists a natural $N$ such that
+    \begin{align*}
+        \abs{a_{m,n}-a_{p,q}} < \varepsilon \text{ for all } m,n \geq p,q \geq N.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    We only prove the converse. Let $\alpha_{n} = a_{n,n}$. for all $n$. The condition implies that $\{\alpha_{n}\}$ is Cauchy, that is, $\abs{\alpha_{n}-\alpha_{p}} < \frac{\varepsilon}{2}$ for all $n,p \geq N$. Thus, $\alpha_{m} \to a$ and there exists a natural $N_{0}$ such that $\abs{\alpha_{n}-a} < \frac{\varepsilon}{2}$ for all $n \geq N_{0}$. Therefore, for all $m,n \geq \max \{N_{0},N\}$, we have
+    \begin{align*}
+        \abs{a_{m,n}-a} \leq \abs{a_{m,n}-a_{n,n}} + \abs{a_{n,n}-a} < \varepsilon.
+    \end{align*}
+\end{proof}
 
 
 \begin{appendices}
