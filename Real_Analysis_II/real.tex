@@ -2017,14 +2017,16 @@ If $p \in \R[x]$, we know that $\# \cZ(p) < \infty$. We question whether $\cZ(\t
     Recall that $\frac{1}{1+x} = \sum_{n=0}^{\infty} (-1)^{n} x^{n}$ for $\abs{x} < 1$. From here, $\log (1+x) = \sum_{n=0}^{\infty} \frac{(-1)^{n}x^{n+1}}{n+1}$ for all $x \in (-1,1)$. By Abel's theorem, $\log 2 = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \ldots$
 \end{example}
 
-\chapter{DOUBLE SEQUENCES}
+
+\chapter{MISCELLANEOUS RESULTS}
+\section{DOUBLE SEQUENCES \& SERIES}
 A double sequence is simply $f:\N \times \N \to \R$ with $f(m,n) = a_{m,n}$. The sequence $\{a_{m,n}\}$ to termed a double sequence. We ask if the $m$- and $n$- limits commute; whether $\lim_{m \to \infty} \lim_{n \to \infty} a_{m,n} = \lim_{n \to \infty} \lim_{m \to \infty} a_{m,n}$.
 
 \begin{example}
     Choose the double sequence defined as $a_{m,n} = \frac{n}{m+n}$. Here, $\lim_{n \to \infty} a_{m,n} = 1$ and $\lim_{m \to \infty} a_{m,n} = 0$. The commuting of the limits is not true even at the basic level.
 \end{example}
 
-\section{Notion of Convergence}
+\subsection{Double Sequences}
 
 \begin{definition}
     We say that a double sequence $\{a_{m,n}\}$ converges to a real $a \in \R$ if for every $\varepsilon > 0$, there exists a natural $N$ such that
@@ -2060,20 +2062,120 @@ A double sequence is simply $f:\N \times \N \to \R$ with $f(m,n) = a_{m,n}$. The
     \end{align*}
 \end{proof}
 
+\subsection{Double Series}
 
-\begin{appendices}
+\textit{March 24th.}
 
-\titleformat{\chapter}[display]
-  {\normalfont\Large\bfseries}
-  {\chaptername\ \thechapter}{20pt}{\Huge}
+Partial sums for double series are defined as $S_{m,n} = \sum_{1 \leq i \leq m, 1 \leq j \leq n} a_{i,j}$, the $(m,n)^{\text{th}}$ partial sum.
+\begin{definition}
+    If $\lim_{m,n \to \infty} S_{m,n} = a$ exists, we say that the \eax{double series} converges to $\sum_{m,n = 1}^{\infty} a_{m,n} = a$.
+\end{definition}
+It can be shown that if $\sum a_{m,n}$ converges, then $\lim_{m,n \to \infty} a_{m,n} = 0$. If the terms are always non-negative, that is, $a_{m,n} \geq 0$, then $\sum a_{m,n}$ converges if and only if the double sequence $\{S_{m,n}\}_{m,n=0}^{\infty}$ is bounded.
 
-\titlespacing*{\chapter}{0pt}{20pt}{40pt}
+\begin{example}
+    Let $\alpha,\beta > 1$. Then the infinite double series $\sum_{m,n = 1}^{\infty} \frac{1}{\alpha^{m}\beta^{n}}$ is convergent. The partial sums here are
+    \begin{align}
+        S_{m,n} = \left( \sum_{i=1}^{m} \frac{1}{\alpha^{i}} \right) \left( \sum_{j=1}^{n} \frac{1}{\beta^{j}} \right).
+    \end{align}
+    As $\alpha, \beta > 1$, both the series $\sum_{n=1}^{\infty} \frac{1}{\alpha_{n}}$ and $\sum_{n=1}^{\infty} \frac{1}{\beta^{n}}$ converges. The partial sums are bounded, and the double series is convergent.
+\end{example}
 
-\chapter{Appendix}
-Extra content goes here.
+\begin{theorem}[\eax{Fubini-Torelli theorem}]
+    A double series $\sum_{m,n = 1}^{\infty} a_{m,n}$ is absolutely convergent if and only if one, and hence all, of the following holds---
+    \begin{itemize}
+        \item $\sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \abs{a_{m,n}} < \infty$,
+        \item $\sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \abs{a_{m,n}} < \infty$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+    We look at the partial sums $S_{m,n} = \sum_{i=1}^{m} \sum_{j=1}^{n} a_{i,j}$, and also define $r_{m,n} = \sum_{i=1}^{m} \sum_{j=1}^{n} \abs{a_{i,j}}$. Let $\sum_{m,n=1}^{\infty} \abs{a_{m,n}} < \infty$. For every $\varepsilon > 0$, there exists a natural $N$ such that $\abs{r_{m,n} - r_{p,q}} < \varepsilon$ for all $m \geq p \geq N$ and $n \geq q \geq N$. This implies that
+    \begin{align}
+        \abs{S_{m,n}-S_{p,q}} = \abs{\sum_{\substack{p+1 \leq i \leq m,\\q+1 \leq j \leq n}} a_{i,j}} \leq \sum_{\substack{p+1 \leq i \leq m,\\q+1 \leq j \leq n}} \abs{a_{ij}} = \abs{r_{m,n} - r_{p,q}} < \varepsilon.
+    \end{align}
+    The sequence $\{S_{m,n}\}$ satisfies the Cauchy criterion. Thus, $a = \sum_{m,n=1}^{\infty} a_{m,n}$ exists. Set $r = \sup_{m,n} r_{m,n} < \infty$. Now, for all $i \in \N$ and $n \in \N$, $\sum_{j=1}^{n} \abs{a_{i,j}} \leq r_{i,n} \leq r$. This implies that
+    \begin{align}
+        \sum_{j=1}^{\infty} \abs{a_{i,j}} &< \infty \text{ for all } i \in \N 
+        \implies \sum_{j=1}^{\infty} a_{i,j} &< \infty \text{ for all } i \in \N.
+    \end{align}
+    For all $m \in \N$, set $\alpha_{m} = \sum_{i=1}^{m} \sum_{j=1}^{\infty} a_{ij}$. As $\sum_{m,n = 1}^{\infty} a_{m,n} = a$, for every $\varepsilon > 0$, there exists a natural $N$ such that $\abs{S_{m,n}-a} < \varepsilon$ for all $m,n \geq N$, that is,
+    \begin{align}
+        \abs{\sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij} - a} < \varepsilon \text{ for all } m,n \geq N \implies \abs{\alpha_{m} - a} \leq \varepsilon \text{ for all } m \geq N
+    \end{align}
+    which shows that $\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} a_{i,j} = a$. Similarly, $\sum_{j=1}^{\infty} \sum_{i=1}^{\infty} a_{i,j} = a$. Therefore, $\sum_{m,n=1}^{\infty} a_{m,n} = \sum_{m} \sum_{n} a_{m,n} = \sum_{n} \sum_{m} a_{m,n}$.
+
+    Observe that $r = \sup_{m,n} r_{m,n} = \sum_{m,n} \abs{a_{m,n}}$. For all $m$ fixed, $r_{m,n}$ increases as $n$ increases.
+    \begin{align}
+        \implies \lim_{m \to \infty} \lim_{n \to \infty} r_{m,n} \leq r \implies \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \abs{a_{m,n}} < \infty.
+    \end{align}
+    Similarly, $\sum_{n=1}^{\infty} \sum_{m=1}^{\infty} \abs{a_{m,n}}$ is also convergent.
+
+    The converse is left as an exercise to the reader.
+\end{proof}
+
+Let $f(x) = \sum_{n=0}^{\infty} a_{n}x^{n}$ have a radius of convergence $R > 0$. Then for $a \in (-R,R)$, $f(x) = \sum_{n=0}^{\infty} \frac{1}{n!} f^{(n)}(a)(x-a)^{n}$ for all $\abs{x-a} < R-\abs{a}$. This result is also left as an exercise to the reader.
+
+\section{Weierstrass Approximation Theorem}
+We ask the following--- given $f \in \cC[0,1]$, does there exist a polynomial $p \in \R[x]$ such that $f$ is \textit{close} to $p$? Alternatively, given $f \in \cC[0,1]$, does there exist $\{p_{n}\} \subseteq \R[x]$ such that $p_{n} \to f$; for every $\varepsilon > 0$, there exists $p \in \R[x]$ such that $\norm{f-p} < \varepsilon$. In fact, this is always true for a continuous function.
+
+The idea to show this is to introduce bump functions; for all $n \in \N$, we know that $\sum_{k=0}^{n} x^{k} (1-x)^{n-k} = 1$ for all $x \in [0,1]$
+\begin{definition}
+    We adopt the notation $b_{k}^{n}(x) = \binom{n}{k} x^{k}(1-x)^{n-k}$ on $[0,1]$ for $0 \leq k \leq n$. These are termed the \eax{Bernstein polynomial}s. 
+\end{definition}
+\begin{remark}
+    The following results can be shown:
+    \begin{itemize}
+        \item $b_{k}^{n}$ has a unique maxima at $x = \frac{k}{n}$.
+        \item $\sum_{k=0}^{n} b_{k}^{n} = 1$.
+        \item $\deg b_{k}^{n} = n$.
+        \item $b_{k}^{n} \geq 0$.
+    \end{itemize}
+\end{remark}
+
+\begin{definition}
+    Let $f:[0,1] \to \R$ be a function. Define the \eax{Bernstein polynomial of degree $n$} as
+    \begin{align*}
+        (B_{n}(f))(x) = \sum_{k=0}^{n} f(\frac{k}{n}) b_{k}^{n}(x) \text{ for all } x \in [0,1].
+    \end{align*}
+\end{definition}
+
+\begin{remark}
+    The following results may also be shown:
+    \begin{itemize}
+        \item $B_{n}$ may be interpreted as $B_{n}:\cC[0,1] \to \{\text{polynomials with degree} \leq n\}$.
+        \item $B_{n}$ is linear in continuous functions.
+        \item If $f \geq g$, then $B_{n}(f) \geq B_{n}(g)$.
+        \item $\abs{f} \leq g \implies \abs{B_{n}(f)} \leq B_{n}(g)$.
+        \item $B_{n}(1) = 1$.
+        \item $B_{n}(x) = x$.
+        \item $B_{n}(x^{2}) = x^{2}+\frac{x-x^{2}}{n}$.
+    \end{itemize}
+\end{remark}
+
+\begin{theorem}[\eax{Weierstrass approximation theorem}]
+    Given $f \in \cC[0,1]$ and $\varepsilon > 0$, there exists $p \in \R[x]$ such that $\norm{f-p} < \varepsilon$.
+\end{theorem}
+\begin{proof}
+    Set $M$ to be $\sup_{x \in [0,1]}\abs{f(x)}$. Also, there exists $\delta > 0$ such that $\abs{f(x)-f(y)} < \frac{\varepsilon}{2}$ for all $\abs{x-y} < \delta$. Pick and fix $a \in [0,1]$. For all $x \in [0,1]$, we claim that
+    \begin{align}
+        \abs{f(x)-f(a)} < \frac{\varepsilon}{2} + \frac{2M}{\delta^{2}}(x-a)^{2}.
+    \end{align}
+    Clearly, this is true for $\abs{x-a} < \delta$; we let $\abs{x-a} \geq \delta$. Then $\abs{f(x)-f(a)} \leq 2M \leq 2M\frac{(x-a)^{2}}{\delta^{2}} + \frac{\varepsilon}{2}$. Thus the inequality is satisfied by $x \in [0,1]$. We apply the Bernstein polynomial $B_{n}$ on both sides to get
+    \begin{align}
+        \abs{(B_{n}(f))(x)-f(a)} &\leq B_{n}\left( \frac{\varepsilon}{2} + \frac{2M}{\delta^{2}}(x-a)^{2} \right) = \frac{\varepsilon}{2} + \frac{2M}{\delta^{2}} B_{n}(x^{2}-2ax+a^{2}) \notag \\
+        &= \frac{\varepsilon}{2} + \frac{2M}{\delta^{2}} (x^{2}+\frac{x-x^{2}}{n}-2ax+a^{2}).
+    \end{align}
+    Setting $x = a$ gives us
+    \begin{align}
+        \abs{(B_{n}(f))(a)-f(a)} \leq \frac{\varepsilon}{2} + \frac{2M}{\delta^{2}} \left( \frac{a-a^{2}}{n} \right) &\leq \frac{\varepsilon}{2} + \frac{M}{2\delta^{2}n} \notag \\
+        \implies \abs{(B_{n}(f))(x)-f(x)} &\leq \frac{\varepsilon}{2} + \frac{M}{2\delta^{2}n}.
+    \end{align}
+    Choose $N \geq \frac{M}{\delta^{2}\varepsilon}$. So for all $n \geq N$, the term $\abs{(B_{n}(f))(x)-f(x)}$ minmizes to less than $\varepsilon$ for all $x \in [0,1]$. Thus,
+    \begin{align}
+        \norm{B_{n}(f)-f} < \varepsilon \text{ for all } n \geq N.
+    \end{align}
+\end{proof}
 
 \printindex
 
-\end{appendices}
 
 \end{document}
