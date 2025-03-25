@@ -1479,7 +1479,69 @@ We note that $A$ is symmetric matrix. Conversely, if $A$ is a symmetric matrix, 
         x_{1} \\ x_{2} \\ \vdots \\ x_{n}
     \end{pmatrix}.
 \end{align}
-Here, the coefficients are then given as $\alpha_{i} = a_{ii}$ and $\beta_{ij} = 2a_{ij}$ for $i < j$.
+Here, the coefficients are then given as $\alpha_{i} = a_{ii}$ and $\beta_{ij} = 2a_{ij}$ for $i < j$.\\
+
+\textit{March 25th.}
+\begin{example}
+    Suppose $q(x_{1},x_{2}) = 5x_{1}^{2}-10x_{1}x_{2}+x_{2}^{2}$. The associated matrix $A$ is then simply given as $A = \begin{pmatrix}
+        5 & -5 \\ -5 & 1
+    \end{pmatrix}$. It can be verified that $q(x_{1},x_{2}) = X^{t}AX$ where $X = \begin{pmatrix}
+        x_{1} & x_{2}
+    \end{pmatrix}^{t}$.
+\end{example}
+There is a one-to-one correspondence between the set of quadratic forms and the set of symmetric matrices. Let $X = PY$, where $P$ is invertible, that is, the new basis comprises of the columns of $P$. Then,
+\begin{align}
+    q(X^{t}) = X^{t}AX = (PY)^{t}A(PY) = Y^{t}(P^{t}AP)Y.
+\end{align}
+With respect to the new coordinate system, $q(Y^{t}) = Y^{t}BY$ where $B=P^{t}AP$.
+
+\begin{definition}
+    Two matrices $A$ and $B$ are termed \eax{congruent matrices} if there exists an invertible $P$ such that $B = P^{t}AP$.
+\end{definition}
+
+Two matrix representations of a quadratic form are congruent, and any two symmetric congruent matrices represent the same quadratic form. Congruent matrices have the same rank. Thus, a rank can be assigned to a quadratic form; it is simply the rank of an associated matrix.\\
+
+A quadratic form $q$ satisfying $q(X^{t}) > 0$ for all $X \neq 0$ is termed a \eax{positive definite quadratic form}. Similarly, a form $q$ satisfying $q(X^{t}) < 0$ for all $X \neq 0$ is termed a \eax{negative definite quadratic form}. Changing the inequalities to also include an `equals to' leads to the definitions \eax{positive semidefinite quadratic form} and \eax{negative semidefinite quadratic form}. An \eax{indefinite quadratic form} is simply a form which can take negative, positive, and zero values.
+
+We note that $q_{1}(x,y) = x^{2}+y^{2}$ is positive definite. The form $q_{2}(x,y) = -x^{2}-y^{2}$ is negative definite. Similarly, the form $q_{3}(x,y) = x^{2}-2xy+y^{2}$ is positive semidefinite and the form $q_{4}(x,y) = -x^{2}+2xy-y^{2}$ is negative semidefinite. Finally, the form $q_{5}(x,y) = x^{2}-y^{2}$ is indefinite.
+With respect to a change of basis, the definiteness of a quadratic form is conserved.
+
+\begin{definition}
+    A quadratic form $q$ in $n$ variables is said to be in the diagonal form if $q(X^{t}) = \alpha_{1}x_{1}^{2} + \ldots + \alpha_{n}x_{n}^{2}$.
+\end{definition}
+
+\begin{theorem}
+    Any quadratic form $X^{t}AX$ can be reduced to a diagonal form by a change of basis.
+\end{theorem}
+\begin{proof}
+    As $A$ is symmetric, by the spectral theorem, there exists an orthogonal matrix $U$ such that $U^{-1}AU$ is diagonal. As $U^{-1} = U^{t}$, since $U$ is orthogonal, $U^{-1}AU$ represents the same form with respect to the basis consisting of columns of $U$.
+\end{proof}
+
+Notice that the diagonal form consists of the eigenvalues of $A$ on the diagonal. We discuss how to find this diagonal form explicitly; if $A = 0$, there is nothing to do. So, we assume that $A$ is non-zero. Further suppose that there exists $i$ such that $a_{ii} \neq 0$ and $a_{ij} = 0$ for all $i \neq j$. Interchange $x_{1}$ and $x_{i}$ making $a_{11} \neq 0$. This is inflicted by a non-singular linear transformation.
+
+If $A$ is non-zero with $a_{11} = a_{22} = \ldots = a_{nn} = 0$ and $a_{ij} \neq 0$ for some $i \neq j$, make the change of variables $x_{j} = y_{i} + y_{j}$ and $x_{k} = y_{k}$ for $k \neq j$. This converts the form $X^{t}AX$ to $Y^{t}BY$ where $b_{ii} = 2a_{ij} \neq 0$. Let $a_{11} \neq 0$. Thus,
+\begin{align}
+    X^{t}AX &= a_{11}x_{1}^{2} + 2a_{12}x_{1}x_{2} + 2a_{13}x_{1}x_{3} + \ldots + 2a_{1n}x_{1}x_{n} + \sum_{i,j=2}^{n} a_{ij}x_{i}x_{j} \notag \\
+    &= a_{11} \left( x_{1} + \frac{a_{12}}{a_{11}}x_{2} + \ldots + \frac{a_{1n}}{a_{11}} x_{n} \right)^{2} + \sum_{i,j=2}^{n} \left( a_{ij} - \frac{a_{ii}a_{ij}}{a_{11}} \right)x_{i}x_{j}.
+\end{align}
+Apply a change of variables as $z_{1} = x_{1} + \frac{a_{12}}{a_{11}}x_{2} + \ldots + \frac{a_{1n}}{a_{11}}x_{n}$ and $z_{k} = x_{k}$ for $k \neq 1$. The change of variable matrix looks like $\begin{pmatrix}
+    1 & \frac{a_{12}}{a_{11}} & \cdots & \frac{a_{1n}}{a_{11}} \\
+    0 & 1 & \cdots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \cdots & 1
+\end{pmatrix}$. The quadratic form now looks like $a_{11}z_{1}^{2} + q'(z_{2},\ldots,z_{n})$ where $q'$ is a quadratic form in $(n-1)$ variables. We repeat the same procedure and $X^{t}AX$ can be reduced to a diagonal form.
+
+\begin{definition}
+    The \eax{rank of a quadratic form} is the rank of the associated matrix. It is well-defined since any two congruent matrices have the same rank.
+\end{definition}
+
+\begin{definition}
+    The \eax{index of a quadratic form} $q$ is the number of positive entries in the diagonal of the diagonal form of $q$.
+\end{definition}
+
+\begin{definition}
+    The \eax{signature of a quadratic form} is the difference between the number of positive entries and the number of negative entries in the diagonal of the diagonal form of $q$.
+\end{definition}
 
 
 \begin{appendices}
