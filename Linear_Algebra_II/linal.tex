@@ -1458,6 +1458,8 @@ For $A \in M_{n}(\C)$, $\lambda$ is an eigenvalue of $A$ if and only if $i\lambd
 
 \chapter{QUADRATIC FORMS}
 
+
+\section{Introduction}
 \begin{definition}
     A \eax{quadratic form} in $n$ variables $x_{1},x_{2},\ldots,x_{n}$ is an expression of the form
     \begin{align*}
@@ -1532,16 +1534,69 @@ Apply a change of variables as $z_{1} = x_{1} + \frac{a_{12}}{a_{11}}x_{2} + \ld
 \end{pmatrix}$. The quadratic form now looks like $a_{11}z_{1}^{2} + q'(z_{2},\ldots,z_{n})$ where $q'$ is a quadratic form in $(n-1)$ variables. We repeat the same procedure and $X^{t}AX$ can be reduced to a diagonal form.
 
 \begin{definition}
-    The \eax{rank of a quadratic form} is the rank of the associated matrix. It is well-defined since any two congruent matrices have the same rank.
+    The \eax{rank of a quadratic form} is the rank of the associated matrix. It is well-defined since any two congruent matrices have the same rank. This is equivalent to the dimension of the column space of the matrix.
 \end{definition}
 
 \begin{definition}
-    The \eax{index of a quadratic form} $q$ is the number of positive entries in the diagonal of the diagonal form of $q$.
+    The \eax{index of a quadratic form} $q$ is the number of positive entries in the diagonal of the diagonal form of $q$. This is equivalent to the number of positive eigenvalues of the matrix.
 \end{definition}
 
 \begin{definition}
-    The \eax{signature of a quadratic form} is the difference between the number of positive entries and the number of negative entries in the diagonal of the diagonal form of $q$.
+    The \eax{signature of a quadratic form} is the difference between the number of positive entries and the number of negative entries in the diagonal of the diagonal form of $q$. This is equivalent to the difference between the number of positive eigenvalues and the number of negative eigenvalues of the matrix.
 \end{definition}
+
+
+\textit{March 27th.}
+
+\begin{theorem}[\eax{Sylvester's law of inertia}]
+    Two $n \times n$ symmetric matrices $B$ and $C$ are congruent, that is, they represent the same quadratic form in $\R^{n}$ if and only if the diagonal representations of $B$ and $C$ have the same rank, same index, and same signature.
+\end{theorem}
+\begin{proof}
+    Suppose $B$ and $C$ are congruent, that is, they represent the same quadratic form over different bases of $\R^{n}$. Let $(v_{1},\ldots,v_{n})$ be a basis of $\R^{n}$ consisting of orthonormal eigenvectors of $B$. By spectral theorem, this is possible since $B$ is symmetric. Similarly, let $(w_{1},\ldots,w_{n})$ be a basis of $\R^{n}$ consisting of orthonormal eigenvectors of $C$. Let $Bv_{i} = a_{i}v_{i}$ and $Cw_{j}=b_{j}w_{j}$. We rearrange the basis in a way so that the vectors corresponding to the positive eigenvalues occur first, the vectors corresponding to the negative eigenvalues occur next, and the vectors corresponding to eigenvalue 0 occur last.
+
+    As $B$ and $C$ have the same rank, call it $r$, let us assume their indices are different. Let $p$ be the index of $B$ and $q$ be the index of $C$, and suppose $q > p$. Note that the bases that contain the eigenvectors of $B$ and $C$ look like $(v_{1},\ldots,v_{p},v_{p+1},\ldots,v_{r},v_{r+1},\ldots,v_{n})$ and $(w_{1},\ldots,w_{q},w_{q+1},\ldots,w_{r},w_{r+1},\ldots,w_{n})$. Define a linear transformation on $\R^{n}$ by
+    \begin{align}
+        L(x) = \begin{pmatrix}
+            v_{1}^{t}Bx \\ \vdots \\ v_{p}^{t}Bx \\ w_{q+1}^{t}Cx \\ \vdots \\ w_{r}^{t}Cx
+        \end{pmatrix}.
+    \end{align}
+    The co-domain is $\R^{p+r-q}$. We then have
+    \begin{align}
+        \dim \ker L = n - \dim L(\R^{n}) \geq n - (p+r-q) > n-r.
+    \end{align}
+    As $\dim \ker B = n-r = \dim \ker C$, $\ker B \cap \ker C \subset \ker L$. So there exists $v_{0} \in \R^{n}$ such that $Lv_{0} = 0$ but $v_{0} \notin \text{span} \{v_{r+1},\ldots,v_{n}\}$ and $v_{0} \notin \text{span}\{w_{r+1},\ldots,w_{n}\}$. Let $v_{0} = \sum_{i=1}^{n} c_{i}v_{i} = \sum_{j=1}^{n} d_{j}w_{j}$. At least one of the coefficients $c_{i}$ is non-zero for $i \leq r$. Similarly, at least one of the coefficients $d_{j}$ is non-zero for $j \leq r$. For any $v_{k}$, we have
+    \begin{align}
+        v_{k}^{t}Bv_{0} = v_{k}^{t} B (\sum_{i=1}^{n} c_{i}v_{i}) = \sum_{i=1}^{n} c_{i}v_{k}^{t}Bv_{i} = \sum_{i=1}^{n} c_{i}v_{k}^{t}a_{i}v_{i} = c_{k}a_{k}.
+    \end{align}
+    If $k \leq p$, since $v_{k}^{t}Bv_{0}$ represents the $k^{\text{th}}$ coordinate of $Lv_{0}$ and $Lv_{0} = 0$, we must have $c_{k}a_{k} = 0$. $a_{k}$ represents a positive eigenvalue in this case, so we get $c_{k} = 0$. So, $v_{0} = \sum_{i=p+1}^{n} c_{i}v_{i}$. Similarly, analysing $w_{k}^{t}Cv_{0}$ yields $v_{0} = \sum_{1 \leq i \leq q; r+1 \leq i \leq n} d_{j}w_{j}$ as $d_{j} = 0$ for all $q+1 \leq j \leq r$. We move on to
+    \begin{align}
+        v_{0}^{t}Bv_{0} = (\sum_{i=p+1}^{n} c_{i}v_{i})^{t}B (\sum_{j=p+1}^{n} c_{j}v_{j}) = \sum_{p+1 \leq i,j \leq n} c_{i}c_{j}v_{i}^{t}Bv_{j} = \sum_{p+1\leq i,j \leq n} c_{i}c_{j}a_{j}v_{i}^{t} v_{j} = \sum_{i=p+1}^{n} c_{i}^{2} a_{i} \leq 0.
+    \end{align}
+    As the $a_{i}$'s are non-positive for $i \geq p+1$, and at least one of the $c_{i}$'s is non-zero for $p+1 \leq i \leq r$, $v_{0}^{t}Bv_{0} < 0$. The value of the quadratic form at $v_{0}$ is less than $0$. 
+    
+    ``We can compute the value of the quadratic form at $v_{0}$, relative to the diagonalizing basis for $C$.
+    \begin{align}
+        v_{0}^{t}Cv_{0} = (\sum_{\substack{1\leq i\leq q\\ p+1 \leq i \leq n}}d_{i}w_{i})^{t}C (\sum_{\substack{1 \leq j \leq q\\r+1 \leq j \leq n}}d_{j}w_{j}) = \sum_{i,j} d_{i}d_{j}b_{j}w_{i}^{t}w_{j} = \sum_{\substack{1 \leq i \leq q\\r+1 \leq i \leq n}} d_{i}^{2}b_{i}.
+    \end{align}
+    As at least one $d_{i} \neq 0$ for $1 \leq i \leq q$ and as the $b_{i}$'s are non-negative, $v_{0}^{t}Cv_{0} > 0$. This gives a contradiction to the assumption that the indices are different.''
+
+    The converse is left as an exercise to the reader.
+\end{proof}
+
+\begin{theorem}
+    Let $x^{t}Ax$ be a quadratic form in $n$ variables with rank $r$, signature $s$, and index $p$. Then
+    \begin{itemize}
+        \item $A$ is positive definite if and only if $p = n \text{ }(= s = r)$.
+        \item $A$ is positive semidefinite if and only if $p = r \text{ } (= s)$.
+        \item $A$ is negative definite if and only if $s = -n \text{ } (= -r)$.
+        \item $A$ is negative semidefinite if and only if $p = 0 \text{ } (r = -s)$.
+        \item $A$ is indefinite if and only if $p \geq 1$ and $\abs{s} < r$.
+    \end{itemize}
+\end{theorem}
+
+\begin{theorem}
+    A symmetric matrix $A$ is positive definite (positive semidefinite) if each eigenvalue of $A$ is positive (non-negative). 
+\end{theorem}
 
 
 \begin{appendices}
