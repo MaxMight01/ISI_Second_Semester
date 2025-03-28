@@ -1528,6 +1528,8 @@ The best predictor of $Y$ using $X$ is $E[Y|X]$.
 \section{Types of Convergence}
 We being with a probability space $(\Omega, P)$, and define a sequence of random variables $X_{n}:\Omega \to \R$ for $n \geq 1$ and also have another $X:\Omega \to \R$.
 
+\subsection{Almost Sure Convergence}
+
 \begin{definition}
     We first discuss the notion of \eax{almost sure convergence}. A sequence of random variables $X_{n}$ converges almost surely to $X$, that is, $X_{n} \toup{\text{a.s.}} X$ if
     \begin{align*}
@@ -1557,6 +1559,8 @@ We being with a probability space $(\Omega, P)$, and define a sequence of random
     If we define the sequence of random variables as $X_{n} = n 1_{[0,\frac{1}{n}]}$, we find that $X_{n} \toup{\text{a.s.}} 0$. However, $EX_{n} = 1$ and $E[0] = 0$. The expectation is not preserved in almost sure convergence
 \end{example}
 
+
+\subsection{Convergence in Probability}
 \begin{definition}
     We discuss the notion of \eax{convergence in probability}. We say that a sequence of random variables $X_{n}$ converges in probability to $X$, that is, $X_{n} \toup{p} X$ if for every $\varepsilon > 0$,
     \begin{align*}
@@ -1676,6 +1680,96 @@ A consequence of this is the weak law of large numbers.
     \begin{align}
         E\left( \sum_{n=1}^{\infty} \overline{X}_{n}^{4} \right) < \infty \implies P\left( \sum_{n=1}^{\infty} \overline{X}_{n}^{4} < \infty \right) = 1 \implies P(\overline{X}_{n} \to 0) = 1.
     \end{align}
+\end{proof}
+
+\subsection{Convergence in Distribution}
+\textit{March 28th.}
+
+\begin{definition}
+    We discuss the notion of \eax{convergence in distribution}. Suppose $X_{1},X_{2},\ldots$ are a sequence of random variables, and let $X$ be another random variables. Denote the cumulative distribution function of $X_{n}$ by $F_{n}$ and that of $X$ by $F$. We say that the sequence of random variables $X_{n}$ converges to $X$ if $\lim_{n \to \infty} F_{n}(x) = F(x)$ for all $x$ at which $F$ is continuous.
+\end{definition}
+
+We write $X_{n} \rightrightarrows X$ or $F_{n} \rightrightarrows F$, or even $X_{n} \toup{d} X$ if $X_{n}$ converges to $X$ in distribution.
+
+\begin{remark}
+    When $X$ has a denisty function $f$, then $F$ is continuous everywhere and we need the sequence to converge everywhere.
+\end{remark}
+
+When $F$ is continuous, we have $P(a < X_{n} \leq b) = P(X_{n} \leq b) - P(X_{n} \leq a) = F_{n}(b)-F_{n}(a) \to F(b)-F(a)$. Similarly, we can show that $P(a \leq X_{n} \leq b) \to P(a < X \leq b)$ since $P(X = a) = 0$; we wish to show that $P(X_{n} = a) = 0$ is $X_{n}$ converges to a $X$ with continuous $F$. This can be shown as
+\begin{align}
+    P(X_{n}=a) \leq P(a-\varepsilon < X_{n} \leq a) = F_{n}(a)-F_{n}(a-\varepsilon) \notag \implies \limsup_{n \to \infty} P(X_{n}=a) \leq F(a) - F(a-\varepsilon).
+\end{align}
+Letting $\varepsilon \downarrow 0$, we find $\limsup_{n \to \infty} P(X_{n}=a) = 0 \implies \lim_{n \to \infty} P(X_{n}=a) = 0$.
+
+\begin{example}
+    Suppose $X_{n} \sim \text{Bin}(n,\frac{\lambda}{n})$ and $X \sim \text{Poisson}(\lambda)$. We have already seen that $P(X_{n}=k) \to P(X=k)$. For $x \geq 0$, we have
+    \begin{align}
+        \lim_{n \to \infty} P(X_{n} \leq x) = \lim_{n \to \infty} \sum_{0 \leq k \leq x}P(X_{n} = k) = \sum_{0 \leq k \leq x} \lim_{n \to \infty} P(X_{n} = k) = \sum_{0 \leq k \leq x} P(X=k) = P(X \leq x).
+    \end{align}
+\end{example}
+
+Suppose $X_{1},X_{2},\ldots$ are independent and identically distributed random variables with finite mean $\mu$ and finite variance $\sigma^{2}$. From the law of large numbers, we know that $\frac{S_{n}}{n} \to \mu$ where $S_{n}$ are the partial sums. The central limit theorem roughly states that $\frac{S_{n}}{n} = \mu + O(\frac{1}{\sqrt{n}})$. We state this more formally.
+
+\begin{theorem}[The \eax{central limit theorem}]
+    Let $X_{1},X_{2},\ldots$ be independent and identically distributed random variables with with quantities defined as above. The central limit theorem states that
+    \begin{align*}
+        \frac{S_{n}-n\mu}{\sigma\sqrt{n}} \rightrightarrows N(0,1).
+    \end{align*}
+    For $-\infty < a \leq b \leq \infty$, we have
+    \begin{align*}
+        P\left(a \leq \frac{S_{n}-n\mu}{\sigma \sqrt{n}} \leq b  \right) \toup{n \to \infty} \int_{a}^{b} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^{2}}{2}} dx.
+    \end{align*}
+\end{theorem}
+
+The left hand side may be rewritten as $P(n\mu + a\sigma\sqrt{n} \leq S_{n} \leq n\mu + b\sigma\sqrt{n})$ and the right hand side may be rewritten as $P(m\mu + a\sigma\sqrt{m} \leq Z_{1} + \cdots + Z_{m} \leq m\mu + b\sigma\sqrt{m})$ where $Z_{1},\ldots,Z_{m} \sim N(\mu,\sigma^{2})$ are independent.
+
+\begin{example}
+    Suppose a fair coin is tossed a million times, and denote $S$ to be the number of heads. This is the sum of a million independent and identically distributed $\text{Ber}(\frac{1}{2})$ variables. Here, $\mu = \frac{1}{2}$ and $\sigma^{2} = \frac{1}{4}$. In this case, $n\mu = 500,000$ and $\sigma \sqrt{n} = 500$. The central limit theorem states that $\frac{S-500,000}{500} \approx N(0,1)$. Using $a = -2.576$ and $b = 2.576$, we have
+    \begin{align}
+        P(498712 \leq S \leq 501288) \approx \int_{-2.576}^{2.576} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^{2}}{2}}dx \approx 0.99.
+    \end{align}
+\end{example}
+
+Suppose $g:\R \to \R$ is defined by $g(x) = e^{-\frac{1}{x}}$ for $x > 0$, and $g(x) = 0$ for $x \leq 0$. For $x \neq 0$, clearly $g(x)$ is infinitely differentiable. We shall show that $g(x)$ is also infinitely differentiable at $x = 0$ with $g^{(k)}(0) = 0$ always. We have
+\begin{align}
+    \lim_{x \uparrow 0} \frac{g(x)-g(0)}{x-0} = \lim_{x \uparrow 0} \frac{0}{x} = 0
+\end{align}
+and
+\begin{align}
+    \lim_{x \downarrow 0} \frac{g(x)-g(0)}{x-0} = \lim_{x \downarrow 0} \frac{e^{-\frac{1}{x}}}{x} = 0.
+\end{align}
+Thus, $g(x)$ is differentiable at $0$, and there exists a $C$ such that $\abs{g'(x)} \leq C$ for all $x \in \R$. For any $k^{\text{th}}$ derivative of $g(x)$ for $x > 0$, we obtain $g^{(k)}(x) = e^{-\frac{1}{x}}p_{2k}(\frac{1}{x})$ where $p_{2k}$ is a polynomial of degree $2k$. Again, the only problem is at 0. By the induction hypothesis, $g^{(k-1)}(0) = 0$. We have
+\begin{align}
+    \lim_{x \downarrow 0} \frac{g^{(k-1)}(x)-g^{(k-1)}(0)}{x-0} = \lim_{x \downarrow 0} \frac{g^{(k-1)}(x)}{x} = \lim_{x \downarrow 0} \frac{e^{-\frac{1}{x}} p_{2(k-1)}(\frac{1}{x})}{x} = 0
+\end{align}
+and left hand limit is easily seen to be zero. Hence, $g^{(k)}(0) = 0$ and there always exists a $C_{k}$ such that $\abs{g^{(k)}(x)} \leq C_{k}$ for all $x \in \R$. Thus, $g \in C_{b}^{\infty}$, the set of functions on $\R$ that are infinitely differentiable with bounded derivatives, including the $0^{\text{th}}$ derivative.
+
+For any $-\infty < a < b < \infty$, let $g_{a,b}(x)=g(x-a)g(b-x)$. We note that $g_{a,b} \equiv 0$ on $\R\setminus[a,b]$ and $g_{a,b} \in C_{b}^{\infty}$. Also, $g > 0$ on $(a,b)$. Define $C_{a,b}$ to be the integral $\int_{\R} g_{a,b}(x)dx > 0$. Lastly, defining $h_{a,b}(x) = \frac{1}{C_{a,b}}g_{a,b}(x)$ gives a probability density function. Denote the cumulative distribution function by $H_{a,b}$.
+\begin{align}
+    H_{a,b}(x) = \begin{cases}
+        0 &\text{ if } x \in (-\infty,a],\\
+        \text{ strictly increasing } &\text{ if } x \in (a,b),\\
+        1 &\text{ if } x \in [b,\infty).
+    \end{cases}
+\end{align}
+We may also note that $H_{a,b} \in C_{b}^{\infty}$. We have defined this distribution for the following lemma.
+
+\begin{lemma}
+    Let $X$ be a random variable and suppose $X_{1},X_{2},\ldots$ be a sequence of random variables such that for each $f \in C_{b}^{\infty}$ we have $Ef(X_{n}) \to Ef(X)$. Then $X_{n} \rightrightarrows X$.
+\end{lemma}
+\begin{proof}
+    Let $F_{n}$ be the cumulative distribution function of $X_{n}$ and $F$ be that of $X$. Fix $t \in \R$ at which $F$ is continuous, and also fix $s < t$. We need to show $F_{n}(t) \toup{n \to \infty} F(t)$. Consider $H_{s,t}$ defined as above; $H_{s,t} \in C_{b}^{\infty}$. Look at $1-H_{s,t} \leq 1_{(-\infty,t]}$. We then have
+    \begin{align}
+        E[1-H_{s,t}(X_{n})] &\leq E[1_{(-\infty,t]}(X_{n})] = F_{n}(t) \notag \\
+        \implies E[1-H_{s,t}(X)] = \lim_{n \to \infty} E[1-H_{s,t}(X_{n})] &\leq \liminf_{n \to \infty} F_{n}(t)
+    \end{align}
+    This gives us $F(s) \leq \liminf_{n \to \infty} F_{n}(t)$. Letting $s \uparrow t$, we get $F(t) \leq \liminf_{n \to \infty} F_{n}(t)$.
+
+    Similarly, consider $H_{t,s}$ for $s > t$. We get
+    \begin{align}
+        \limsup_{n \to \infty} F_{n}(t) = \limsup_{n \to \infty} E[1_{(\infty,t]}(X_{n})] \leq \limsup_{n \to \infty} E[1-H_{t,s}(X_{n})] = E[1-H_{t,s}(X)] \leq E[1_{(-\infty,s]}(X)] = F(s).
+    \end{align}
+    Letting $s \downarrow t$, we have $\limsup_{n \to \infty} F_{n}(t) \leq F(t)$. Also considering $F(t) \leq \liminf_{n \to \infty} F_{n}(t)$, we obtain $F_{n}(t) \to F(t)$.
 \end{proof}
 
 
