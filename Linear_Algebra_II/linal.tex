@@ -1594,9 +1594,92 @@ Apply a change of variables as $z_{1} = x_{1} + \frac{a_{12}}{a_{11}}x_{2} + \ld
     \end{itemize}
 \end{theorem}
 
+\section{Definiteness}
+\textit{April 1st.}
+\begin{definition}
+    A real symmetric matrix $A$ is said to be positive definite (positive semidefinite) if $X^{t}AX > 0$ $(X^{t}AX \geq 0)$ for all $X \neq 0$.
+\end{definition}
+
 \begin{theorem}
     A symmetric matrix $A$ is positive definite (positive semidefinite) if each eigenvalue of $A$ is positive (non-negative). 
 \end{theorem}
+
+\begin{theorem}
+    A (real) matrix $A$ is positive semidefinite if and only if there exists a real matrix $B$ such that $A = B^{t}B$.
+\end{theorem}
+\begin{proof}
+    If $A = B^{t}B$, then $X^{t}AX = X^{t}B^{t}BX = (BX)^{t}BX \geq 0$. Conversely, let $A$ be positive semidefinite. As $A$ is symmetric, there exists an invertible $P$ such that $P^{t}AP = \begin{pmatrix}
+        I_{r} & O \\ O & O
+    \end{pmatrix}$ where $r$ is the rank of $A$. Letting $B = \text{diag}(I_{r},O)P^{-1}$, we get $A = B^{t}B$.
+\end{proof}
+Note that in the above proof, $a_{ij} = \ip{B_{i},B_{j}}$ where $B_{i}$ is the $i^{\text{th}}$ column of $B$.
+
+\begin{theorem}
+    $A$ is positive definite if and only if $A=B^{t}B$ for some real non-singular matrix $B$.
+\end{theorem}
+
+\begin{corollary}
+    The inverse of a positive definite matrix is positive definite.
+\end{corollary}
+
+\begin{definition}
+    A \eax{principal submatrix} of a square matrix $A$ is the submatrix obtained from $A$ by considering the same rows and columns. A \eax{leading principal submatrix} of $A$ is the principal submatrix obtained by taking the first $k$ rows and $k$ columns.
+\end{definition}
+
+\begin{theorem}
+    Let $A$ be a real square matrix. If $A$ is positive definite, then every principal submatrix of $A$ has a positive determinant. Conversely, if the determinants of all the leading principal submatrices of a real symmetric matrix are positive, then $A$ is positive definite.
+\end{theorem}
+\begin{proof}
+    Let $A$ be positive definite. Let $A_{k}$ be a $k \times k$ principal submatrix of $A$. Then there exists an invertible $P$ such that $P^{t}AP$ has $A_{k}$ on the top left. Note that $P^{t}$ is a sequence of elementary matrices of type II applied to $A$ to bring the rows of $A_{k}$ to the first $k$ rows. Also, $X^{t}A_{k}X = Y^{t}AY$ where $Y = P\begin{pmatrix}
+        X & O
+    \end{pmatrix}^{t}$. Since $Y^{t}AY > 0$ for all non-zero $Y$, we have $X^{t}A_{k}X > 0$ for all non-zero $X$. So, $A_{k}$ is positive definite for all $k$ and hence $\det A_{k} > 0$.
+
+    Conversely, if $A$ is of order $1 \times 1$, that is, $A = \begin{pmatrix}
+        a
+    \end{pmatrix}$, then for all non-zero $x \in \R$, $x^{t}ax = x^{2}a > 0$. Hence, we assume the order $n$ of $A$ is greater than 1. Assume that the result holds true for all matrices of order $n-1$. Suppose $A$ is not positive definite. As $\det A > 0$, there exist at least two eigenvalues $\lambda_{1}$ and $\lambda_{2}$ which are negative. As $A$ is symmetric, spectral theorem tells us that there exists two orthogonal eigenvectors corresponding to $\lambda_{1}$ and $\lambda_{2}$; call them $X$ and $Y$ respectively. Consider a linear combination of $X$ and $Y$, say $\theta = aX + bY$ for $a,b \in \R$ such that the last coordinate of $\theta$ is zero, that is, $\theta \in R^{n-1}$. If $A_{n-1}$ is the $(n-1)$ leading principal submatrix of $A$, then
+    \begin{align}
+        \theta^{t}A_{n-1}\theta = (aX+bY)^{t}A_{n-1}(aX+bY) = a^{2}\lambda_{1} \norm{X}^{2} + b^{2}\lambda_{2}\norm{Y}^{2} < 0.
+    \end{align}
+    So the leading principal submatrix $A_{n-1}$ is not positive definite, but this is a contradiction.
+\end{proof}
+
+\begin{theorem}
+    A real symmetric matrix $A$ is positive semidefinite if and only if all principal submatrices of $A$ have determinant non-negative.
+\end{theorem}
+\begin{proof}
+    The first part is similar to the case for positive definiteness. Conversely, let all principal submatrices have determinant non-negative. Again, $n=1$ is trivial case. Assume that for matrices of order $n-1$, $\det A \geq 0$. Let $A(i_{1},\ldots,i_{k}|j_{1},\ldots,j_{k})$ denote the submatrix of the $i_{1}^{\text{th}},\ldots,i_{k}^{\text{th}}$ rows and $j_{1}^{\text{th}},\ldots,j_{k}^{\text{th}}$ columns. If all diagonal entries of $A$ are zeroes, then $\det A(i,j|i,j) = -a_{ij}^{2} \geq 0 \implies a_{ij} = 0$ for all $i,j$, so $A = 0$. Hence, $A$ is positive semidefinite. So, let $A$ have at least one positive diagonal entry, say the $i^{\text{th}}$ one. Applying $R_{1i}$ and $C_{1i}$, to bring $a_{ii}$ to the top-leftmost place. This new matrix is $P^{t}AP$ for some invertible $P$. Assume the result holds for all matrices of order $n-1$. Let $A_{k}$ denote a $k^{\text{th}}$ order principal submatrix of $A$. Make the $(i,1)^{\text{th}}$ entry of $A$ zero by performing $R_{i1}(-a_{i1}/a_{11})$, and the $(1,i)^{\text{th}}$ entry zero by performing $C_{1i}(-a_{1i}/a_{ii})$ for $u = 2,\ldots,n$. Let $B$ be the resultant matrix and let $C$ be the matrix obtained from $B$ by deleting the first row and first column. As the operations applied on $A$ to obtain $B$ are elementary matrices of type I, the determinant of these operations is 1. So, $\det A = \det B = a_{11} \det C$.
+
+    Apply similar operators on $A_{k}$ to obtain $B_{k}$ and $C_{k}$. Then
+    \begin{align}
+        \det A(1,i_{1},\ldots,i_{k}|1,i_{1},\ldots,i_{k}) &= \det B(1,i_{1},\ldots,i_{k}|1,i_{1},\ldots,i_{k}) = a_{11} \notag \\
+        &= a_{11} \det C(i_{1}-1,\ldots,i_{k}-1|i_{1}-1,\ldots,i_{k}-1) \geq 0
+    \end{align}
+    for all $2 \leq i_{1} \leq \ldots \leq i_{k} \leq n$. Hence, all principal submatrices of $C$ have non-negative determinants; by hypothesis, $C$ is positive semidefinite. $B = \text{diag}(a_{11},C)$ is positive semidefinite. As $A$ is congruent to $B$, $A$ is also positive semidefinite.
+\end{proof}
+
+\begin{theorem}
+    Let $A_{n \times n}$ be a positive semidefinite matrix. Fix $1 \leq i \leq n$. Then $\det A \leq a_{ii} A_{ii}$, where $A_{ii}$ is the determinant of the matrix obtained by deleting the $i^{\text{th}}$ row and column of $A$. If $A$ is also positive definite, then $\det A = a_{ii}A_{ii}$ if and only if $a_{ij} = 0$ for all $j \neq i$.
+\end{theorem}
+
+\begin{proof}
+    Note that it is enough to prove for $i = n$. Let $\det A = 0$. Then $A_{nn}$ is non-negative and $a_{nn}$ is also non-negative. So, $0 = \det A \leq a_{nn}A_{nn}$. We now let $\det A \neq 0$. Then $A$ is positive definite. Let $A = \begin{pmatrix}
+        D & U \\ U^{t} & a_{nn}
+    \end{pmatrix}$, where $D$ is positive definite (being a principal submatrix) and $D^{-1}$ is also positive definite. So, $U^{t}D^{-1}U \geq 0$. But
+    \begin{align}
+        \det A = \det D \cdot \det (a_{nn}-U^{t}D^{-1}U) = \det D \cdot (a_{nn}-U^{t}D^{-1}U) = A_{nn}(a_{nn}-U^{t}D^{-1}U) \leq a_{nn}A_{nn}.
+    \end{align}
+    Note that equality holds if and only if $U^{t}D^{-1}U = 0$. But this occurs if and only if $U = 0$.
+\end{proof}
+
+\begin{theorem}[\eax{Hadamard inequality}]
+    For a real $n \times n$ matrix $B$,
+    \begin{align*}
+        (\det B)^{2} \leq \prod_{j=1}^{n} \norm{B_{j}}^{2}.
+    \end{align*}
+\end{theorem}
+\begin{proof}
+    Simply consider $A = B^{t}B$. The proof is left as an exercise to the reader.
+\end{proof}
 
 
 \begin{appendices}
