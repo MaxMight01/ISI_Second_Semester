@@ -1671,6 +1671,15 @@ Note that in the above proof, $a_{ij} = \ip{B_{i},B_{j}}$ where $B_{i}$ is the $
     Note that equality holds if and only if $U^{t}D^{-1}U = 0$. But this occurs if and only if $U = 0$.
 \end{proof}
 
+
+\textit{April 3rd.}
+\begin{theorem}
+    If $A$ is positive semidefinite, then $\det A \leq a_{11}a_{22} \cdots a_{nn}$. If $A$ is positive definite, and the equality holds, then $A$ is diagonal.
+\end{theorem}
+\begin{proof}
+    The proof is left as an exercise to the reader.
+\end{proof}
+
 \begin{theorem}[\eax{Hadamard inequality}]
     For a real $n \times n$ matrix $B$,
     \begin{align*}
@@ -1679,6 +1688,34 @@ Note that in the above proof, $a_{ij} = \ip{B_{i},B_{j}}$ where $B_{i}$ is the $
 \end{theorem}
 \begin{proof}
     Simply consider $A = B^{t}B$. The proof is left as an exercise to the reader.
+\end{proof}
+
+Suppose $A_{n \times n}$ is symmetric. Consider $X^{t}AX$ for all $X \in \R^{n}$. If $A$ has at least one positive eigenvalue, say $\lambda$, and if $v$ is an eigenvector corresponding to $\lambda$, then $v^{t}Av = \lambda \norm{v}^{2}$ can be made as large as possible from the choice of $v$. Thus, the set $\{X^{t}AX : X \in \R^{n}\}$ is not bounded above. If there exist no positive eigenvalues of $A$, then is $A$ is negative semidefinite, and $X^{t}AX \leq 0$ for all $X \in \R^{n}$. We can say more about the set of all possible values of $X^{t}AX$.
+
+\begin{theorem}
+    For any quadratic form $X^{t}AX$,
+    \begin{align*}
+        \max_{\norm{X} = 1} X^{t}AX = \max_{Y \neq 0} \frac{Y^{t}AY}{Y^{t}Y} = \lambda_{1}, \text{ and }
+        \min_{\norm{X} = 1} X^{t}AX = \min_{Y \neq 0} \frac{Y^{t}AY}{Y^{t}Y} = \lambda_{n}
+    \end{align*}
+    where $\lambda_{1}$ and $\lambda_{n}$ are the largest and smallest eigenvalues of $A$. Moreover, $\frac{Y^{t}AY}{Y^{t}Y} = \lambda_{1}$ if and only if $Y$ is an eigenvector of $A$ corresponding to $\lambda_{1}$. A similar result holds true for $\lambda_{n}$.
+\end{theorem}
+\begin{proof}
+    Let $\lambda_{1} \geq \lambda_{2} \geq \ldots \geq \lambda_{n}$ be the eigenvalues of $A$. There exists a unitary $P$ such that $P^{t}AP = D = \text{diag}(\lambda_{1},\lambda_{2},\ldots,\lambda_{n})$. If $U_{1},\ldots,U_{n}$ are the columns of $P$, then
+    \begin{align}
+        A = \lambda_{1}U_{1}U_{1}^{t} + \lambda_{2}U_{2}U_{2}^{t} + \cdots + \lambda_{n}U_{n}U_{n}^{t}.
+    \end{align}
+    As the set $(U_{1},\ldots,U_{n})$ forms an orthonormal basis of $\R^{n}$, any $Y$ can be written as $Y = \alpha_{1}U_{1} + \cdots + \alpha_{n}U_{n}$ which gives
+    \begin{align}
+        Y^{t}AY &= \lambda_{1}\alpha_{1}^{2} + \cdots + \lambda_{n}\alpha_{n}^{2} \notag \\
+        \implies \frac{Y^{t}AY}{Y^{t}Y} &= \frac{\lambda_{1}\alpha_{1}^{2} + \cdots + \lambda_{n}\alpha_{n}^{2}}{\alpha_{1}^{2} + \cdots + \alpha_{n}^{2}} \leq \lambda_{1}.
+    \end{align}
+    Let $k = \max \{j : \lambda_{1} = \lambda_{j}\}$. If $k = n$, then $A = \lambda_{1}(U_{1}U_{1}^{t} + \cdots + U_{n}U_{n}^{t}) = \lambda_{1}P^{t}P = \lambda_{1}I$. Thus, the inequality becomes an equality for all $Y$, and $Y$ is an eigenvector corresponding to $\lambda_{1}$. If $k < n$, then
+    \begin{align}
+        \frac{Y^{t}AY}{Y^{t}Y} = \lambda_{1} &\implies \frac{\lambda_{1}\alpha_{1}^{2} + \cdots \lambda_{n}{\alpha_{n}^{2}}}{\alpha_{1}^{2}+ \cdots + \alpha_{n}^{2}} = \lambda_{1} \notag \\
+        \implies \alpha_{k+1}^{2}(\lambda_{k+1}-\lambda_{1}) + \cdots + \alpha_{n}^{2}(\lambda_{n}-\lambda_{1}) = 0 &\implies \alpha_{k+1} = \ldots = \alpha_{n} = 0.
+    \end{align}
+    Thus, $Y = \alpha_{1}U_{1} + \cdots + \alpha_{k}U_{k} \implies AY = \lambda_{1}Y$. The converse is easy to see. The proof for the minimum is left as an exercise to the reader.
 \end{proof}
 
 
