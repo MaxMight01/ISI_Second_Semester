@@ -1718,6 +1718,31 @@ Suppose $A_{n \times n}$ is symmetric. Consider $X^{t}AX$ for all $X \in \R^{n}$
     Thus, $Y = \alpha_{1}U_{1} + \cdots + \alpha_{k}U_{k} \implies AY = \lambda_{1}Y$. The converse is easy to see. The proof for the minimum is left as an exercise to the reader.
 \end{proof}
 
+\section{Simultaneous Diagonalization}
+\textit{April 4th.}
+
+Let $X^{t}AX$ and $X^{t}BX$ be two quadratic forms in $n$ variables. They are said to be \eax{simultaneously diagonalizable quadratic forms} if there exists an invertible $P$ such that both $P^{t}AP$ and $P^{t}BP$ are diagonal.
+
+\begin{theorem}
+    Le $X^{t}AX$ and $X^{t}BX$ be two quadratic forms in $n$ variables. If at least one of them is positive definite, or negative definite, then they are both simultaneously diagonalizable.
+\end{theorem}
+\begin{proof}
+    Let $B$ be positive definite. So, there exists an invertible $N$ such that $N^{t}N$, that is, $(N^{-1})^{t}BN^{-1} = I$. Let $M = N^{-1}$, so that $M^{t}BM = I$. We also note that $M^{t}AM$ is symmetric. Hence, there exists an orthonormal matrix $P$ such that $P^{t}(M^{t}AM)P$ is diagonal, or $(MP)^{t}AMP$ is diagonal. It can be verified that the matrix $(MP)^{t}BMP$ also evaluates to the identity, a diagonal matrix.
+\end{proof}
+If $B$ is positive definite, and $A$ is any symmetric matrix, then there exists a non-singular matrix $S$ such that by the transformation $X = SY$, $X^{t}AX$ is diagonal and $X^{t}BX$ is the identity. Let $S^{t}AS = \text{diag}(\alpha_{1},\ldots,\alpha_{n}) = D$ and $S^{t}BS = I$. Note that this is equivalent to saying $S^{t}BS = I$ and $S^{-1}(B^{-1}A)S = D$; we do this to see that $\alpha_{1},\ldots,\alpha_{n}$ are really just the eigenvalues of $B^{-1}A$.
+
+Let $X_{1},\ldots,X_{n}$ be the columns of $S$. Then the above is, again, equiavlent to saying that $X_{i}^{t}BX_{j} = \delta_{ij}$ and $(B^{-1}A)X_{i} = \alpha_{i}X_{i}$ for $1 \leq i \leq n$, or $AX_{i} = \alpha_{i}BX_{i}$. Also note that the $\alpha_{i}$'s are roots of the polynomial equation $\det (xI - B^{-1}A) = 0$. Since we can rewrite $\det (xI-B^{-1}A)$ as $\det B^{-1} \cdot \det(xB-A)$, we find that the roots of $\det (xI-B^{-1}A) = 0$ are exactly the roots of $\det (xB-A) = 0$.
+
+\begin{theorem}
+    Let $(A-\alpha B)X = 0$ and $(A-\beta B)Y = 0$, where $A,B$ are symmetric, and $\alpha \neq \beta$. Then, $X^{t}BY = 0$.
+\end{theorem}
+\begin{proof}
+    The proof is simple since $\alpha X^{t}BY = \alpha Y^{t}BX = Y^{t}AX = X^{t}AY = \beta X^{t}BY \implies X^{t}BY = 0$ for $\alpha \neq \beta$.
+\end{proof}
+
+To find the matrix $S$ discussed above, we find the roots of $\det (xB-A) = 0$. Let $\beta_{1},\ldots,\beta_{k}$ be the distinct roots of $\det (xB-A) = 0$. Consider the inner product $\ip{X,Y} = Y^{t}BX$. Let $\beta_{i}$ have an algebraic multiplicity $n_{i}$ in this equation. We can find $n_{i}$ orthornormal vecotrs $X_{i_{1}},X_{i_{2}},\ldots,X_{i_{n_{i}}}$ corresponding to $\beta_{i}$ such that $(\beta_{i}B-A)X_{i_{j}} = 0$ for all $1 \leq j \leq n_{i}$. $S = (X_{11},\ldots,X_{1n_{1}},X_{21},\ldots,X_{2n_{2}},\ldots,X_{k1},\ldots,X_{kn_{k}})$, while using the above theorem, gives an orthonormal matrix such that $S^{t}BS = I$ and $S^{-1}AS = D$.
+
+
 
 \begin{appendices}
 
