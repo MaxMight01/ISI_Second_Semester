@@ -120,12 +120,6 @@
 
 \clearpage
 
-\pagenumbering{roman}
-
-\chapter*{List of Symbols}
-\begin{notationlist}
-    \item
-\end{notationlist}
 
 \newpage
 \setcounter{tocdepth}{2}
@@ -1285,7 +1279,7 @@ It is of note to keep in mind that the set of complex unitary matrices and the s
     Let $\lambda_{1},\ldots,\lambda_{n}$ be the eigenvalues of $A \in M_{n}(\C)$. Then there exists a unitary matrix $U \in M_{n}(\C)$ such that $U^{\ast}AU$ is an upper triangular matrix, with the eigenvalues on the diagonal.
 \end{theorem}
 \begin{proof}
-    Let us assume that the result holds for any $k \times k$ matrix with $k < n$. Let $x_{1}$ be a unit eigenvector of $A$ corresponding to $A_{1}$. Extend $x_{1}$ to an orthonormal basis of $\C^{n}$, say, $S = (x_{1},x_{2},\ldots,x_{n})$. Treating $x_{1},\ldots,x_{n}$ as columns of a matrix $S$, $S$ is unitary. We then have
+    Let us assume that the result holds for any $k \times k$ matrix with $k < n$. Let $x_{1}$ be a unit eigenvector of $A$ corresponding to $\lambda_{1}$. Extend $x_{1}$ to an orthonormal basis of $\C^{n}$, say, $S = (x_{1},x_{2},\ldots,x_{n})$. Treating $x_{1},\ldots,x_{n}$ as columns of a matrix $S$, $S$ is unitary. We then have
     \begin{align}
         AS = (Ax_{1},Ax_{2},\ldots,Ax_{n}) = (\lambda_{1}x_{1},Ax_{2},\ldots,Ax_{n}) = S(u, S^{-1}Ax_{2},\ldots,S^{-1}Ax_{n})
     \end{align}
@@ -1551,37 +1545,15 @@ Apply a change of variables as $z_{1} = x_{1} + \frac{a_{12}}{a_{11}}x_{2} + \ld
 \begin{theorem}[\eax{Sylvester's law of inertia}]
     Two $n \times n$ symmetric matrices $B$ and $C$ are congruent, that is, they represent the same quadratic form in $\R^{n}$ if and only if the diagonal representations of $B$ and $C$ have the same rank, same index, and same signature.
 \end{theorem}
+
 \begin{proof}
-    Suppose $B$ and $C$ are congruent, that is, they represent the same quadratic form over different bases of $\R^{n}$. Let $(v_{1},\ldots,v_{n})$ be a basis of $\R^{n}$ consisting of orthonormal eigenvectors of $B$. By spectral theorem, this is possible since $B$ is symmetric. Similarly, let $(w_{1},\ldots,w_{n})$ be a basis of $\R^{n}$ consisting of orthonormal eigenvectors of $C$. Let $Bv_{i} = a_{i}v_{i}$ and $Cw_{j}=b_{j}w_{j}$. We rearrange the basis in a way so that the vectors corresponding to the positive eigenvalues occur first, the vectors corresponding to the negative eigenvalues occur next, and the vectors corresponding to eigenvalue 0 occur last.
-
-    As $B$ and $C$ have the same rank, call it $r$, let us assume their indices are different. Let $p$ be the index of $B$ and $q$ be the index of $C$, and suppose $q > p$. Note that the bases that contain the eigenvectors of $B$ and $C$ look like $(v_{1},\ldots,v_{p},v_{p+1},\ldots,v_{r},v_{r+1},\ldots,v_{n})$ and $(w_{1},\ldots,w_{q},w_{q+1},\ldots,w_{r},w_{r+1},\ldots,w_{n})$. Define a linear transformation on $\R^{n}$ by
+    Let $C = Q^{t}BQ$ for $Q$ invertible. Without the loss of generality, let the positive diagonal entries in $B$ be $b_{11},\ldots,b_{kk}$, and those of $C$ are $c_{11},\ldots,c_{mm}$ and $k > m$. Consider $Q_{i1}x_{1} + \cdots + Q_{in}x_{n} = 0$ for all $k+1 \leq i \leq n$. This is a system of $n-k$ equations in $n$ unknowns. So, there exists a non-zero $X$ such that $X$ is a solution for the above system of equations, with $x_{i} = 0$ for $1 \leq i \leq m$. As $x_{1},\ldots,x_{m} = 0$, we have $X^{t}CX = \sum_{i=m+1}^{n}x_{i}^{2}c_{ii} \leq 0$. $QX \neq 0$ since $Q$ is invertible and $X$ is non-zero. Also, the last $n-k$ components of $QX$ are zeroes. So,
     \begin{align}
-        L(x) = \begin{pmatrix}
-            v_{1}^{t}Bx \\ \vdots \\ v_{p}^{t}Bx \\ w_{q+1}^{t}Cx \\ \vdots \\ w_{r}^{t}Cx
-        \end{pmatrix}.
+        X^{t}CX = X^{t}Q^{t}BQX = (QX)^{t}B(QX) > 0.
     \end{align}
-    The co-domain is $\R^{p+r-q}$. We then have
-    \begin{align}
-        \dim \ker L = n - \dim L(\R^{n}) \geq n - (p+r-q) > n-r.
-    \end{align}
-    As $\dim \ker B = n-r = \dim \ker C$, $\ker B \cap \ker C \subset \ker L$. So there exists $v_{0} \in \R^{n}$ such that $Lv_{0} = 0$ but $v_{0} \notin \text{span} \{v_{r+1},\ldots,v_{n}\}$ and $v_{0} \notin \text{span}\{w_{r+1},\ldots,w_{n}\}$. Let $v_{0} = \sum_{i=1}^{n} c_{i}v_{i} = \sum_{j=1}^{n} d_{j}w_{j}$. At least one of the coefficients $c_{i}$ is non-zero for $i \leq r$. Similarly, at least one of the coefficients $d_{j}$ is non-zero for $j \leq r$. For any $v_{k}$, we have
-    \begin{align}
-        v_{k}^{t}Bv_{0} = v_{k}^{t} B (\sum_{i=1}^{n} c_{i}v_{i}) = \sum_{i=1}^{n} c_{i}v_{k}^{t}Bv_{i} = \sum_{i=1}^{n} c_{i}v_{k}^{t}a_{i}v_{i} = c_{k}a_{k}.
-    \end{align}
-    If $k \leq p$, since $v_{k}^{t}Bv_{0}$ represents the $k^{\text{th}}$ coordinate of $Lv_{0}$ and $Lv_{0} = 0$, we must have $c_{k}a_{k} = 0$. $a_{k}$ represents a positive eigenvalue in this case, so we get $c_{k} = 0$. So, $v_{0} = \sum_{i=p+1}^{n} c_{i}v_{i}$. Similarly, analysing $w_{k}^{t}Cv_{0}$ yields $v_{0} = \sum_{1 \leq i \leq q; r+1 \leq i \leq n} d_{j}w_{j}$ as $d_{j} = 0$ for all $q+1 \leq j \leq r$. We move on to
-    \begin{align}
-        v_{0}^{t}Bv_{0} = (\sum_{i=p+1}^{n} c_{i}v_{i})^{t}B (\sum_{j=p+1}^{n} c_{j}v_{j}) = \sum_{p+1 \leq i,j \leq n} c_{i}c_{j}v_{i}^{t}Bv_{j} = \sum_{p+1\leq i,j \leq n} c_{i}c_{j}a_{j}v_{i}^{t} v_{j} = \sum_{i=p+1}^{n} c_{i}^{2} a_{i} \leq 0.
-    \end{align}
-    As the $a_{i}$'s are non-positive for $i \geq p+1$, and at least one of the $c_{i}$'s is non-zero for $p+1 \leq i \leq r$, $v_{0}^{t}Bv_{0} < 0$. The value of the quadratic form at $v_{0}$ is less than $0$. 
-    
-    ``We can compute the value of the quadratic form at $v_{0}$, relative to the diagonalizing basis for $C$.
-    \begin{align}
-        v_{0}^{t}Cv_{0} = (\sum_{\substack{1\leq i\leq q\\ p+1 \leq i \leq n}}d_{i}w_{i})^{t}C (\sum_{\substack{1 \leq j \leq q\\r+1 \leq j \leq n}}d_{j}w_{j}) = \sum_{i,j} d_{i}d_{j}b_{j}w_{i}^{t}w_{j} = \sum_{\substack{1 \leq i \leq q\\r+1 \leq i \leq n}} d_{i}^{2}b_{i}.
-    \end{align}
-    As at least one $d_{i} \neq 0$ for $1 \leq i \leq q$ and as the $b_{i}$'s are non-negative, $v_{0}^{t}Cv_{0} > 0$. This gives a contradiction to the assumption that the indices are different.''
-
-    The converse is left as an exercise to the reader.
+    This is a contradiction to the fact that $k > m$. So, $k \leq m$. Reversing the roles of $B$ and $C$, $m \leq k$ forces $m = k$. For negatives, we simply work with $-B$ and $-C$.
 \end{proof}
+
 
 \begin{theorem}
     Let $x^{t}Ax$ be a quadratic form in $n$ variables with rank $r$, signature $s$, and index $p$. Then
@@ -1817,20 +1789,40 @@ To find the matrix $S$ discussed above, we find the roots of $\det (xB-A) = 0$. 
     \end{pmatrix}$.
 \end{proof}
 
+\textit{April 10th.}\\
+We state an alternative proof of the converse in the last theorem.
+\begin{proof}[Alternative proof of the converse]
+    We induct on $p$ instead of $n$. Assume that the result holds for $p-1$, and assume that $A_{i}$'s commute pairwise for $1 \leq i \leq p$. There exists an orthogonal $Q$ such that $D_{k} = Q^{t}A_{k}Q$ is diagonal for $1 \leq k \leq p-1$. Now partition the set $\{1,\ldots,n\}$ by the following rule; $i$ and $j$ belong to the same block if and only if $(D_{k})_{ii} = (D_{k})_{jj}$ for all $1 \leq k \leq p-1$. We assume that the blocks of the partition consists of the first $n_{1}$ elements, next $n_{2}$ elements, $\ldots$, and last $n_{s}$ elements, possibly by replacing $Q$ by $Q$ times a permutation matrix, wich will enable a shuffling of the rows of $D_{k}$'s. We shall call this matrix also $Q$. Now let $C = Q^{t}A_{p}Q$. Since $A_{p}A_{k} = A_{k}A_{p}$ for all $1 \leq k \leq p-1$, we have $D_{k}C = CD_{k}$. Equating the $(i,j)^{\text{th}}$ elements, we get $(D_{k})_{ii}c_{ij} = c_{ij}(D_{k})_{jj}$ for all $1 \leq k \leq p-1$. If $i$ and $j$ lie in different blocks, then $(D_{k})_{ii} \neq (D_{k})_{jj}$ for some $k$, which forces $c_{ij} = 0$. Thus, $C = \text{diag}(C_{1},C_{2},\ldots,C_{s})$ where $C_{t}$ is a matrix of order $n_{t}$, with $1 \leq t \leq s$. Since $C$ is symmetric, each $C_{t}$ is symmetric and there exists an orthogonal $U_{t}$ of order $n_{t}$ such that $U_{t}^{t}C_{t}U_{t}$ is diagonal. Finally, take $U = \text{diag}(U_{1},U_{2},\ldots,U_{s})$ and let $P = QU$. It can be verified that $PP^{t} = I$ and $P^{t}A_{p}P$ is diagonal.
 
-\begin{appendices}
+    For $1 \leq k \leq p-1$, let first $n_{1}$ diagonal entries of $D_{k}$ be $\delta_{1}$, $\ldots$, next $n_{s}$ diagonal entries of $D_{k}$ be $\delta_{s}$. Then,
+    \begin{align}
+        P^{t}A_{k}P = U^{t}Q^{t}A_{k}QU = U^{t}D_{k}U = \text{diag}(\delta_{1}I_{n_{1}},\ldots,\delta_{s}I_{n_{s}}).
+    \end{align}
+    Thus, the $P$ is desirable.
+\end{proof}
 
-\titleformat{\chapter}[display]
-  {\normalfont\Large\bfseries}
-  {\chaptername\ \thechapter}{20pt}{\Huge}
+Let $P \in M_{n}(\R)$. We call $P$ an \eax{orthogonal projector} if there exists a subspace $S \subseteq \R^{n}$ such that $PX$ is the projection of $X$ into $S$ along $S^{\perp}$. Here, $S = \colsp P$. Some equivalent conditions are that $P^{\ast}P = P$, and that $P^{2}=P$ and $P^{\ast}=P$.
 
-\titlespacing*{\chapter}{0pt}{20pt}{40pt}
 
-\chapter{Appendix}
-Extra content goes here.
+\begin{theorem}[\eax{Cramer's rule}]
+    Let $A$ be a non-singular $n \times n$ matrix. Then the solution of $AX = b$ is given by $X = (x_{j})$ with $x_{j} = \frac{\det A_{j}}{\det A}$, where $A_{j}$ is the $n \times n$ matrix obtained from $A$ by replacing the $j^{\text{th}}$ column by the column vector $b$.
+\end{theorem}
+
+\begin{proof}
+    Recall the classical adjoint, where $A(\adj A) = (\adj A) A = (\det A) I_{n}$ with $(\adj A)_{ij} = (-1)^{i+j} \det M_{ji}$. Here, $M_{ij}$ is the $(n-1) \times (n-1)$ matrix obtained from $A$ by deleting the $i^{\text{th}}$ row and $j^{\text{th}}$ column. Since $A$ is non-singular, we have $A^{-1} = \frac{\det A} (\adj A)$. The $j^{\text{th}}$ row(s) of $\adj A$ look like
+    \begin{align}
+        \begin{pmatrix}
+            (-1)^{1+j} \det M_{ij} & (-1)^{2+j}\det M_{2j} & \cdots & (-1)^{n+j} \det M_{nj}.
+        \end{pmatrix}
+    \end{align}
+    Thus,
+    \begin{align}
+        x_{j} = \frac{(j^{\text{th}} \text{ row of } \adj A)b}{\det A} = \frac{\det A_{j}}{\det A},
+    \end{align}
+    where $A_{j}$ is the matrix obtained from $A$ by replacing the $j^{\text{th}}$ column by $b$.
+\end{proof}
+
 
 \printindex
-
-\end{appendices}
 
 \end{document}
